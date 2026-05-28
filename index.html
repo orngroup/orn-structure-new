@@ -1,0 +1,1281 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.hub-root{min-height:100vh;background:var(--color-background-tertiary)}
+.top-nav{background:#0a0a0a;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-bars{display:flex;align-items:flex-end;gap:3px;height:22px}
+.nav-bar{border-radius:10px;width:5px}
+.nav-wordmark{color:#fff;font-size:15px;font-weight:500;letter-spacing:0.08em}
+.nav-badge{background:#1e3a5f;color:#7eb8f7;font-size:11px;padding:3px 10px;border-radius:20px}
+.hub-hero{background:#0a0a0a;padding:3rem 2rem 2.5rem;border-bottom:0.5px solid #222}
+.hub-hero h1{color:#fff;font-size:26px;font-weight:500;margin-bottom:6px}
+.hub-hero p{color:#888;font-size:14px}
+.hub-search{margin-top:1.5rem;max-width:480px}
+.hub-search input{width:100%;background:#1a1a1a;border:0.5px solid #333;border-radius:var(--border-radius-md);color:#fff;padding:10px 14px;font-size:14px;outline:none}
+.hub-search input::placeholder{color:#555}
+.hub-search input:focus{border-color:#555}
+.region-tabs{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0 2rem;display:flex;overflow-x:auto;scrollbar-width:none}
+.region-tabs::-webkit-scrollbar{display:none}
+.rtab{padding:14px 20px;font-size:13px;font-weight:500;color:var(--color-text-secondary);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none;transition:all 0.15s}
+.rtab:hover{color:var(--color-text-primary)}
+.rtab.active{color:#1d6bce;border-bottom-color:#1d6bce}
+.hub-body{padding:2rem}
+.region-label{font-size:11px;font-weight:500;letter-spacing:0.1em;color:var(--color-text-tertiary);text-transform:uppercase;margin-bottom:12px;margin-top:2rem}
+.region-label:first-child{margin-top:0}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:1rem}
+.dest-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:6px}
+.dest-card:hover{border-color:var(--color-border-secondary);transform:translateY(-1px)}
+.dest-card .flag{font-size:22px;line-height:1}
+.dest-card .dname{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.built-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:#e6f1fb;color:#0c447c;display:inline-block;width:fit-content}
+.soon-tag{font-size:11px;color:var(--color-text-tertiary)}
+.dest-page{min-height:100vh;background:var(--color-background-tertiary)}
+.dest-back{display:flex;align-items:center;gap:8px;padding:14px 2rem;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer;font-size:13px;color:var(--color-text-secondary)}
+.dest-back:hover{color:var(--color-text-primary)}
+.dest-hero{width:100%;height:220px;position:relative;overflow:hidden;display:block}
+.dest-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.dest-hero-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px}
+.dest-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.15) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem 2rem}
+.dest-hero-name{color:#fff;font-size:32px;font-weight:500;line-height:1}
+.dest-hero-tagline{color:rgba(255,255,255,0.72);font-size:14px;margin-top:4px}
+.dest-quickstats{background:#0a0a0a;padding:12px 2rem;display:flex;gap:2rem;overflow-x:auto;scrollbar-width:none}
+.dest-quickstats::-webkit-scrollbar{display:none}
+.qs-item{display:flex;flex-direction:column;gap:2px;min-width:fit-content}
+.qs-label{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:0.08em}
+.qs-value{font-size:13px;color:#fff;font-weight:500}
+.dest-body{padding:1.5rem 2rem 3rem;display:flex;flex-direction:column;gap:1.5rem}
+.section-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.5rem}
+.section-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.section-title i{color:#1d6bce;font-size:16px}
+.ksp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ksp-item{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;border-left:3px solid #1d6bce;border-radius:0;border-top-right-radius:var(--border-radius-md);border-bottom-right-radius:var(--border-radius-md)}
+.ksp-item .ksp-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.ksp-item .ksp-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.sell-bullets{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sell-bullets li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--color-text-primary);line-height:1.5}
+.sell-bullets li::before{content:"→";color:#1d6bce;font-weight:500;margin-top:1px;flex-shrink:0}
+.traveller-types{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+.tt-chip{font-size:12px;padding:4px 12px;border-radius:20px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.tt-chip.highlight{background:#e6f1fb;color:#0c447c;border-color:#b5d4f4}
+.flight-table{width:100%;border-collapse:collapse;font-size:12px}
+.flight-table th{text-align:left;padding:8px 8px;font-size:11px;font-weight:500;color:var(--color-text-tertiary);border-bottom:0.5px solid var(--color-border-tertiary);text-transform:uppercase;letter-spacing:0.06em}
+.flight-table td{padding:9px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top;font-size:12px}
+.flight-table tr:last-child td{border-bottom:none}
+.direct-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:#eaf3de;color:#3b6d11}
+.connect-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:#faeeda;color:#854f0b}
+.visa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.visa-item{padding:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.visa-item-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px}
+.visa-item-value{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.voa-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:#eaf3de;color:#3b6d11}
+.evisa-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:#e6f1fb;color:#0c447c}
+.sticker-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:#faeeda;color:#854f0b}
+.free-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:#eaf3de;color:#3b6d11}
+.overview-text{font-size:13px;color:var(--color-text-primary);line-height:1.7}
+.overview-text p+p{margin-top:10px}
+.weather-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.month-cell{text-align:center;padding:8px 4px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.month-cell .mo{font-size:10px;color:var(--color-text-tertiary);margin-bottom:3px}
+.month-cell .temp{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.month-cell .icon{font-size:13px;margin-bottom:2px;display:block}
+.month-cell.peak{background:#e6f1fb;border-color:#b5d4f4}
+.month-cell.low{background:var(--color-background-secondary)}
+.season-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.sl-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+.sl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px}
+.exp-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+.exp-img{height:70px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.exp-info{padding:10px}
+.exp-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.exp-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.exp-cat{font-size:10px;padding:2px 8px;border-radius:20px;margin-top:6px;display:inline-block}
+.practical-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.practical-item{padding:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.practical-item .pi-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.practical-item .pi-value{font-size:12px;color:var(--color-text-primary);line-height:1.5}
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.food-item{padding:12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);text-align:center}
+.food-emoji{font-size:22px;display:block;margin-bottom:6px}
+.food-name{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.food-desc{font-size:11px;color:var(--color-text-secondary)}
+.links-list{display:flex;flex-direction:column;gap:8px}
+.link-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;transition:background 0.1s}
+.link-row:hover{background:var(--color-background-secondary)}
+.link-row-label{font-size:13px;color:var(--color-text-primary);display:flex;align-items:center;gap:8px}
+.link-row-label i{color:var(--color-text-tertiary);font-size:15px}
+.disclaimer{font-size:11px;color:var(--color-text-tertiary);line-height:1.6;padding:12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+</style>
+
+<div class="hub-root" id="app"></div>
+
+<script>
+const DESTS={
+  ASIA:["Azerbaijan","Bali","Bhutan","Cambodia","Dubai","Hong Kong","Japan","Malaysia","Maldives","Philippines","Saudi Arabia","Singapore","Sri Lanka","Thailand","Turkey","Vietnam"],
+  EUROPE:["France","Greece","Italy","Spain","Switzerland","United Kingdom"],
+  INDIA:["Andamans","Goa","Himachal Pradesh","Jammu and Kashmir","Kerala","Rajasthan","Sikkim"],
+  OCEANIA:["Australia","New Zealand"]
+};
+const FLAGS={"Azerbaijan":"🇦🇿","Bali":"🇮🇩","Bhutan":"🇧🇹","Cambodia":"🇰🇭","Dubai":"🇦🇪","Hong Kong":"🇭🇰","Japan":"🇯🇵","Malaysia":"🇲🇾","Maldives":"🇲🇻","Philippines":"🇵🇭","Saudi Arabia":"🇸🇦","Singapore":"🇸🇬","Sri Lanka":"🇱🇰","Thailand":"🇹🇭","Turkey":"🇹🇷","Vietnam":"🇻🇳","France":"🇫🇷","Greece":"🇬🇷","Italy":"🇮🇹","Spain":"🇪🇸","Switzerland":"🇨🇭","United Kingdom":"🇬🇧","Andamans":"🏝️","Goa":"🏖️","Himachal Pradesh":"🏔️","Jammu and Kashmir":"🏔️","Kerala":"🌴","Rajasthan":"🏜️","Sikkim":"🏔️","Australia":"🇦🇺","New Zealand":"🇳🇿"};
+const HERO_COLORS={"Azerbaijan":"135deg,#1a3a6b 0%,#2e7d5e 100%","Bali":"135deg,#0d4f8b 0%,#1a8a6e 50%,#2d6a1f 100%","Bhutan":"135deg,#7a2c00 0%,#c95c00 60%,#1a3a6b 100%","Cambodia":"135deg,#8b1a1a 0%,#c47c00 100%","Dubai":"135deg,#b8860b 0%,#c9a84c 40%,#d4a017 100%","Hong Kong":"135deg,#8b0000 0%,#1a237e 100%","Japan":"135deg,#8b1a1a 0%,#c9a4a4 60%,#f5f0f0 100%","Malaysia":"135deg,#cc0001 0%,#003893 100%","Maldives":"135deg,#006994 0%,#00b4d8 60%,#90e0ef 100%","Philippines":"135deg,#0038a8 0%,#ce1126 100%","Saudi Arabia":"135deg,#006c35 0%,#1a5c2a 100%","Singapore":"135deg,#ee2536 0%,#fff 100%","Sri Lanka":"135deg,#8d153a 0%,#f4a72f 100%","Thailand":"135deg,#a51931 0%,#2d2a4a 100%","Turkey":"135deg,#e30a17 0%,#1a1a6b 100%","Vietnam":"135deg,#da251d 0%,#f5c518 100%","France":"135deg,#002395 0%,#ED2939 100%","Greece":"135deg,#0d5eaf 0%,#ffffff 60%,#0d5eaf 100%","Italy":"135deg,#009246 0%,#ce2b37 100%","Spain":"135deg,#c60b1e 0%,#ffc400 100%","Switzerland":"135deg,#ff0000 0%,#ffffff 100%","United Kingdom":"135deg,#00247d 0%,#cf142b 100%","Andamans":"135deg,#006994 0%,#2d6a1f 100%","Goa":"135deg,#1565c0 0%,#f9a825 100%","Himachal Pradesh":"135deg,#1a237e 0%,#b3e5fc 100%","Jammu and Kashmir":"135deg,#1a237e 0%,#4caf50 60%,#ffffff 100%","Kerala":"135deg,#1b5e20 0%,#0d47a1 100%","Rajasthan":"135deg,#bf360c 0%,#f9a825 100%","Sikkim":"135deg,#1a237e 0%,#4caf50 100%","Australia":"135deg,#002868 0%,#cc0000 60%,#ffcd00 100%","New Zealand":"135deg,#00247d 0%,#cc142b 100%"};
+
+const ALL_DATA={
+"Azerbaijan":{
+  name:"Azerbaijan",flag:"🇦🇿",tagline:"Where the Caucasus meets the Caspian — fire, history and modern glamour",
+  quickstats:{Capital:"Baku",Currency:"AZN (Manat)",Language:"Azerbaijani",TimeZone:"AZT (UTC+4)",BestTime:"Apr–Jun, Sep–Nov"},
+  ksp:[
+    {title:"Emerging gem",desc:"One of the fastest-growing tourism destinations in Asia — clients feel like pioneers"},
+    {title:"Easy visa",desc:"e-Visa available in 3 days, ~USD 26 — extremely low friction for Indian passport holders"},
+    {title:"Excellent value",desc:"Luxury hotels, fine dining and excursions at 30–40% less than comparable European destinations"},
+    {title:"Stunning diversity",desc:"Fire temples, mud volcanoes, skiing, Caspian beaches and a UNESCO old city — all in one country"}
+  ],
+  sell:["Baku is one of the most photogenic cities in the world — flame towers, medieval old city and futuristic architecture all within walking distance","e-Visa in 3 days makes it an easy sell — no embassy visits, no hassle for Indian clients","Exceptional value for money — 5-star hotels from ₹6,000/night, fine dining from ₹1,500/head","Growing direct connectivity from Indian metros makes it increasingly accessible","Perfect add-on to Turkey or Georgia itineraries for longer Caucasus trips","Trip Factory recommended duration: 5–7 nights"],
+  travellerTypes:["Honeymoon","Couple","Adventure","Culture","Photography","Group"],
+  highlightTypes:["Honeymoon","Photography"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Baku (GYD)",airlines:"Air Arabia, IndiGo (via Dubai/Sharjah)",time:"~6–7h",type:"connecting",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Baku (GYD)",airlines:"flydubai, Air Arabia",time:"~6–7h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Baku (GYD)",airlines:"IndiGo, Air Arabia",time:"~7–8h",type:"connecting",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Baku (GYD)",airlines:"Air Arabia (via Sharjah)",time:"~7h",type:"connecting",freq:"4–5x weekly"},
+    {from:"Chennai (MAA)",to:"Baku (GYD)",airlines:"flydubai (via Dubai)",time:"~7–8h",type:"connecting",freq:"4x weekly"}
+  ],
+  visa:{type:"e-Visa",cost:"USD 26 (≈ ₹2,150)",validity:"30 days",processing:"3–5 business days online",documents:"Passport scan, photo, hotel booking, return ticket, bank statement",portal:"https://evisa.gov.az",badge:"evisa"},
+  overview:["Azerbaijan sits at the crossroads of Europe and Asia, bordering the Caspian Sea to the east and the Greater Caucasus mountains to the north. The capital Baku is a stunning paradox — a UNESCO-listed medieval walled city sitting beside a gleaming waterfront boulevard lined with flame-shaped skyscrapers. It is one of the few cities in the world where you can walk from an 800-year-old palace to a Formula 1 street circuit in under 20 minutes.","Beyond Baku, Azerbaijan reveals extraordinary natural diversity. Gobustan National Park, just 60km south of the capital, has ancient petroglyphs and the world's largest concentration of mud volcanoes. The mountain regions of Sheki and Quba offer lush green valleys, traditional caravanserais, and summer temperatures that are a relief from the heat of the plains. In winter, Shahdag becomes a proper ski resort.","For Indian travellers, Azerbaijan carries a particular cultural resonance — the ancient Ateshgah Fire Temple near Baku was a site of pilgrimage for Hindu and Zoroastrian traders along the Silk Road for centuries, and Indian merchants left inscriptions on its walls that survive to this day."],
+  weather:[
+    {mo:"Jan",temp:"4°",icon:"❄️",type:"low"},{mo:"Feb",temp:"5°",icon:"❄️",type:"low"},{mo:"Mar",temp:"9°",icon:"🌦️",type:"shoulder"},
+    {mo:"Apr",temp:"15°",icon:"🌤️",type:"peak"},{mo:"May",temp:"21°",icon:"☀️",type:"peak"},{mo:"Jun",temp:"26°",icon:"☀️",type:"peak"},
+    {mo:"Jul",temp:"29°",icon:"☀️",type:"peak"},{mo:"Aug",temp:"29°",icon:"☀️",type:"peak"},{mo:"Sep",temp:"25°",icon:"🌤️",type:"peak"},
+    {mo:"Oct",temp:"18°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"12°",icon:"🌦️",type:"shoulder"},{mo:"Dec",temp:"6°",icon:"❄️",type:"low"}
+  ],
+  weatherTip:"Best aligned with India's spring break (Apr–May) and post-monsoon travel season (Sep–Oct). Avoid Jan–Feb unless clients want snow and ski at Shahdag. Summer (Jul–Aug) is warm but manageable — great for city breaks.",
+  experiences:[
+    {name:"Baku Old City (Icheri Sheher)",desc:"UNESCO-walled medieval city with the Maiden Tower and Palace of the Shirvanshahs",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏰"},
+    {name:"Flame Towers",desc:"Iconic LED-clad skyscrapers visible from across the city — spectacular at night",cat:"Architecture",color:"#faeeda",textColor:"#854f0b",bg:"🔥"},
+    {name:"Gobustan Mud Volcanoes",desc:"Otherworldly landscape — hundreds of bubbling mud volcanoes, unique on earth",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌋"},
+    {name:"Ateshgah Fire Temple",desc:"Ancient Hindu-Zoroastrian fire temple — deeply moving for Indian visitors",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛕"},
+    {name:"Heydar Aliyev Centre",desc:"Zaha Hadid's masterpiece — one of the world's most photographed buildings",cat:"Architecture",color:"#faeeda",textColor:"#854f0b",bg:"🏛️"},
+    {name:"Sheki Old Town",desc:"Silk Road caravanserai town with stunning Khan's Palace stained glass",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🕌"},
+    {name:"Caspian Sea Seafront",desc:"Baku Boulevard — 3.75km waterfront promenade perfect for evening strolls",cat:"Leisure",color:"#e1f5ee",textColor:"#0f6e56",bg:"🌊"},
+    {name:"Shahdag Ski Resort",desc:"Modern ski resort — winter add-on for adventurous clients (Dec–Mar)",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"⛷️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"AZN Manat. USD widely accepted in hotels. ATMs plentiful in Baku. Inform bank before travel."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. Hepatitis A recommended. Standard travel insurance sufficient."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220V, Type C & F sockets (European style). Indian plugs need an adaptor."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Azercell or Bakcell SIM at airport from ~₹800. Excellent 4G in Baku. WiFi widely available."},
+    {label:"Tipping guide",icon:"ti-coin",value:"10% at restaurants is appreciated. Taxi drivers — round up fare. Hotel staff ₹100–200."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: dress modestly at mosques. Don't: photograph military sites. Alcohol widely available in restaurants."}
+  ],
+  food:[
+    {emoji:"🥩",name:"Plov",desc:"Saffron rice with lamb — the national dish"},
+    {emoji:"🫕",name:"Dushbara",desc:"Tiny lamb dumplings in broth"},
+    {emoji:"🍢",name:"Lula Kebab",desc:"Spiced minced lamb on skewer — excellent street food"},
+    {emoji:"🥗",name:"Shepherd's Salad",desc:"Fresh tomato, cucumber, herbs — very vegetarian-friendly"},
+    {emoji:"🍵",name:"Azerbaijani Tea",desc:"Black tea served in tulip glasses with jam and sugar"},
+    {emoji:"🥐",name:"Tendir Bread",desc:"Clay oven flatbread — eaten with every meal"}
+  ],
+  dietNotes:"Meat-heavy cuisine but vegetarian options are available — salads, breads, dairy dishes and bean soups are plentiful. Halal food is widely available as a Muslim-majority country. Limited options for vegans. Indian restaurants exist in Baku.",
+  links:[
+    {label:"Azerbaijan Tourism Board",icon:"ti-globe",url:"https://tourism.gov.az"},
+    {label:"e-Visa application portal",icon:"ti-id",url:"https://evisa.gov.az"},
+    {label:"Azerbaijani Airlines (AZAL)",icon:"ti-plane",url:"https://www.azal.az"},
+    {label:"Trip Factory — Azerbaijan packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Bali":{
+  name:"Bali",flag:"🇮🇩",tagline:"Island of the Gods — where spirituality meets paradise",
+  quickstats:{Capital:"Denpasar",Currency:"IDR (Rupiah)",Language:"Indonesian",TimeZone:"WITA (UTC+8)",BestTime:"Apr–Oct"},
+  ksp:[
+    {title:"Bucket-list brand",desc:"One of the world's most recognised destinations — effortless to sell to any client segment"},
+    {title:"Incredible value",desc:"Private pool villas from ₹8,000/night — luxury feel at mid-range prices"},
+    {title:"Indian-friendly",desc:"Hindu culture, vegetarian food widely available, warm hospitality — clients feel at home"},
+    {title:"Direct connectivity",desc:"Strong flight connections from all Indian metros make logistics simple"}
+  ],
+  sell:["One of the world's most recognisable bucket-list destinations — easy to sell, easy to get clients excited","Exceptional value: luxury villas with private pools start from ₹8,000/night","Rich Hindu cultural heritage — temples, ceremonies, rice terraces — resonates deeply with Indian clients","Strong direct flight connectivity from all major Indian cities","Trip Factory recommended duration: 6–8 nights"],
+  travellerTypes:["Honeymoon","Family","Adventure","Luxury","Culture","Solo"],
+  highlightTypes:["Honeymoon","Luxury"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Denpasar (DPS)",airlines:"IndiGo, Air India, Garuda",time:"~9h",type:"connecting",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Denpasar (DPS)",airlines:"IndiGo, Air Asia, Singapore Airlines",time:"~9–11h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Denpasar (DPS)",airlines:"IndiGo, Air Asia",time:"~7.5h",type:"connecting",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Denpasar (DPS)",airlines:"IndiGo, Malaysia Airlines",time:"~8h",type:"connecting",freq:"4–5x weekly"},
+    {from:"Hyderabad (HYD)",to:"Denpasar (DPS)",airlines:"IndiGo, Batik Air",time:"~9h",type:"connecting",freq:"Daily"},
+    {from:"Kolkata (CCU)",to:"Denpasar (DPS)",airlines:"Air Asia, IndiGo",time:"~8h",type:"connecting",freq:"4x weekly"},
+    {from:"Ahmedabad (AMD)",to:"Denpasar (DPS)",airlines:"IndiGo (via BOM)",time:"~11h",type:"connecting",freq:"Daily"}
+  ],
+  visa:{type:"Visa on Arrival",cost:"USD 35 (≈ ₹2,900)",validity:"30 days, extendable to 60",processing:"On arrival, 15–30 mins",documents:"Passport (6+ months valid), onward ticket, accommodation proof, USD 35",portal:"https://molina.imigrasi.go.id",badge:"voa"},
+  overview:["Bali is Indonesia's most iconic island, renowned for its dramatic volcanic landscapes, ancient Hindu temples, lush rice terraces and world-class surf beaches. It sits at the crossroads of the Indian Ocean, bringing together Polynesian traditions and South-East Asian hospitality in a way that captivates every type of traveller.","The island is divided into distinct regions, each with its own personality. Seminyak and Kuta offer buzzing nightlife and beach clubs; Ubud is the spiritual and cultural heart with its monkey forests and traditional arts; Uluwatu perches dramatically on clifftops above some of Bali's best surf; and Nusa Dua hosts the island's most exclusive resort properties.","For Indian travellers, Bali is an exceptionally popular first international destination — the predominantly Hindu cultural milieu, vegetarian-friendly food options and warm hospitality create an immediate sense of familiarity, while the destination still delivers the full 'wow' of an overseas trip."],
+  weather:[
+    {mo:"Jan",temp:"28°",icon:"🌧️",type:"low"},{mo:"Feb",temp:"28°",icon:"🌧️",type:"low"},{mo:"Mar",temp:"28°",icon:"🌦️",type:"shoulder"},
+    {mo:"Apr",temp:"29°",icon:"⛅",type:"shoulder"},{mo:"May",temp:"29°",icon:"🌤️",type:"peak"},{mo:"Jun",temp:"28°",icon:"☀️",type:"peak"},
+    {mo:"Jul",temp:"27°",icon:"☀️",type:"peak"},{mo:"Aug",temp:"27°",icon:"☀️",type:"peak"},{mo:"Sep",temp:"28°",icon:"🌤️",type:"peak"},
+    {mo:"Oct",temp:"29°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Dec",temp:"28°",icon:"🌧️",type:"low"}
+  ],
+  weatherTip:"Best aligned with Indian school summer holidays (Apr–Jun) and Christmas–New Year. Avoid monsoon (Nov–Mar) for beach trips. Diwali long weekend (Oct–Nov) works for shorter 5-night breaks.",
+  experiences:[
+    {name:"Tanah Lot Temple",desc:"Sea temple at sunset — iconic Bali photograph",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛕"},
+    {name:"Tegallalang Rice Terraces",desc:"UNESCO-listed terraces in Ubud — stunning walk",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌾"},
+    {name:"Mount Batur Sunrise Trek",desc:"Active volcano hike at 3am for a breathtaking sunrise",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🌋"},
+    {name:"Seminyak Beach Clubs",desc:"Stylish beach clubs, sunset cocktails, boutique shopping",cat:"Beach",color:"#e1f5ee",textColor:"#0f6e56",bg:"🌅"},
+    {name:"Uluwatu Kecak Dance",desc:"Fire-lit clifftop Kecak performance at dusk",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🔥"},
+    {name:"Nusa Penida Snorkelling",desc:"Swim with manta rays at Crystal Bay",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🐠"},
+    {name:"Ubud Cooking Class",desc:"Learn to cook satay, rendang and sambal",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🍛"},
+    {name:"Sacred Monkey Forest",desc:"Ancient temple complex with Balinese long-tailed monkeys",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐒"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"IDR Rupiah. USD accepted in tourist areas. ATMs everywhere. Inform bank before travel."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Hepatitis A & B recommended. Typhoid, Rabies for rural areas. Bring mosquito repellent."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220V, Type C & F. Indian Type D/M plugs may need an adaptor."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Telkomsel or XL SIM at airport from ~₹600. Excellent 4G. Free WiFi at most hotels."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Not mandatory. ₹100–200 for drivers; 5–10% at restaurants if no service charge."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: dress modestly at temples (sarongs provided). Don't: touch people's heads. Remove shoes at temple entrances."}
+  ],
+  food:[
+    {emoji:"🍖",name:"Babi Guling",desc:"Suckling pig — Bali's signature dish (non-veg)"},
+    {emoji:"🍛",name:"Nasi Goreng",desc:"Fried rice — widely vegetarian-adaptable"},
+    {emoji:"🥜",name:"Gado-Gado",desc:"Peanut sauce veggie salad — great for vegetarians"},
+    {emoji:"🍢",name:"Satay Lilit",desc:"Minced fish or chicken on lemongrass skewer"},
+    {emoji:"🌊",name:"Lawar",desc:"Mixed veg with coconut and meat"},
+    {emoji:"🍹",name:"Es Kelapa Muda",desc:"Fresh young coconut — refreshing and everywhere"}
+  ],
+  dietNotes:"Very vegetarian-friendly — most warungs have meat-free options. Indian-style restaurants common in Ubud and Seminyak. Halal options widely available. Jain food possible in upscale hotels.",
+  links:[
+    {label:"Official Bali Tourism Board",icon:"ti-globe",url:"https://www.balitourismboard.or.id"},
+    {label:"Indonesia Visa on Arrival info",icon:"ti-id",url:"https://molina.imigrasi.go.id"},
+    {label:"Garuda Indonesia",icon:"ti-plane",url:"https://www.garuda-indonesia.com"},
+    {label:"Trip Factory — Bali packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Bhutan":{
+  name:"Bhutan",flag:"🇧🇹",tagline:"The Last Shangri-La — happiness measured not in GDP but in joy",
+  quickstats:{Capital:"Thimphu",Currency:"BTN/INR",Language:"Dzongkha",TimeZone:"BTT (UTC+6)",BestTime:"Mar–May, Sep–Nov"},
+  ksp:[
+    {title:"High-value destination",desc:"Bhutan's Sustainable Development Fee makes it a premium, low-volume sell — higher margins"},
+    {title:"No visa for Indians",desc:"Indian passport holders enter visa-free with just a permit — zero friction"},
+    {title:"Truly unique",desc:"Carbon-negative country, pristine Himalayan monasteries, archery culture — nothing else like it"},
+    {title:"Direct flights",desc:"DrukAir flies direct from Delhi, Kolkata, Mumbai and Bagdogra — convenient for Indian clients"}
+  ],
+  sell:["Only carbon-negative country in the world — a powerful selling point for eco-conscious clients","Indian passport holders need only a permit (no visa) — removes the biggest barrier","High Daily Sustainable Development Fee (USD 100/night) positions it as premium — higher margin packages","Direct DrukAir flights from Delhi, Kolkata and Mumbai make it accessible","Iconic imagery — Tiger's Nest monastery is one of Asia's most photographed sites","Trip Factory recommended duration: 5–7 nights"],
+  travellerTypes:["Luxury","Honeymoon","Adventure","Culture","Eco-travel","Photography"],
+  highlightTypes:["Luxury","Honeymoon"],
+  flights:[
+    {from:"Delhi (DEL)",to:"Paro (PBH)",airlines:"DrukAir, Bhutan Airlines",time:"~2h",type:"direct",freq:"Daily"},
+    {from:"Mumbai (BOM)",to:"Paro (PBH)",airlines:"DrukAir",time:"~3.5h",type:"direct",freq:"4x weekly"},
+    {from:"Kolkata (CCU)",to:"Paro (PBH)",airlines:"DrukAir, Bhutan Airlines",time:"~1.5h",type:"direct",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Paro (PBH)",airlines:"DrukAir (via Kolkata)",time:"~4h",type:"connecting",freq:"4x weekly"},
+    {from:"Bagdogra (IXB)",to:"Paro (PBH)",airlines:"DrukAir",time:"~45min",type:"direct",freq:"Daily"}
+  ],
+  visa:{type:"Permit required (not visa)",cost:"Permit free for Indians; SDF USD 100/night",validity:"Duration of stay",processing:"Applied through licensed tour operator",documents:"Indian passport or voter ID, tour booking through licensed operator",portal:"https://www.tourism.gov.bt",badge:"free"},
+  overview:["Bhutan is the world's only carbon-negative country and one of the last truly untouched Himalayan kingdoms. Nestled between India and Tibet, it has resisted mass tourism through a deliberate policy of 'high value, low impact' tourism — meaning every visitor contributes meaningfully to the country's conservation and cultural preservation.","The country's landscape is extraordinary — from subtropical forests in the south to alpine meadows above 4,000m, with dramatic dzong fortresses perched on cliffs above river valleys. Thimphu is the world's only capital without traffic lights (a monk-on-a-pedestal directs traffic instead). The sacred Tiger's Nest monastery, clinging to a sheer cliff face 900 metres above the Paro valley, is one of Asia's most astonishing sights.","For Indian travellers, Bhutan holds a special draw — no visa required, Indian Rupee accepted everywhere, Hindi widely understood, and a culture rooted in shared Himalayan traditions. It is the ideal 'exotic but comfortable' first international destination for families and couples who want something truly special without the complexity of a long-haul trip."],
+  weather:[
+    {mo:"Jan",temp:"5°",icon:"❄️",type:"low"},{mo:"Feb",temp:"7°",icon:"❄️",type:"low"},{mo:"Mar",temp:"13°",icon:"🌤️",type:"peak"},
+    {mo:"Apr",temp:"17°",icon:"☀️",type:"peak"},{mo:"May",temp:"20°",icon:"☀️",type:"peak"},{mo:"Jun",temp:"22°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"22°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"22°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"20°",icon:"⛅",type:"peak"},
+    {mo:"Oct",temp:"16°",icon:"☀️",type:"peak"},{mo:"Nov",temp:"11°",icon:"⛅",type:"shoulder"},{mo:"Dec",temp:"6°",icon:"❄️",type:"low"}
+  ],
+  weatherTip:"Spring (Mar–May) has rhododendrons in bloom — the most beautiful time. Autumn (Sep–Nov) has crystal-clear skies perfect for Himalayan views. Avoid monsoon (Jun–Aug) when trekking paths become difficult. Tshechu festivals in spring and autumn are unmissable cultural events.",
+  experiences:[
+    {name:"Tiger's Nest Monastery",desc:"Paro Taktsang — Bhutan's most iconic sight, 3-hour hike to reach it",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏔️"},
+    {name:"Punakha Dzong",desc:"'Palace of Great Happiness' — stunning fortress at river confluence",cat:"Architecture",color:"#faeeda",textColor:"#854f0b",bg:"🏯"},
+    {name:"Dochula Pass",desc:"108 memorial chortens with Himalayan panorama on clear days",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"⛰️"},
+    {name:"Haa Valley Trek",desc:"Remote hidden valley — pristine alpine wilderness, few tourists",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🥾"},
+    {name:"Thimphu Weekend Market",desc:"Local produce market — taste and shop for traditional Bhutanese foods",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛍️"},
+    {name:"Archery — national sport",desc:"Watch or participate in Bhutan's national sport at local grounds",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏹"},
+    {name:"Hot Stone Bath",desc:"Traditional Bhutanese healing bath with river-heated stones",cat:"Wellness",color:"#e1f5ee",textColor:"#0f6e56",bg:"♨️"},
+    {name:"Gangtey Crane Festival",desc:"Black-necked cranes arrive Nov–Mar in Phobjikha Valley — magical",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🦢"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"Indian Rupee accepted everywhere. BTN = INR. ATMs in Thimphu and Paro. No credit card issues."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccines. Altitude sickness possible above 3000m — acclimatise slowly."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type D & G sockets. Indian plugs generally work. Carry a universal adaptor."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Bhutan Telecom or TashiCell SIM available. 4G in cities, limited in rural areas."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Not mandatory but appreciated. Guides: USD 10–15/day. Drivers: USD 5–8/day."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: carry passport at all times. Don't: smoke in public (banned). Dress conservatively at dzongs."}
+  ],
+  food:[
+    {emoji:"🌶️",name:"Ema Datshi",desc:"Chilli and cheese stew — national dish, very spicy"},
+    {emoji:"🍄",name:"Shamu Datshi",desc:"Mushroom and cheese — great vegetarian option"},
+    {emoji:"🍚",name:"Red Rice",desc:"Nutty, earthy Bhutanese red rice — unique staple"},
+    {emoji:"🥩",name:"Phaksha Paa",desc:"Pork with red chillies and radish"},
+    {emoji:"🍵",name:"Butter Tea",desc:"Salty yak butter tea — warming at altitude"},
+    {emoji:"🍺",name:"Ara",desc:"Traditional Bhutanese spirit made from rice or wheat"}
+  ],
+  dietNotes:"Vegetarian options are available — mushroom and cheese dishes, red rice, lentil soups. However the cuisine is chilli-heavy and very spicy. Jain food is difficult. Most hotels in Thimphu have Indian kitchen on request for Indian guests.",
+  links:[
+    {label:"Tourism Council of Bhutan",icon:"ti-globe",url:"https://www.tourism.gov.bt"},
+    {label:"Bhutan permit system",icon:"ti-id",url:"https://www.tourism.gov.bt/plan/tourism-levy"},
+    {label:"DrukAir official site",icon:"ti-plane",url:"https://www.drukair.com.bt"},
+    {label:"Trip Factory — Bhutan packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Cambodia":{
+  name:"Cambodia",flag:"🇰🇭",tagline:"Ancient temples, warm smiles and the world's greatest archaeological wonder",
+  quickstats:{Capital:"Phnom Penh",Currency:"USD / KHR",Language:"Khmer",TimeZone:"ICT (UTC+7)",BestTime:"Nov–Apr"},
+  ksp:[
+    {title:"Angkor Wat",desc:"One of the Seven Wonders of the World — a non-negotiable bucket list item for culture lovers"},
+    {title:"e-Visa in minutes",desc:"Simple online e-Visa for Indian passport holders — USD 36, processed in 3 days"},
+    {title:"Budget-friendly",desc:"One of South-East Asia's most affordable destinations — great for value-seekers"},
+    {title:"Short & powerful",desc:"Siem Reap + Phnom Penh can be done in 5 nights — perfect for shorter holiday windows"}
+  ],
+  sell:["Angkor Wat is on every traveller's bucket list — an incredibly easy sell to culture-loving clients","One of South-East Asia's best value destinations — 4-star hotels from ₹3,500/night","e-Visa available online in 3 days — minimum admin for clients","Easy to combine with Vietnam or Thailand for a two-country Southeast Asia itinerary","Trip Factory recommended duration: 4–6 nights"],
+  travellerTypes:["Culture","History","Budget","Family","Photography","Adventure"],
+  highlightTypes:["Culture","History"],
+  flights:[
+    {from:"Delhi (DEL)",to:"Siem Reap (REP)",airlines:"IndiGo, Air Asia (via KL/Bangkok)",time:"~7–9h",type:"connecting",freq:"Daily"},
+    {from:"Mumbai (BOM)",to:"Siem Reap (REP)",airlines:"IndiGo, Thai Airways",time:"~7–9h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Siem Reap (REP)",airlines:"Air Asia (via KL)",time:"~7–8h",type:"connecting",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Phnom Penh (PNH)",airlines:"Air Asia, Malaysia Airlines",time:"~7h",type:"connecting",freq:"4x weekly"}
+  ],
+  visa:{type:"e-Visa",cost:"USD 36 (≈ ₹2,990)",validity:"30 days single entry",processing:"3 business days online",documents:"Passport scan, photo, credit card for payment",portal:"https://www.evisa.gov.kh",badge:"evisa"},
+  overview:["Cambodia is home to one of humanity's greatest architectural achievements — the temple complex of Angkor, built between the 9th and 15th centuries as the capital of the Khmer Empire. At its peak, Angkor was the largest pre-industrial city in the world, and today Angkor Wat remains the world's largest religious monument, its five towers an instantly recognisable silhouette against the Cambodian sky.","Beyond Angkor, Cambodia offers a genuinely moving travel experience. The country has emerged from one of the 20th century's most traumatic histories with remarkable resilience, and visitors to Phnom Penh inevitably find themselves reflecting deeply on humanity's capacity for both destruction and regeneration. The National Museum, the Royal Palace and the Killing Fields Memorial make Phnom Penh a profound cultural destination.","The Cambodian people are renowned for their warmth, and the country's food scene — particularly in Siem Reap — has blossomed into one of South-East Asia's most exciting. Cambodia is genuinely excellent value, making it ideal for young couples, culture enthusiasts and anyone wanting to cover multiple South-East Asian countries in one trip."],
+  weather:[
+    {mo:"Jan",temp:"28°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"29°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"32°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"33°",icon:"🌤️",type:"shoulder"},{mo:"May",temp:"31°",icon:"🌦️",type:"low"},{mo:"Jun",temp:"30°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"29°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"29°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"29°",icon:"🌧️",type:"low"},
+    {mo:"Oct",temp:"29°",icon:"🌦️",type:"low"},{mo:"Nov",temp:"28°",icon:"⛅",type:"peak"},{mo:"Dec",temp:"27°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Nov–Mar is the dry season and the best time to visit — comfortable temperatures and clear skies perfect for temple exploration. Avoid the rainy season (Jun–Sep) for sightseeing. Christmas and New Year are very popular with Indian families.",
+  experiences:[
+    {name:"Angkor Wat at Sunrise",desc:"The world's largest religious monument — non-negotiable",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛕"},
+    {name:"Bayon Temple",desc:"Faces of 54 towers staring serenely in all directions",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🗿"},
+    {name:"Ta Prohm (Tomb Raider)",desc:"Jungle-reclaimed temple made famous by Angelina Jolie",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌳"},
+    {name:"Tonle Sap Lake",desc:"South-East Asia's largest lake with floating villages",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌊"},
+    {name:"Royal Palace Phnom Penh",desc:"Silver pagoda and throne hall — a dazzling complex",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏛️"},
+    {name:"Killing Fields Memorial",desc:"Sombre but essential — the Tuol Sleng Genocide Museum",cat:"History",color:"#f1efe8",textColor:"#5f5e5a",bg:"🕊️"},
+    {name:"Siem Reap Night Market",desc:"Vibrant night market with local crafts, street food and silk",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🏮"},
+    {name:"Kulen Mountain",desc:"Sacred mountain — waterfall, reclining Buddha, jungle temples",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"⛰️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"USD is de-facto currency. KHR for small change. ATMs everywhere. $1 = ~4,000 KHR."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Hepatitis A recommended. Malaria risk low in tourist areas. Dengue precautions advised. Water — drink bottled only."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220V, Type A, C & G sockets. Universal adaptors available at hotels."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Smart or Cellcard SIM from airport ~₹600. Excellent 4G in Siem Reap and Phnom Penh."},
+    {label:"Tipping guide",icon:"ti-coin",value:"USD 1–2 for tuk-tuk drivers, USD 2–5 for guides per day. Not mandatory but greatly appreciated."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: dress modestly at temples (cover knees and shoulders). Don't: touch monks. Bargaining is expected at markets."}
+  ],
+  food:[
+    {emoji:"🍲",name:"Fish Amok",desc:"Coconut-steamed fish curry — Cambodia's signature dish"},
+    {emoji:"🍜",name:"Kuy Teav",desc:"Rice noodle soup — popular breakfast"},
+    {emoji:"🥗",name:"Green Papaya Salad",desc:"Tangy, refreshing — vegetarian-friendly"},
+    {emoji:"🍚",name:"Lok Lak",desc:"Stir-fried beef with lime and pepper dip"},
+    {emoji:"🥤",name:"Sugarcane Juice",desc:"Fresh street juice — everywhere and delicious"},
+    {emoji:"🍌",name:"Nom Banh Chok",desc:"Khmer noodles with fish-based green curry"}
+  ],
+  dietNotes:"Vegetarian options available but fish sauce is commonly used in Cambodian cooking — always specify to chefs. Vegan dining is growing in Siem Reap. Halal restaurants available in Phnom Penh. Indian food is harder to find outside major hotels.",
+  links:[
+    {label:"Cambodia Tourism official site",icon:"ti-globe",url:"https://www.tourismcambodia.com"},
+    {label:"Cambodia e-Visa portal",icon:"ti-id",url:"https://www.evisa.gov.kh"},
+    {label:"Angkor Pass info",icon:"ti-ticket",url:"https://www.angkorticket.com"},
+    {label:"Trip Factory — Cambodia packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Dubai":{
+  name:"Dubai",flag:"🇦🇪",tagline:"Where the desert meets the future — luxury, spectacle and endless sunshine",
+  quickstats:{Capital:"Dubai (emirate)",Currency:"AED (Dirham)",Language:"Arabic / English",TimeZone:"GST (UTC+4)",BestTime:"Nov–Apr"},
+  ksp:[
+    {title:"Visa on Arrival",desc:"Indian passport holders get 30-day Visa on Arrival — zero pre-travel hassle"},
+    {title:"Top Indian destination",desc:"India is Dubai's #1 source market — massive infrastructure geared for Indian travellers"},
+    {title:"World-class attractions",desc:"Burj Khalifa, Palm Jumeirah, Desert Safaris, global shopping — non-stop experiences"},
+    {title:"Direct flights everywhere",desc:"Every major Indian city has direct flights — shortest international getaway from India"}
+  ],
+  sell:["India's single most popular international destination — every client has it on their list","Visa on Arrival for Indian passport holders — zero friction, zero embassy visits","World's tallest building, biggest mall, best theme parks — superlatives clients love","Exceptional shopping — Dubai Duty Free, Gold Souk, Mall of the Emirates","Trip Factory recommended duration: 4–6 nights"],
+  travellerTypes:["Family","Honeymoon","Shopping","Luxury","Adventure","Group"],
+  highlightTypes:["Family","Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Dubai (DXB)",airlines:"Air India, IndiGo, Emirates, flydubai",time:"~3h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Dubai (DXB)",airlines:"IndiGo, Emirates, Air India, flydubai",time:"~3.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Bengaluru (BLR)",to:"Dubai (DXB)",airlines:"IndiGo, Emirates, Air Arabia",time:"~3.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Hyderabad (HYD)",to:"Dubai (DXB)",airlines:"IndiGo, Air Arabia, Emirates",time:"~3h",type:"direct",freq:"Multiple daily"},
+    {from:"Chennai (MAA)",to:"Dubai (DXB)",airlines:"IndiGo, Emirates, Air Arabia",time:"~3.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Kolkata (CCU)",to:"Dubai (DXB)",airlines:"IndiGo, Air Arabia",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Ahmedabad (AMD)",to:"Dubai (DXB)",airlines:"IndiGo, Air Arabia, flydubai",time:"~3h",type:"direct",freq:"Multiple daily"}
+  ],
+  visa:{type:"Visa on Arrival",cost:"Free for Indian passport holders",validity:"30 days",processing:"On arrival at DXB airport",documents:"Valid Indian passport, return ticket, hotel booking, sufficient funds",portal:"https://www.visitdubai.com/en/plan-your-trip/visa-information",badge:"voa"},
+  overview:["Dubai is the world's most visited city and India's most popular international destination by a wide margin. Built in a single generation from a fishing village into a global metropolis, it has redefined what a modern city can be — the Burj Khalifa, Palm Jumeirah, the Dubai Mall and the Museum of the Future are all genuine engineering marvels that inspire awe in even the most seasoned traveller.","The emirate offers something for every type of client: luxury shopping at scale, Michelin-starred dining from 200 nationalities, desert safari adventures, world-class theme parks (IMG Worlds, Legoland, Motiongate), and a beach scene that rivals the Mediterranean. For families, it is arguably the world's most complete holiday destination.","The strong presence of the Indian community in Dubai — over 3 million Indians live there — means the destination is deeply comfortable for Indian travellers. Vegetarian food, Hindi signage, Indian banking facilities and a general cultural familiarity make it the perfect 'just abroad' destination for first-time international travellers."],
+  weather:[
+    {mo:"Jan",temp:"20°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"21°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"25°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"30°",icon:"🌤️",type:"shoulder"},{mo:"May",temp:"36°",icon:"🌡️",type:"low"},{mo:"Jun",temp:"40°",icon:"🌡️",type:"low"},
+    {mo:"Jul",temp:"42°",icon:"🌡️",type:"low"},{mo:"Aug",temp:"42°",icon:"🌡️",type:"low"},{mo:"Sep",temp:"38°",icon:"🌡️",type:"low"},
+    {mo:"Oct",temp:"33°",icon:"🌤️",type:"shoulder"},{mo:"Nov",temp:"27°",icon:"☀️",type:"peak"},{mo:"Dec",temp:"22°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Nov–Apr is ideal — warm, sunny, no humidity. Perfect for Indian school holidays (Dec–Jan) and Diwali long weekends. Summer (Jun–Aug) is extreme at 40°C+ but deep hotel discounts and indoor attractions still make it viable. Dubai Shopping Festival runs Jan–Feb.",
+  experiences:[
+    {name:"Burj Khalifa At the Top",desc:"World's tallest building — 124th floor observation deck",cat:"Attraction",color:"#faeeda",textColor:"#854f0b",bg:"🏙️"},
+    {name:"Desert Safari",desc:"Dune bashing, camel ride, belly dancing, BBQ dinner",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🐪"},
+    {name:"Dubai Mall & Fountain",desc:"World's largest mall + spectacular choreographed fountain show",cat:"Shopping",color:"#e1f5ee",textColor:"#0f6e56",bg:"🛍️"},
+    {name:"Palm Jumeirah",desc:"Man-made island — Atlantis water park and luxury hotels",cat:"Leisure",color:"#e6f1fb",textColor:"#0c447c",bg:"🌴"},
+    {name:"Gold & Spice Souks",desc:"Old Dubai's traditional markets — authentic Arabian experience",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"✨"},
+    {name:"Dubai Frame",desc:"Giant picture frame with views of old and new Dubai",cat:"Attraction",color:"#faeeda",textColor:"#854f0b",bg:"🖼️"},
+    {name:"Museum of the Future",desc:"Futuristic architecture + immersive tech exhibitions",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🔮"},
+    {name:"Dhow Cruise",desc:"Traditional wooden boat dinner cruise on the creek",cat:"Leisure",color:"#e1f5ee",textColor:"#0f6e56",bg:"⛵"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"AED Dirham. 1 AED ≈ ₹23. ATMs everywhere. Cards widely accepted. Currency exchange at airport."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. World-class healthcare. Travel insurance recommended."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220–240V, Type G (UK-style). Indian plugs need UK adaptor — widely sold."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Du or Etisalat tourist SIMs at airport ~₹1,200. Excellent 5G. VoIP calls (WhatsApp video) are restricted."},
+    {label:"Tipping guide",icon:"ti-coin",value:"10–15% at restaurants (often added to bill). AED 5–10 for hotel staff and taxi drivers."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: carry ID at all times. Don't: drink alcohol in public spaces. Dress modestly outside hotels and malls. Ramadan — no eating/drinking in public during daylight."}
+  ],
+  food:[
+    {emoji:"🥙",name:"Shawarma",desc:"UAE's most popular street food — chicken or lamb wrap"},
+    {emoji:"🫕",name:"Al Harees",desc:"Slow-cooked wheat and meat — traditional Emirati"},
+    {emoji:"🍚",name:"Machboos",desc:"Spiced rice with meat or fish — national dish"},
+    {emoji:"🥗",name:"Fattoush",desc:"Lebanese bread salad — great vegetarian option"},
+    {emoji:"🍮",name:"Luqaimat",desc:"Sweet dumplings with date syrup — popular dessert"},
+    {emoji:"☕",name:"Karak Chai",desc:"Spiced Indian-style tea — sold on every street corner"}
+  ],
+  dietNotes:"Extremely Indian-friendly — hundreds of Indian restaurants across Dubai. Pure vegetarian (including Jain) options widely available. Halal is the standard for all meat in Dubai. No issues for any dietary requirement. Kerala, Punjabi, South Indian, Gujarati cuisines all available.",
+  links:[
+    {label:"Visit Dubai official site",icon:"ti-globe",url:"https://www.visitdubai.com"},
+    {label:"UAE visa information",icon:"ti-id",url:"https://www.visitdubai.com/en/plan-your-trip/visa-information"},
+    {label:"Emirates airline",icon:"ti-plane",url:"https://www.emirates.com"},
+    {label:"Trip Factory — Dubai packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Maldives":{
+  name:"Maldives",flag:"🇲🇻",tagline:"Overwater bungalows, turquoise lagoons and the most romantic sunsets on earth",
+  quickstats:{Capital:"Malé",Currency:"MVR / USD",Language:"Dhivehi / English",TimeZone:"MVT (UTC+5)",BestTime:"Nov–Apr"},
+  ksp:[
+    {title:"Visa free on arrival",desc:"Indian passport holders enter completely free — no visa, no application, no cost"},
+    {title:"Honeymoon capital",desc:"The world's premier honeymoon destination — overwater villas, private dining, unmatched romance"},
+    {title:"Short flight from India",desc:"3h from Mumbai, 3.5h from Delhi — the ultimate luxury short-haul escape"},
+    {title:"High-margin packages",desc:"All-inclusive luxury resort packages command strong margins — ideal premium sell"}
+  ],
+  sell:["World's #1 honeymoon destination — sells itself to any couple client","Visa-free for Indian passport holders — zero barriers to booking","Only 3 hours from Mumbai — closer than most Indian hill stations feel on road","All-inclusive luxury resorts mean easy, clean package pricing for agents","Trip Factory recommended duration: 5–7 nights"],
+  travellerTypes:["Honeymoon","Luxury","Couple","Diving","Wellness"],
+  highlightTypes:["Honeymoon","Luxury"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Malé (MLE)",airlines:"IndiGo, Air India, Maldivian, Indigo",time:"~3h",type:"direct",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Malé (MLE)",airlines:"IndiGo, Air India",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Malé (MLE)",airlines:"IndiGo, Air Asia",time:"~3h",type:"direct",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Malé (MLE)",airlines:"IndiGo, SriLankan",time:"~2.5h",type:"direct",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Malé (MLE)",airlines:"IndiGo",time:"~3h",type:"direct",freq:"4–5x weekly"}
+  ],
+  visa:{type:"Visa on Arrival (free)",cost:"Free for all nationalities",validity:"30 days",processing:"Immigration on arrival — 5 mins",documents:"Passport, confirmed resort booking, return ticket, sufficient funds (USD 100+/day)",portal:"https://www.tourism.gov.mv",badge:"free"},
+  overview:["The Maldives is an archipelago of 1,190 coral islands spread across the equator in the Indian Ocean, forming the world's lowest-lying nation. It has built its entire tourism economy on one extraordinary natural asset: the most pristine marine ecosystem on earth, with house reefs teeming with manta rays, whale sharks, turtles and thousands of species of reef fish beneath water so clear it barely seems real.","The destination is synonymous with one iconic image — the overwater bungalow — and the country's 150+ luxury resorts have refined this concept to its highest expression. Each resort occupies its own private island, meaning guests enjoy an exclusive experience with turquoise lagoons visible from their bedroom floor. Private dining on sandbanks, couple's spa treatments on the ocean, and sunset dolphin cruises are standard inclusions.","India is one of the Maldives' top source markets, and the short flight time — just 3 hours from Mumbai — makes it the ideal luxury escape for anniversary trips, honeymoons, and high-end family holidays. The destination's visa-free status for Indian nationals removes every administrative barrier."],
+  weather:[
+    {mo:"Jan",temp:"29°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"29°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"30°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"30°",icon:"🌤️",type:"peak"},{mo:"May",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Jun",temp:"28°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"28°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"28°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"28°",icon:"🌧️",type:"low"},
+    {mo:"Oct",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Nov",temp:"29°",icon:"⛅",type:"peak"},{mo:"Dec",temp:"29°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Nov–Apr is the dry season — calm seas, excellent visibility for diving, perfect beach weather. Ideal for Christmas–New Year, Valentine's, and spring honeymoon packages. The wet season (Jun–Sep) sees rougher seas and some rain but rates drop significantly — still good for diving.",
+  experiences:[
+    {name:"Overwater Bungalow Stay",desc:"The iconic Maldives experience — wake up above the turquoise lagoon",cat:"Luxury",color:"#e6f1fb",textColor:"#0c447c",bg:"🌊"},
+    {name:"House Reef Snorkelling",desc:"Coral gardens and sea turtles right from the resort jetty",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐠"},
+    {name:"Whale Shark Swimming",desc:"South Ari Atoll — swim alongside the ocean's gentle giants",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🦈"},
+    {name:"Sandbank Dining",desc:"Private dinner on a deserted sandbank under the stars",cat:"Luxury",color:"#e6f1fb",textColor:"#0c447c",bg:"🕯️"},
+    {name:"Submarine Diving",desc:"Semi-sub and dive centres at most resorts — vivid coral reefs",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🤿"},
+    {name:"Sunset Dolphin Cruise",desc:"Spinner dolphins at sunset — a daily ritual at most resorts",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐬"},
+    {name:"Over-water Spa",desc:"Jet pool and treatment rooms suspended over the Indian Ocean",cat:"Wellness",color:"#e1f5ee",textColor:"#0f6e56",bg:"💆"},
+    {name:"Malé Fish Market",desc:"For those on a city stopover — vibrant early morning tuna market",cat:"Culture",color:"#f1efe8",textColor:"#5f5e5a",bg:"🐟"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"USD is standard at resorts. MVR for local guesthouses. All resorts accept cards. Resort bill settles at checkout."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. Medical facilities limited outside Malé — comprehensive travel insurance essential."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type G (UK-style). Most resorts have universal sockets in rooms — check on booking."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Resort WiFi included (quality varies). Dhiraagu SIM at Malé airport. Limited connectivity on remote islands."},
+    {label:"Tipping guide",icon:"ti-coin",value:"At resorts: USD 5–10/day for housekeeping, USD 10–15 for diving instructors. Often added to bill as service charge."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: respect the predominantly Muslim culture on local islands. Don't: bring alcohol to local islands — resorts only. Bikinis confined to resort beaches."}
+  ],
+  food:[
+    {emoji:"🐟",name:"Garudhiya",desc:"Tuna broth soup — the national dish of Maldives"},
+    {emoji:"🍚",name:"Mas Riha",desc:"Spiced tuna curry with rice — classic Maldivian"},
+    {emoji:"🥥",name:"Kulhi Mas",desc:"Spicy tuna patties — popular street snack in Malé"},
+    {emoji:"🌯",name:"Roshi",desc:"Flatbread eaten with every meal"},
+    {emoji:"🍰",name:"Bondibai",desc:"Sweet rice pudding with coconut milk"},
+    {emoji:"🥤",name:"Kurumba",desc:"Fresh young coconut water — the best in the world"}
+  ],
+  dietNotes:"Resort dining is international and caters comprehensively to Indian vegetarian and Jain requirements — always notify the resort in advance. Local Maldivian food is fish-heavy. Halal is the standard across the country. No pork or alcohol on local islands.",
+  links:[
+    {label:"Visit Maldives official site",icon:"ti-globe",url:"https://www.visitmaldives.com"},
+    {label:"Maldives Immigration info",icon:"ti-id",url:"https://www.immigration.gov.mv"},
+    {label:"Maldivian Air Taxi (seaplane)",icon:"ti-plane",url:"https://www.maldivianair.com"},
+    {label:"Trip Factory — Maldives packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Thailand":{
+  name:"Thailand",flag:"🇹🇭",tagline:"Land of smiles — temples, beaches, street food and world-class hospitality",
+  quickstats:{Capital:"Bangkok",Currency:"THB (Baht)",Language:"Thai",TimeZone:"ICT (UTC+7)",BestTime:"Nov–Apr"},
+  ksp:[
+    {title:"Visa exemption",desc:"Indian passport holders get 60-day visa-free entry — one of the most generous arrangements"},
+    {title:"Something for everyone",desc:"Bangkok, Phuket, Chiang Mai, Koh Samui — four completely different experiences in one country"},
+    {title:"Excellent value",desc:"Luxury for less — 5-star hotels from ₹5,000/night, world-class street food for ₹200"},
+    {title:"Most-visited in SE Asia",desc:"The region's most proven destination — easy, reliable, endlessly repeatable sell"}
+  ],
+  sell:["60-day visa-free entry for Indian passport holders — as of 2024, zero barriers","The most versatile destination in South-East Asia — beach, culture, city, adventure all in one country","Bangkok, Phuket and Chiang Mai are three completely different holidays — ideal for repeat clients","World's best street food and some of the finest resorts in Asia at brilliant value","Trip Factory recommended duration: 7–10 nights (multi-destination)"],
+  travellerTypes:["Family","Honeymoon","Adventure","Culture","Beach","Solo","Group"],
+  highlightTypes:["Family","Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Bangkok (BKK/DMK)",airlines:"IndiGo, Thai Airways, Air Asia",time:"~4h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Bangkok (BKK)",airlines:"IndiGo, Thai Airways, Air India",time:"~4h",type:"direct",freq:"Multiple daily"},
+    {from:"Bengaluru (BLR)",to:"Bangkok (BKK)",airlines:"IndiGo, Air Asia, Thai Airways",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Bangkok (BKK)",airlines:"IndiGo, Thai Airways",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Bangkok (BKK)",airlines:"IndiGo, Air Asia",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Phuket (HKT)",airlines:"IndiGo direct",time:"~4h",type:"direct",freq:"Daily"}
+  ],
+  visa:{type:"Visa-free (60 days)",cost:"Free",validity:"60 days, extendable 30 days",processing:"Stamp on arrival — 5 mins",documents:"Passport, return ticket, hotel booking, THB 10,000 per person in cash or equivalent",portal:"https://www.thaiembassy.com",badge:"free"},
+  overview:["Thailand is South-East Asia's most visited country and one of the world's great all-round travel destinations. It manages the rare feat of offering world-class beach resorts, a vibrant cosmopolitan capital, ancient temple cities and mountain trekking all within a single country — meaning a 10-night Thai holiday can deliver four completely different travel experiences.","Bangkok is a sensory overload in the best possible way — the Grand Palace, Wat Pho's giant reclining Buddha, the floating markets, and a dining scene that ranges from Michelin-starred tasting menus to ₹200 pad thai on a plastic stool at 2am. Chiang Mai in the north is altogether different — quieter, cooler, with elephant sanctuaries, hill tribe villages and night markets selling hand-crafted silver jewellery.","Thailand's southern islands need little introduction: Phuket's limestone karst scenery and Phi Phi's crystalline bays are among Asia's most photographed coastlines. The country's visa-free policy for Indian passport holders — upgraded to 60 days in 2024 — makes it one of the most accessible international destinations from India."],
+  weather:[
+    {mo:"Jan",temp:"27°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"29°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"32°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"34°",icon:"🌤️",type:"shoulder"},{mo:"May",temp:"32°",icon:"🌦️",type:"low"},{mo:"Jun",temp:"30°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"29°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"29°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"29°",icon:"🌧️",type:"low"},
+    {mo:"Oct",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Nov",temp:"28°",icon:"⛅",type:"peak"},{mo:"Dec",temp:"26°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Nov–Mar is ideal across the whole country. Perfect for Christmas–New Year and India's long weekend holiday calendar. Phuket/Koh Samui have different monsoon timings — Koh Samui is good Oct–Jan when Phuket is wetter. Summer travel works for Bangkok and Chiang Mai with indoor activities.",
+  experiences:[
+    {name:"Grand Palace Bangkok",desc:"The most ornate royal complex in South-East Asia",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏯"},
+    {name:"Phi Phi Islands",desc:"Crystalline waters, dramatic limestone karsts — Maya Bay",cat:"Beach",color:"#e1f5ee",textColor:"#0f6e56",bg:"🏝️"},
+    {name:"Elephant Sanctuary",desc:"Ethical elephant care in Chiang Mai — bathe and feed elephants",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐘"},
+    {name:"Floating Markets",desc:"Damnoen Saduak — vendors selling from wooden boats",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛶"},
+    {name:"Songkran Water Festival",desc:"The world's biggest water fight — mid-April, unmissable",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"💦"},
+    {name:"Doi Inthanon National Park",desc:"Thailand's highest peak — waterfalls, royal pagodas, birding",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌿"},
+    {name:"Patong Beach Nightlife",desc:"Phuket's legendary beach strip — for clients who want that scene",cat:"Leisure",color:"#faeeda",textColor:"#854f0b",bg:"🌅"},
+    {name:"Thai Cooking Class",desc:"Half-day class in Chiang Mai — take the recipes home",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🍜"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"THB Baht. 1 THB ≈ ₹2.3. ATMs widely available but charge ~THB 200 fee. SuperRich exchange booths have best rates."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Hepatitis A recommended. Dengue risk — use repellent. Medical care is excellent in Bangkok and Phuket."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220V, Type A, B & C. Most hotels have universal sockets. Indian plugs usually fit Type C."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"AIS or True SIM at airport from ~₹700. Excellent 4G. 15-day tourist SIM with data is best value."},
+    {label:"Tipping guide",icon:"ti-coin",value:"THB 20–50 at local restaurants. 10% at hotel restaurants. Massage: THB 50–100 tip. Guides: THB 100–200/day."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: remove shoes at temples, dress modestly (cover shoulders & knees). Don't: touch monks, point feet at Buddha images, disrespect the monarchy."}
+  ],
+  food:[
+    {emoji:"🍜",name:"Pad Thai",desc:"Stir-fried rice noodles — Thailand's most famous dish"},
+    {emoji:"🍛",name:"Green Curry",desc:"Coconut milk green chilli curry — excellent vegetarian version"},
+    {emoji:"🥗",name:"Som Tam",desc:"Green papaya salad — spicy, tangy, addictive"},
+    {emoji:"🍱",name:"Khao Man Gai",desc:"Poached chicken rice — Bangkok's favourite comfort food"},
+    {emoji:"🍤",name:"Tom Yum Goong",desc:"Spicy-sour prawn soup — iconic Thai flavour"},
+    {emoji:"🥭",name:"Mango Sticky Rice",desc:"Sweet sticky rice with fresh mango — unmissable dessert"}
+  ],
+  dietNotes:"Very vegetarian-friendly — most dishes can be made without meat on request. Say 'jay' (เจ) for strict vegetarian. Vegan options growing in Bangkok and Chiang Mai. Halal food widely available, especially in southern Thailand. Indian restaurants in major tourist areas.",
+  links:[
+    {label:"Amazing Thailand Tourism Authority",icon:"ti-globe",url:"https://www.tourismthailand.org"},
+    {label:"Thailand visa information",icon:"ti-id",url:"https://www.thaiembassy.com"},
+    {label:"Thai Airways",icon:"ti-plane",url:"https://www.thaiairways.com"},
+    {label:"Trip Factory — Thailand packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Japan":{
+  name:"Japan",flag:"🇯🇵",tagline:"Where ancient tradition and hyper-modernity exist in perfect harmony",
+  quickstats:{Capital:"Tokyo",Currency:"JPY (Yen)",Language:"Japanese",TimeZone:"JST (UTC+9)",BestTime:"Mar–May, Oct–Nov"},
+  ksp:[
+    {title:"Visa-free from 2024",desc:"India gained visa-free access to Japan — removes the biggest historical barrier for Indian agents"},
+    {title:"Premium sell",desc:"Japan commands high package values — clients spend generously on a once-in-a-lifetime trip"},
+    {title:"Truly unique",desc:"Cherry blossoms, bullet trains, geishas, robot restaurants — no destination is more uniquely itself"},
+    {title:"Safe & easy to navigate",desc:"Exceptionally safe, English signage in cities, JR Pass makes rail travel seamless"}
+  ],
+  sell:["Visa-free for Indian passport holders since 2024 — the game-changer that opened Japan for Indian travellers","Cherry blossom season (late Mar–Apr) is one of travel's most magical experiences — premium packages justified","The bullet train (Shinkansen) experience alone is worth the trip for many clients","Japan is one of the safest countries in the world — parents love it for family trips","Trip Factory recommended duration: 10–14 nights (Tokyo + Kyoto + Osaka minimum)"],
+  travellerTypes:["Culture","Luxury","Honeymoon","Family","Photography","Adventure","Solo"],
+  highlightTypes:["Culture","Luxury"],
+  flights:[
+    {from:"Delhi (DEL)",to:"Tokyo (NRT)",airlines:"Air India, ANA, JAL",time:"~8h",type:"direct",freq:"Daily"},
+    {from:"Mumbai (BOM)",to:"Tokyo (NRT)",airlines:"Air India, JAL (via HKG/SIN)",time:"~9–11h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Tokyo (NRT)",airlines:"Air India, Singapore Airlines",time:"~10h",type:"connecting",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Osaka (KIX)",airlines:"Air India, ANA",time:"~9h",type:"direct",freq:"4x weekly"}
+  ],
+  visa:{type:"Visa-free",cost:"Free",validity:"90 days",processing:"No advance application needed",documents:"Valid passport, return ticket, hotel bookings, sufficient funds",portal:"https://www.japan.travel/en/plan/visa/",badge:"free"},
+  overview:["Japan is unlike anywhere else on earth. It is a country where 1,300-year-old Buddhist temples sit in the shadows of neon-lit towers, where you can eat a kaiseki dinner of 12 exquisite courses and then grab perfect ramen from a vending machine at 3am, where rural mountain villages maintain medieval crafts while the cities run bullet trains to the second. The contrast is not jarring — it is the essence of Japan.","The classic Golden Route — Tokyo, Hakone (Mt Fuji views), Kyoto, Nara, Osaka — delivers more concentrated cultural richness per kilometre than almost any other journey in Asia. Kyoto alone has 17 UNESCO World Heritage Sites: golden pavilions, bamboo groves, moss gardens and geisha districts, all walkable in a well-planned week.","For Indian travellers, Japan has historically been a dream deferred by a complex visa process. The 2024 visa exemption for Indian passport holders changes this entirely, and Japanese tourism to India has responded accordingly. There has never been a better time to sell Japan to Indian clients."],
+  weather:[
+    {mo:"Jan",temp:"6°",icon:"❄️",type:"low"},{mo:"Feb",temp:"7°",icon:"❄️",type:"low"},{mo:"Mar",temp:"12°",icon:"🌸",type:"peak"},
+    {mo:"Apr",temp:"18°",icon:"🌸",type:"peak"},{mo:"May",temp:"23°",icon:"☀️",type:"peak"},{mo:"Jun",temp:"26°",icon:"🌧️",type:"shoulder"},
+    {mo:"Jul",temp:"30°",icon:"🌡️",type:"low"},{mo:"Aug",temp:"31°",icon:"🌡️",type:"low"},{mo:"Sep",temp:"26°",icon:"⛅",type:"shoulder"},
+    {mo:"Oct",temp:"20°",icon:"🍁",type:"peak"},{mo:"Nov",temp:"14°",icon:"🍁",type:"peak"},{mo:"Dec",temp:"8°",icon:"❄️",type:"low"}
+  ],
+  weatherTip:"Cherry blossom (late Mar–mid Apr) is the most sought-after time — premium prices justified, book 6+ months ahead. Autumn foliage (Oct–Nov) is equally stunning and slightly less crowded. Summer is hot and humid. Winter (Dec–Feb) is ideal for skiing in Hokkaido. Avoid Golden Week (Apr 29–May 5) — extremely crowded and expensive.",
+  experiences:[
+    {name:"Mount Fuji & Hakone",desc:"Japan's iconic peak — views from Hakone ryokan and Lake Ashi",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🗻"},
+    {name:"Fushimi Inari Shrine",desc:"Thousands of vermilion torii gates winding up the mountain",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"⛩️"},
+    {name:"Shinkansen Bullet Train",desc:"Tokyo to Kyoto in 2h 15min at 300km/h — experience in itself",cat:"Experience",color:"#faeeda",textColor:"#854f0b",bg:"🚅"},
+    {name:"Nara Deer Park",desc:"Sacred sika deer roam free among ancient temples",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🦌"},
+    {name:"Dotonbori Osaka",desc:"Neon-lit canal street — Japan's most vibrant eating district",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🏮"},
+    {name:"Arashiyama Bamboo Grove",desc:"Towering bamboo forest walkway in Kyoto — magical at dawn",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🎋"},
+    {name:"Tsukiji Outer Market",desc:"Tokyo's legendary seafood and street food market",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🍣"},
+    {name:"Ryokan Stay",desc:"Traditional inn — tatami rooms, yukata robes, kaiseki dinner",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏯"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"JPY Yen. Japan is largely cash-based — always carry yen. 7-Eleven and Japan Post ATMs accept international cards. 1 JPY ≈ ₹0.55."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No vaccinations required. Excellent healthcare. Travel insurance strongly recommended. Pharmacies require prescriptions."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"100V, Type A (US-style flat pins). Indian plugs will not work — bring a Type A adaptor."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Pocket WiFi rental or SIM at Narita/Haneda airport. IIJmio or NTT docomo for SIM. Excellent 4G/5G everywhere."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Tipping is considered rude in Japan — do NOT tip. Exceptional service is simply the standard. Return change if given too much."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: bow in greeting, queue patiently, speak quietly on trains. Don't: eat while walking, tip anyone, talk loudly on phones on trains. Tattoos may restrict onsen (hot spring) access."}
+  ],
+  food:[
+    {emoji:"🍱",name:"Bento",desc:"Precision-crafted boxed meal — available everywhere from ¥500"},
+    {emoji:"🍜",name:"Ramen",desc:"Regional broths — tonkotsu, shoyu, miso — each prefecture different"},
+    {emoji:"🍣",name:"Sushi & Sashimi",desc:"The original — counter sushi in Tokyo is a life-changing meal"},
+    {emoji:"🍛",name:"Japanese Curry",desc:"Mild, sweet curry on rice — surprisingly vegetarian-friendly"},
+    {emoji:"🥟",name:"Gyoza",desc:"Pan-fried pork dumplings — best in Osaka and Tokyo"},
+    {emoji:"🍡",name:"Wagashi",desc:"Traditional Japanese sweets with matcha — beautiful and delicious"}
+  ],
+  dietNotes:"Japan can be challenging for vegetarians — dashi (fish stock) is used in many 'vegetable' dishes. However, Buddhist shojin ryori (vegan temple cuisine) is available and increasingly restaurant apps show vegetarian options. Halal food is growing especially in Tokyo, Kyoto, Osaka. Indian restaurants in Tokyo's Shinjuku area.",
+  links:[
+    {label:"Japan National Tourism Organization",icon:"ti-globe",url:"https://www.japan.travel"},
+    {label:"Japan visa information for Indians",icon:"ti-id",url:"https://www.in.emb-japan.go.jp"},
+    {label:"JR Pass info",icon:"ti-train",url:"https://www.jrpass.com"},
+    {label:"Trip Factory — Japan packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Singapore":{
+  name:"Singapore",flag:"🇸🇬",tagline:"The city that has everything — clean, safe, spectacular and totally effortless",
+  quickstats:{Capital:"Singapore",Currency:"SGD",Language:"English / Mandarin / Tamil",TimeZone:"SGT (UTC+8)",BestTime:"Year-round"},
+  ksp:[
+    {title:"Visa-free for Indians",desc:"No visa required for Indian passport holders — just arrive and explore"},
+    {title:"Perfect family destination",desc:"Universal Studios, Gardens by the Bay, Zoo, Night Safari — world-class family attractions"},
+    {title:"Gateway hub",desc:"Perfect add-on to any SE Asia itinerary — 4h from India, connects to everywhere"},
+    {title:"Safe & easy",desc:"One of the world's safest, cleanest, most English-friendly cities — zero navigation stress"}
+  ],
+  sell:["Visa-free for Indians — the ultimate low-friction sell","Perfect stopover or add-on to Bali, Thailand or Australia — strengthens any SE Asia package","Universal Studios Singapore is world-class — a guaranteed family hit","Gardens by the Bay and Marina Bay Sands are among the most photographed sights in Asia","Trip Factory recommended duration: 4–5 nights (standalone) or 2–3 nights (add-on)"],
+  travellerTypes:["Family","Honeymoon","Shopping","Solo","Stopover","Culture"],
+  highlightTypes:["Family","Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Singapore (SIN)",airlines:"IndiGo, Singapore Airlines, Air India",time:"~5h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Singapore (SIN)",airlines:"IndiGo, Singapore Airlines, Vistara",time:"~5.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Bengaluru (BLR)",to:"Singapore (SIN)",airlines:"IndiGo, Singapore Airlines, Air Asia",time:"~4.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Chennai (MAA)",to:"Singapore (SIN)",airlines:"IndiGo, Air India, Singapore Airlines",time:"~4h",type:"direct",freq:"Multiple daily"},
+    {from:"Hyderabad (HYD)",to:"Singapore (SIN)",airlines:"IndiGo, Singapore Airlines",time:"~5h",type:"direct",freq:"Daily"},
+    {from:"Kolkata (CCU)",to:"Singapore (SIN)",airlines:"IndiGo, Singapore Airlines",time:"~4h",type:"direct",freq:"Daily"}
+  ],
+  visa:{type:"Visa-free",cost:"Free",validity:"30 days",processing:"Immigration on arrival — 5 mins",documents:"Valid passport, return ticket, hotel booking, sufficient funds",portal:"https://www.ica.gov.sg",badge:"free"},
+  overview:["Singapore is one of the world's great city-states — 750 square kilometres of extraordinary urban engineering that manages to be simultaneously futuristic and culturally layered, immaculately clean and buzzing with street food energy. In a city where you can walk from a 500-year-old Hindu temple to the world's first rooftop infinity pool in 20 minutes, the sheer density of experiences per square kilometre is unmatched.","The city's ethnic tapestry — Chinese, Malay, Indian and Eurasian communities living and eating side by side — creates a food culture of remarkable depth. The hawker centre system, now UNESCO-listed, means you can eat brilliantly for under ₹300 or spend ₹30,000 at a Michelin-starred restaurant. Both are excellent choices in Singapore.","For Indian travellers, Singapore holds a particular warmth — the Little India neighbourhood in Tekka, the presence of Tamil on all public signage, the thriving Hindu temples on every other street. It is the perfect destination for clients who want an overseas experience that is genuinely comfortable and completely safe, yet thrillingly urban."],
+  weather:[
+    {mo:"Jan",temp:"27°",icon:"🌦️",type:"shoulder"},{mo:"Feb",temp:"28°",icon:"🌤️",type:"peak"},{mo:"Mar",temp:"28°",icon:"🌤️",type:"peak"},
+    {mo:"Apr",temp:"29°",icon:"🌤️",type:"peak"},{mo:"May",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Jun",temp:"29°",icon:"⛅",type:"peak"},
+    {mo:"Jul",temp:"28°",icon:"🌤️",type:"peak"},{mo:"Aug",temp:"28°",icon:"🌤️",type:"peak"},{mo:"Sep",temp:"28°",icon:"🌦️",type:"shoulder"},
+    {mo:"Oct",temp:"28°",icon:"🌧️",type:"low"},{mo:"Nov",temp:"27°",icon:"🌧️",type:"low"},{mo:"Dec",temp:"27°",icon:"🌧️",type:"low"}
+  ],
+  weatherTip:"Singapore is good year-round — hot and humid throughout. Feb–Apr and Jun–Aug are the driest months. Dec–Jan gets the most rain but showers are usually brief. Great for Indian Christmas–New Year trips and summer school holidays. F1 Night Race happens in September.",
+  experiences:[
+    {name:"Gardens by the Bay",desc:"Supertrees, Cloud Forest and Flower Dome — stunning after dark",cat:"Attraction",color:"#eaf3de",textColor:"#3b6d11",bg:"🌿"},
+    {name:"Marina Bay Sands Skypark",desc:"Iconic infinity pool and observation deck over the city skyline",cat:"Luxury",color:"#e6f1fb",textColor:"#0c447c",bg:"🏙️"},
+    {name:"Universal Studios Singapore",desc:"World-class theme park on Sentosa island — family must-do",cat:"Family",color:"#faeeda",textColor:"#854f0b",bg:"🎢"},
+    {name:"Singapore Zoo & Night Safari",desc:"World's best wildlife park — the night safari is truly magical",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🦁"},
+    {name:"Hawker Centre Food Tour",desc:"Maxwell, Lau Pa Sat — eat like a local for ₹300 a meal",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🍜"},
+    {name:"Chinatown & Little India",desc:"Colourful heritage districts with temples, markets and street art",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏮"},
+    {name:"Sentosa Island",desc:"Beach, Adventure Cove waterpark, casino, beach clubs",cat:"Leisure",color:"#e1f5ee",textColor:"#0f6e56",bg:"🏖️"},
+    {name:"Orchard Road Shopping",desc:"Singapore's legendary 2km mall strip — world brands and local boutiques",cat:"Shopping",color:"#e1f5ee",textColor:"#0f6e56",bg:"🛍️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"SGD. 1 SGD ≈ ₹62. Cards accepted everywhere. ATMs on every corner. Changi airport has great exchange rates."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No vaccinations required. World-class healthcare. Standard travel insurance is fine."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type G (UK-style 3-pin). Indian plugs need a UK adaptor — available everywhere."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Singtel or Starhub SIM at Changi airport ~SGD 15 (₹930). Excellent 5G. Free WiFi at most hotels and malls."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Tipping not expected or customary. Most restaurants add 10% service charge + 9% GST to bills already."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Don't: chew gum (technically banned), jaywalk (fines apply), eat on MRT trains. Do: queue patiently. Tap water is safe to drink."}
+  ],
+  food:[
+    {emoji:"🦀",name:"Chilli Crab",desc:"Singapore's most iconic dish — messy, magnificent"},
+    {emoji:"🍜",name:"Laksa",desc:"Spicy coconut noodle soup — vegetarian version available"},
+    {emoji:"🍗",name:"Hainanese Chicken Rice",desc:"Singapore's unofficial national dish — subtle and perfect"},
+    {emoji:"🥐",name:"Roti Prata",desc:"Indian-influenced flaky flatbread — everywhere, any time"},
+    {emoji:"🍱",name:"Nasi Lemak",desc:"Coconut rice with sambal, egg, anchovies — perfect breakfast"},
+    {emoji:"🧃",name:"Kopi",desc:"Traditional Singaporean coffee with condensed milk — addictive"}
+  ],
+  dietNotes:"Exceptionally Indian-friendly — Little India has dozens of South Indian vegetarian restaurants, banana-leaf meals, and Jain food. Halal is widely available — look for the green crescent seal. Most hawker centres have at least one vegetarian Indian stall. World-class variety for all dietary needs.",
+  links:[
+    {label:"Singapore Tourism Board",icon:"ti-globe",url:"https://www.visitsingapore.com"},
+    {label:"Singapore ICA (immigration)",icon:"ti-id",url:"https://www.ica.gov.sg"},
+    {label:"Singapore Airlines",icon:"ti-plane",url:"https://www.singaporeair.com"},
+    {label:"Trip Factory — Singapore packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Vietnam":{
+  name:"Vietnam",flag:"🇻🇳",tagline:"Ancient lantern towns, dragon-backed mountains and the world's most dramatic bay",
+  quickstats:{Capital:"Hanoi",Currency:"VND (Dong)",Language:"Vietnamese",TimeZone:"ICT (UTC+7)",BestTime:"Nov–Apr"},
+  ksp:[
+    {title:"e-Visa in 3 days",desc:"Simple online e-Visa for Indian passport holders — USD 25, processed in 72 hours"},
+    {title:"Extraordinary landscapes",desc:"Ha Long Bay, Sapa rice terraces, Mekong Delta — world-class natural scenery"},
+    {title:"Longest country itinerary",desc:"Hanoi to Ho Chi Minh spans 1,650km — perfect for multi-week explorers"},
+    {title:"Outstanding value",desc:"Street food from ₹80, beautiful hotels from ₹2,500/night — remarkable affordability"}
+  ],
+  sell:["Ha Long Bay is one of the world's top 10 natural wonders — sells itself with a single image","Exceptional value — one of South-East Asia's most affordable quality destinations","e-Visa in 72 hours online — minimal client admin","Vietnam is long and varied — perfect for clients who want to 'do' a whole country end-to-end","Trip Factory recommended duration: 10–14 nights (Hanoi + Ha Long + Hoi An + Ho Chi Minh)"],
+  travellerTypes:["Culture","Adventure","Photography","Honeymoon","History","Foodie"],
+  highlightTypes:["Photography","Honeymoon"],
+  flights:[
+    {from:"Delhi (DEL)",to:"Hanoi (HAN)",airlines:"IndiGo, Vietnam Airlines, Air Asia",time:"~5–6h",type:"connecting",freq:"Daily"},
+    {from:"Mumbai (BOM)",to:"Ho Chi Minh (SGN)",airlines:"IndiGo, Vietnam Airlines",time:"~6h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Ho Chi Minh (SGN)",airlines:"IndiGo, Vietnam Airlines (via SIN/KL)",time:"~6–7h",type:"connecting",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Hanoi (HAN)",airlines:"Air Asia, Malaysia Airlines",time:"~6h",type:"connecting",freq:"4x weekly"}
+  ],
+  visa:{type:"e-Visa",cost:"USD 25 (≈ ₹2,075)",validity:"90 days, single entry",processing:"3 business days online",documents:"Passport scan, photo, travel itinerary",portal:"https://evisa.xuatnhapcanh.gov.vn",badge:"evisa"},
+  overview:["Vietnam stretches 1,650km from north to south — a slender S-shaped country that packs in extraordinary geographical and cultural diversity. In the north, Hanoi's tree-lined French colonial streets and ancient Temple of Literature contrast with the mythical karst towers of Ha Long Bay. In the centre, ancient Hoi An's perfectly preserved lantern-lit trading town and the imperial city of Hue offer some of Asia's finest cultural experiences. In the south, Ho Chi Minh City (Saigon) buzzes with entrepreneurial energy.","The country's natural landscapes are among Asia's most dramatic: the terraced rice fields of Sapa glow golden at harvest time, the Mekong Delta is a maze of waterways and floating markets, and the Phong Nha cave system in central Vietnam contains the world's largest known cave, Son Doong. Vietnam's 3,000km coastline offers beaches from the rugged to the refined.","Vietnamese cuisine is widely regarded as one of the world's most sophisticated street food cultures — fresh herbs, balanced flavours, and extraordinary regional variation. Every city has its signature dish, and eating your way down the country is one of travel's great pleasures."],
+  weather:[
+    {mo:"Jan",temp:"17°",icon:"⛅",type:"peak"},{mo:"Feb",temp:"19°",icon:"🌤️",type:"peak"},{mo:"Mar",temp:"22°",icon:"🌤️",type:"peak"},
+    {mo:"Apr",temp:"26°",icon:"☀️",type:"peak"},{mo:"May",temp:"29°",icon:"🌦️",type:"shoulder"},{mo:"Jun",temp:"30°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"30°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"29°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"28°",icon:"🌦️",type:"shoulder"},
+    {mo:"Oct",temp:"25°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"22°",icon:"🌤️",type:"peak"},{mo:"Dec",temp:"18°",icon:"⛅",type:"peak"}
+  ],
+  weatherTip:"Vietnam's north and south have different weather patterns — Hanoi is best Nov–Apr (dry, cooler), while Saigon is good Nov–Apr (dry season). Ha Long Bay is best Mar–Jun. Hoi An can flood Oct–Nov. For a full-country trip, Feb–Apr is the safest bet.",
+  experiences:[
+    {name:"Ha Long Bay Cruise",desc:"2-night overnight cruise among 2,000 limestone islands",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"⛵"},
+    {name:"Hoi An Ancient Town",desc:"UNESCO lantern-lit trading town — bicycle around at dusk",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏮"},
+    {name:"Sapa Rice Terrace Trek",desc:"Golden harvest terraces and hill tribe village homestays",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🌾"},
+    {name:"Mekong Delta Boat Tour",desc:"Floating markets, coconut candy factories, river life",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🛶"},
+    {name:"Phong Nha Caves",desc:"World's largest cave system — Son Doong expedition available",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🕳️"},
+    {name:"Hue Imperial Citadel",desc:"Ancient Nguyen dynasty royal palace complex",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏯"},
+    {name:"Hanoi Old Quarter",desc:"36 ancient craft guild streets — still operating today",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏘️"},
+    {name:"Vietnamese Cooking Class",desc:"Pho, banh mi, fresh rolls — take the skills home",cat:"Food",color:"#fcebeb",textColor:"#a32d2d",bg:"🍜"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"VND Dong. USD accepted at tourist spots. Always use VND for best rates. ATMs widely available. 1 USD ≈ 25,000 VND."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Hepatitis A recommended. Typhoid for rural areas. Malaria risk low in main cities. Drink bottled water only."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"220V, Type A, C & F. Most hotels have universal sockets. Indian round-pin plugs fit Type C."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Viettel or Mobifone SIM at airport from ~₹500. Excellent 4G nationwide. One of Asia's best value SIM cards."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Not mandatory but appreciated. USD 1–2 for guides, USD 1 for hotel staff per day. Restaurant: 5–10% if service not included."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: dress modestly at temples, bargain at markets. Don't: photograph military installations. Traffic is intense — cross roads slowly and steadily."}
+  ],
+  food:[
+    {emoji:"🍜",name:"Pho",desc:"Legendary beef or chicken noodle soup — Vietnam's gift to the world"},
+    {emoji:"🥖",name:"Banh Mi",desc:"French-Vietnamese baguette sandwich — cheap, perfect"},
+    {emoji:"🫔",name:"Fresh Spring Rolls",desc:"Rice paper rolls with herbs — excellent vegetarian version"},
+    {emoji:"🦐",name:"Bun Bo Hue",desc:"Spicy lemongrass beef noodle from Hue"},
+    {emoji:"☕",name:"Vietnamese Coffee",desc:"Phin-drip robusta coffee with condensed milk — try ca phe trung (egg coffee)"},
+    {emoji:"🥗",name:"Goi Cuon",desc:"Fresh herb salad rolls — healthy, abundant, vegetarian-friendly"}
+  ],
+  dietNotes:"Challenging but manageable for vegetarians — fish sauce (nuoc mam) is used in most sauces. Say 'an chay' for vegetarian. Buddhist vegetarian restaurants (com chay) found in every city. Halal available in Ho Chi Minh City. Indian restaurants limited to major cities.",
+  links:[
+    {label:"Vietnam National Administration of Tourism",icon:"ti-globe",url:"https://vietnam.travel"},
+    {label:"Vietnam e-Visa portal",icon:"ti-id",url:"https://evisa.xuatnhapcanh.gov.vn"},
+    {label:"Vietnam Airlines",icon:"ti-plane",url:"https://www.vietnamairlines.com"},
+    {label:"Trip Factory — Vietnam packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Sri Lanka":{
+  name:"Sri Lanka",flag:"🇱🇰",tagline:"The Pearl of the Indian Ocean — temples, tea and tropical paradise",
+  quickstats:{Capital:"Colombo / Sri Jayawardenepura",Currency:"LKR (Rupee)",Language:"Sinhala / Tamil / English",TimeZone:"SLST (UTC+5:30)",BestTime:"Dec–Apr (west), May–Sep (east)"},
+  ksp:[
+    {title:"e-Visa in hours",desc:"Sri Lanka ETA takes under an hour online — USD 20, available instantly"},
+    {title:"India-friendly",desc:"Same time zone as India, INR partially accepted, Tamil widely spoken — extremely comfortable"},
+    {title:"Compact & diverse",desc:"Beaches, mountains, wildlife, ancient ruins and tea plantations — all within 4 hours drive"},
+    {title:"Incredible value",desc:"Post-recovery destination with excellent value — hotels, food and safaris at remarkable prices"}
+  ],
+  sell:["Same time zone as India — no jet lag, perfect for 5–7 night packages","e-Visa online in hours — clients sorted before they even call back","UNESCO ancient cities, whale watching, tea train, safari — extraordinary variety in a small island","Very similar culture to India — Tamil-speaking south makes it ultra-comfortable for South Indian clients","Trip Factory recommended duration: 7–10 nights"],
+  travellerTypes:["Family","Culture","Nature","Honeymoon","Wildlife","Budget"],
+  highlightTypes:["Family","Nature"],
+  flights:[
+    {from:"Chennai (MAA)",to:"Colombo (CMB)",airlines:"IndiGo, SriLankan Airlines",time:"~1.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Mumbai (BOM)",to:"Colombo (CMB)",airlines:"IndiGo, Air India, SriLankan",time:"~2.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Colombo (CMB)",airlines:"IndiGo, SriLankan Airlines",time:"~4h",type:"direct",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Colombo (CMB)",airlines:"IndiGo, SriLankan",time:"~2h",type:"direct",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Colombo (CMB)",airlines:"IndiGo, SriLankan",time:"~2.5h",type:"direct",freq:"Daily"}
+  ],
+  visa:{type:"e-Visa (ETA)",cost:"USD 20 (≈ ₹1,660)",validity:"30 days",processing:"Instant to a few hours online",documents:"Passport, return ticket, hotel booking, credit card for payment",portal:"https://www.eta.gov.lk",badge:"evisa"},
+  overview:["Sri Lanka is a teardrop-shaped island off the southern tip of India that packs an astonishing amount of beauty into its compact 65,610 square kilometres. Eight UNESCO World Heritage Sites — from the rock fortress of Sigiriya to the ancient city of Anuradhapura — make it one of Asia's richest cultural destinations. The southern coastline delivers pristine tropical beaches from Mirissa to Tangalle; the central highlands offer cool mountain air, waterfalls and the world's most scenic tea plantation railway.","The country's wildlife is exceptional for its size: Yala National Park has one of the world's highest densities of leopards, Wilpattu is wilder and less visited, and the waters off Mirissa offer blue whale watching from December to April — the largest animals on earth, just 90 minutes from Galle.","For Indian travellers, Sri Lanka carries unique resonance as the land of the Ramayana — Ravana's kingdom, Sita's captivity and Hanuman's leap are all mapped onto this landscape, making it a pilgrimage-linked destination for many Hindu families. The cultural familiarity, proximity and ease of the visa make it ideal for all client segments."],
+  weather:[
+    {mo:"Jan",temp:"29°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"30°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"31°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"31°",icon:"⛅",type:"shoulder"},{mo:"May",temp:"30°",icon:"🌧️",type:"low"},{mo:"Jun",temp:"28°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"27°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"27°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"28°",icon:"🌦️",type:"shoulder"},
+    {mo:"Oct",temp:"29°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"28°",icon:"🌦️",type:"shoulder"},{mo:"Dec",temp:"28°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Sri Lanka's two coasts have opposite monsoon seasons. West coast and Cultural Triangle best Dec–Apr. East coast beaches (Trincomalee, Arugam Bay) best May–Sep. For a mixed itinerary, Dec–Mar is safest. Blue whale watching at Mirissa peaks Dec–Apr. Vesak Poya in May is a beautiful cultural festival.",
+  experiences:[
+    {name:"Sigiriya Rock Fortress",desc:"Ancient 5th-century palace atop a sheer 200m rock — UNESCO",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏰"},
+    {name:"Tea Train — Ella to Kandy",desc:"Asia's most scenic train journey through emerald tea plantations",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🚂"},
+    {name:"Yala National Park",desc:"Highest leopard density in the world — also elephants and sloth bears",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐆"},
+    {name:"Mirissa Whale Watching",desc:"Blue whales and sperm whales off the south coast (Dec–Apr)",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐋"},
+    {name:"Galle Fort",desc:"16th-century Dutch colonial fort — cafes, boutiques and ocean views",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"⚓"},
+    {name:"Temple of the Tooth",desc:"Kandy's sacred Buddhist temple housing a relic of the Buddha",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛕"},
+    {name:"Ella Nine Arch Bridge",desc:"Colonial-era viaduct through jungle — the most photographed in Asia",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌉"},
+    {name:"Polonnaruwa Ancient City",desc:"12th-century ruined royal city — remarkably well-preserved",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏛️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"LKR Rupee. 1 LKR ≈ ₹0.28. ATMs widely available. USD exchangeable at banks. Indian INR not officially accepted."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Hepatitis A recommended. No malaria in Colombo or tourist areas. Dengue precautions advised."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type D & G. Indian Type D plugs generally work. Carry a Type G adaptor for older outlets."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Dialog or Mobitel SIM at airport ~₹400. Excellent 4G in cities, patchy in highlands. WiFi available at most hotels."},
+    {label:"Tipping guide",icon:"ti-coin",value:"10% at restaurants if no service charge. Guides: USD 5–10/day. Drivers: USD 3–5/day. Widely appreciated."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: dress modestly at temples (white is ideal). Don't: turn back to Buddha statues for photos. Remove shoes and cover knees and shoulders at religious sites."}
+  ],
+  food:[
+    {emoji:"🍛",name:"Rice & Curry",desc:"Sri Lankan meal — 8-10 small curries served on a plate"},
+    {emoji:"🥞",name:"Hoppers",desc:"Bowl-shaped rice flour crepe — with egg or coconut milk"},
+    {emoji:"🥥",name:"Kottu Roti",desc:"Chopped roti stir-fried with vegetables — loud, delicious"},
+    {emoji:"🦞",name:"Jaffna Crab Curry",desc:"Famous northern Tamil crab curry — rich and fragrant"},
+    {emoji:"🐠",name:"Ambul Thiyal",desc:"Sour fish curry — a southern speciality"},
+    {emoji:"🌶️",name:"Pol Sambol",desc:"Coconut sambal with red chilli — eaten with everything"}
+  ],
+  dietNotes:"Excellent for vegetarians — rice and curry meals always include many vegetable dishes. South Indian Tamil food (dosas, idlis, sambar) widely available in the north and Colombo. Halal food prevalent — over 10% of population is Muslim. Jain options limited but available in upscale Colombo hotels.",
+  links:[
+    {label:"Sri Lanka Tourism official site",icon:"ti-globe",url:"https://www.srilanka.travel"},
+    {label:"Sri Lanka ETA e-Visa",icon:"ti-id",url:"https://www.eta.gov.lk"},
+    {label:"SriLankan Airlines",icon:"ti-plane",url:"https://www.srilankan.com"},
+    {label:"Trip Factory — Sri Lanka packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Australia":{
+  name:"Australia",flag:"🇦🇺",tagline:"The Great Southern Land — vast, wild and spectacularly alive",
+  quickstats:{Capital:"Canberra",Currency:"AUD",Language:"English",TimeZone:"AEST (UTC+10) / AWST (UTC+8)",BestTime:"Sep–Nov, Mar–May"},
+  ksp:[
+    {title:"Premium long-haul",desc:"Australia commands high package values — aspirational destination for upper-market Indian clients"},
+    {title:"Sydney Opera House",desc:"Alongside the Great Barrier Reef, two of the world's most iconic experiences"},
+    {title:"Indian community",desc:"India is Australia's fastest-growing source market — huge diaspora, Indian food everywhere"},
+    {title:"Education hub",desc:"Popular student & family visit destination — strong overlap with VFR (visiting friends & relatives)"}
+  ],
+  sell:["The Great Barrier Reef and Sydney Opera House are two of the world's most non-negotiable bucket-list experiences","Strong Indian diaspora — VFR traffic is substantial, and clients visiting family extend into holidays","Australia commands premium package pricing — high average spend per client","A multi-city Australia itinerary (Sydney + Melbourne + Cairns) is a compelling 14-night product","Trip Factory recommended duration: 12–16 nights"],
+  travellerTypes:["Luxury","Family","Honeymoon","Adventure","Education","VFR"],
+  highlightTypes:["Luxury","Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Sydney (SYD)",airlines:"Qantas, Air India (direct), IndiGo (via SIN)",time:"~12h direct",type:"direct",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Melbourne (MEL)",airlines:"Air India, Qantas (via SIN/BKK)",time:"~13h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Sydney (SYD)",airlines:"Singapore Airlines, Air India",time:"~12–13h",type:"connecting",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Melbourne (MEL)",airlines:"Singapore Airlines, Malaysia Airlines",time:"~13h",type:"connecting",freq:"Daily"}
+  ],
+  visa:{type:"Visitor Visa (subclass 600)",cost:"AUD 145 (≈ ₹8,000)",validity:"Up to 12 months (3-month stays)",processing:"2–4 weeks online",documents:"Passport, bank statements, employment letter, travel history, photos",portal:"https://immi.homeaffairs.gov.au",badge:"sticker"},
+  overview:["Australia is a continent-country of extraordinary scale — 7.7 million square kilometres of desert outback, ancient rainforest, alpine snowfields, and over 10,000 beaches. It is a destination where you can dive the Great Barrier Reef in the morning, visit a UNESCO-listed tropical rainforest in the afternoon, and watch wallabies graze outside your lodge at dusk. No other country offers this range within a single landmass.","The three great cities — Sydney, Melbourne and Brisbane — are among the world's most liveable and each has a distinct personality. Sydney is spectacular architecture and harbour glamour; Melbourne is laneways, coffee culture and world-class restaurants; Brisbane is the relaxed, subtropical gateway to the Gold Coast and the Great Barrier Reef. Perth sits alone on the west coast, three time zones from Sydney, but offers the most pristine Indian Ocean coastline in the world.","India is now Australia's fastest-growing tourism source market, driven by a large and prosperous diaspora community, direct flights from multiple Indian cities, and the appeal of Australia's education system. The combination of VFR travel (visiting friends and relatives) with leisure extensions makes it a very productive segment for ORN agents to develop."],
+  weather:[
+    {mo:"Jan",temp:"26°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"26°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"24°",icon:"🌤️",type:"peak"},
+    {mo:"Apr",temp:"20°",icon:"⛅",type:"shoulder"},{mo:"May",temp:"16°",icon:"🌦️",type:"low"},{mo:"Jun",temp:"13°",icon:"❄️",type:"low"},
+    {mo:"Jul",temp:"12°",icon:"❄️",type:"low"},{mo:"Aug",temp:"13°",icon:"🌤️",type:"shoulder"},{mo:"Sep",temp:"16°",icon:"🌤️",type:"peak"},
+    {mo:"Oct",temp:"19°",icon:"☀️",type:"peak"},{mo:"Nov",temp:"22°",icon:"☀️",type:"peak"},{mo:"Dec",temp:"25°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Australia's seasons are reversed from India — Dec–Feb is Australian summer (Sydney, Melbourne hot). Sep–Nov is spring — ideal weather for most cities. Jun–Aug (Australian winter) is mild and pleasant for Queensland and the Northern Territory (Uluru best Jun–Aug). Indian Christmas–New Year trips work perfectly for Sydney summer.",
+  experiences:[
+    {name:"Great Barrier Reef",desc:"World's largest coral reef — snorkel or dive from Cairns",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐠"},
+    {name:"Sydney Opera House",desc:"Guided tour or attend a performance — an architectural wonder",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🎭"},
+    {name:"Uluru-Kata Tjuta",desc:"Sacred red rock monolith at sunrise — deeply spiritual experience",cat:"Nature",color:"#faeeda",textColor:"#854f0b",bg:"🏜️"},
+    {name:"Daintree Rainforest",desc:"World's oldest tropical rainforest — older than the Amazon",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌿"},
+    {name:"Sydney Harbour Bridge Climb",desc:"3.5h guided climb to the top of the iconic bridge",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🌉"},
+    {name:"Kangaroo Island",desc:"Wildlife paradise — kangaroos, sea lions and koalas in the wild",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🦘"},
+    {name:"Melbourne Laneways",desc:"Street art, boutique coffee and world-class dining in CBD laneways",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🎨"},
+    {name:"Gold Coast Theme Parks",desc:"Dreamworld, Movie World, Sea World — family mega-attractions",cat:"Family",color:"#faeeda",textColor:"#854f0b",bg:"🎢"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"AUD. 1 AUD ≈ ₹55. Cards accepted everywhere. ATMs plentiful. Inform bank before travel."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. Medicare not available to tourists — comprehensive travel insurance essential (medical costs are high)."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type I (Australian 3-pin angled). Indian plugs do not fit — buy a Type I adaptor before departing."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Telstra, Optus or Vodafone tourist SIM ~AUD 30 (₹1,650). Excellent 4G/5G in cities, limited in remote areas."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Not mandatory but appreciated. 10% at restaurants is a generous gesture. No expectation at cafes or taxis."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: apply sunscreen — UV is extreme, even on cool days. Don't: underestimate distances — Australia is vast. Always carry water on hikes. Swim only at patrolled beaches."}
+  ],
+  food:[
+    {emoji:"🍖",name:"Barramundi",desc:"Australia's most popular fish — grilled, pan-fried or in fish & chips"},
+    {emoji:"🦘",name:"Kangaroo Steak",desc:"Lean, sustainable game meat — on many restaurant menus"},
+    {emoji:"🥧",name:"Meat Pie",desc:"The quintessential Australian snack — beef mince in pastry"},
+    {emoji:"🍞",name:"Vegemite Toast",desc:"Salty yeast extract spread — acquired taste, cultural institution"},
+    {emoji:"🍰",name:"Pavlova",desc:"Meringue dessert with cream and fresh fruit — loved nationally"},
+    {emoji:"☕",name:"Flat White",desc:"Australia's gift to coffee culture — silky espresso with microfoam"}
+  ],
+  dietNotes:"Australia's food scene is multicultural and diverse — Indian vegetarian food is widely available in all major cities. Melbourne and Sydney have excellent Indian restaurant strips. Halal certification is widespread in supermarkets and restaurants. Jain options available in major cities. Vegan dining is very well-catered for.",
+  links:[
+    {label:"Tourism Australia official site",icon:"ti-globe",url:"https://www.australia.com"},
+    {label:"Australia visitor visa (600)",icon:"ti-id",url:"https://immi.homeaffairs.gov.au"},
+    {label:"Qantas airlines",icon:"ti-plane",url:"https://www.qantas.com"},
+    {label:"Trip Factory — Australia packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"New Zealand":{
+  name:"New Zealand",flag:"🇳🇿",tagline:"100% Pure — where Middle-earth meets the world's most dramatic landscapes",
+  quickstats:{Capital:"Wellington",Currency:"NZD",Language:"English / Māori",TimeZone:"NZST (UTC+12)",BestTime:"Dec–Feb, Mar–May"},
+  ksp:[
+    {title:"NZeTA in minutes",desc:"NZeTA (electronic travel authority) takes 10 minutes online — USD 17, no visa required"},
+    {title:"Lord of the Rings",desc:"The filming location for Middle-earth — a unique sell for film-loving Indian clients"},
+    {title:"Premium adventure",desc:"Queenstown is the adventure capital of the world — bungee, skydive, helicopter, glaciers"},
+    {title:"Two islands, infinite variety",desc:"North Island volcanoes and Māori culture; South Island glaciers and fiords — two trips in one"}
+  ],
+  sell:["Middle-earth filming locations make it uniquely compelling for Indian pop-culture fans","NZeTA takes 10 minutes online — effectively visa-free in terms of effort","Queenstown offers more adventure activities than anywhere else on earth — thrill-seeker's paradise","The combination of Milford Sound, Hobbiton, and Rotorua geysers creates a genuinely iconic itinerary","Trip Factory recommended duration: 12–14 nights"],
+  travellerTypes:["Adventure","Honeymoon","Luxury","Nature","Photography","Families"],
+  highlightTypes:["Adventure","Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Auckland (AKL)",airlines:"Air India, Singapore Airlines (via SIN)",time:"~15h",type:"connecting",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Auckland (AKL)",airlines:"Air India, Singapore Airlines, Cathay Pacific",time:"~15–17h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Auckland (AKL)",airlines:"Singapore Airlines, Air New Zealand (via SIN)",time:"~14h",type:"connecting",freq:"Daily"}
+  ],
+  visa:{type:"NZeTA (electronic travel authority)",cost:"NZD 23 (≈ ₹1,180) + NZD 35 IVL",validity:"2 years / multiple entry",processing:"10 minutes to 72 hours online",documents:"Passport, photo, credit card for payment, return ticket",portal:"https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/nzeta",badge:"evisa"},
+  overview:["New Zealand is a country of staggering natural beauty — two main islands at the bottom of the Pacific Ocean, formed by the collision of tectonic plates, that have created a landscape unlike anywhere on earth. Geysers burst from the ground in Rotorua, glaciers calve into fjords in Westland, volcanoes steam in Tongariro, and the beaches of the Bay of Islands glow in colours that seem digitally enhanced.","The South Island in particular is a destination that leaves travellers permanently altered. Milford Sound — a fjord of sheer walls rising 1,200m from mirror-flat black water — is one of the most overwhelming natural spectacles on earth. Queenstown sits at the edge of Lake Wakatipu under the Remarkables mountain range and has built an entire economy around adventure: bungee jumping (invented here), skydiving, white-water rafting, heli-skiing and jet boating all within 30 minutes of each other.","New Zealand's Māori culture adds a spiritual and artistic dimension unique in the Pacific. The haka, the traditional welcome ceremony, the intricate carved meeting houses and the geothermal landscape of Whakarewarewa give the country a cultural depth that complements its extraordinary natural settings perfectly."],
+  weather:[
+    {mo:"Jan",temp:"21°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"21°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"19°",icon:"🌤️",type:"peak"},
+    {mo:"Apr",temp:"16°",icon:"⛅",type:"shoulder"},{mo:"May",temp:"12°",icon:"🌦️",type:"low"},{mo:"Jun",temp:"9°",icon:"❄️",type:"low"},
+    {mo:"Jul",temp:"8°",icon:"❄️",type:"low"},{mo:"Aug",temp:"10°",icon:"🌤️",type:"shoulder"},{mo:"Sep",temp:"12°",icon:"🌤️",type:"shoulder"},
+    {mo:"Oct",temp:"15°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"17°",icon:"🌤️",type:"peak"},{mo:"Dec",temp:"19°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Dec–Feb is the NZ summer — peak season, best weather, school holidays. Perfect for Indian Christmas–New Year trips. Mar–May (autumn) has beautiful foliage and fewer crowds — excellent shoulder season. Jun–Aug is ski season in Queenstown — a growing niche for Indian adventure clients.",
+  experiences:[
+    {name:"Milford Sound",desc:"The world's most dramatic fjord — cruise through sheer walls",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"⛰️"},
+    {name:"Hobbiton Movie Set",desc:"Walk through the Shire from Lord of the Rings — Matamata",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🧙"},
+    {name:"Queenstown Bungee Jump",desc:"AJ Hackett — birthplace of bungee jumping, 134m Nevis",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🪂"},
+    {name:"Rotorua Geysers & Māori",desc:"Geothermal wonderland + Māori hangi feast and haka",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🌋"},
+    {name:"Fox & Franz Josef Glaciers",desc:"Drive to the ice face or take a helicopter onto the glacier",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🧊"},
+    {name:"Abel Tasman Kayaking",desc:"Crystal-clear water kayaking in the golden-sand national park",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🚣"},
+    {name:"Tongariro Alpine Crossing",desc:"One-day volcanic crater walk — NZ's most popular day hike",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🥾"},
+    {name:"Bay of Islands",desc:"144 islands north of Auckland — sailing, dolphin watching, history",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"⛵"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"NZD. 1 NZD ≈ ₹51. Cards accepted everywhere. ATMs widely available. NZ is essentially cashless."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. Excellent healthcare. Travel insurance essential — NZ's Accident Compensation scheme covers accidents but not illness."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type I (same as Australia — angled 3-pin). Indian plugs do not fit — buy a Type I adaptor."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Spark or One NZ SIM at Auckland airport ~NZD 29 (₹1,500). Excellent 4G in cities, limited in fiords and national parks."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Not expected or customary in NZ. Service is included in prices. A 'thank you' is the local currency."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: respect the Māori culture — ask before photographing ceremonial items. Don't: bring undeclared food items (strict biosecurity). Declare everything at customs."}
+  ],
+  food:[
+    {emoji:"🐑",name:"Lamb Rack",desc:"NZ produces the world's finest grass-fed lamb — on every menu"},
+    {emoji:"🦞",name:"Crayfish",desc:"New Zealand rock lobster — a luxury seafood treat"},
+    {emoji:"🍦",name:"Hokey Pokey Ice Cream",desc:"Vanilla ice cream with honeycomb toffee — NZ's favourite"},
+    {emoji:"🥝",name:"Pavlova",desc:"NZ claims it (alongside Australia) — meringue, cream, kiwifruit"},
+    {emoji:"🫖",name:"Hangi",desc:"Traditional Māori earth-oven feast — vegetables and meat"},
+    {emoji:"☕",name:"Flat White",desc:"New Zealand co-invented the flat white with Australia — excellent coffee culture"}
+  ],
+  dietNotes:"NZ's food scene is multicultural — Indian vegetarian food is available in Auckland and Wellington. Halal food is increasingly available, particularly in Auckland. Vegan dining is well-catered for in cities. Rural areas can be challenging for vegetarians — self-catering or booking ahead recommended.",
+  links:[
+    {label:"Tourism New Zealand",icon:"ti-globe",url:"https://www.newzealand.com"},
+    {label:"NZeTA application",icon:"ti-id",url:"https://www.immigration.govt.nz"},
+    {label:"Air New Zealand",icon:"ti-plane",url:"https://www.airnewzealand.com"},
+    {label:"Trip Factory — New Zealand packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"France":{
+  name:"France",flag:"🇫🇷",tagline:"La Belle France — art, cuisine, romance and the most visited country on earth",
+  quickstats:{Capital:"Paris",Currency:"EUR",Language:"French",TimeZone:"CET (UTC+1)",BestTime:"Apr–Jun, Sep–Oct"},
+  ksp:[
+    {title:"Schengen visa",desc:"One Schengen visa opens 26 European countries — exceptional value for multi-country Europe trips"},
+    {title:"Eiffel Tower effect",desc:"The world's most recognisable landmark sells itself — every Indian client wants Paris"},
+    {title:"Luxury fashion capital",desc:"Louis Vuitton, Chanel, Hermès — shopping tourism is a major draw for affluent Indian clients"},
+    {title:"South of France",desc:"French Riviera, Provence lavender, Monaco — a compelling premium extension beyond Paris"}
+  ],
+  sell:["Paris is the world's most visited city — an effortless sell to virtually every client","Schengen visa covers 26 countries — France plus Italy, Switzerland, Greece in one trip is a natural multi-country package","Luxury shopping and fashion tourism is a huge draw for affluent Indian clients — Galeries Lafayette tax refund is popular","French cuisine, wines and the Riviera lifestyle command high aspirational appeal","Trip Factory recommended duration: 7–10 nights (Paris + Riviera / Paris + Loire)"],
+  travellerTypes:["Honeymoon","Luxury","Culture","Shopping","Family","Photography"],
+  highlightTypes:["Honeymoon","Luxury"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Paris (CDG)",airlines:"Air India (direct), Air France, Emirates",time:"~9h direct",type:"direct",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Paris (CDG)",airlines:"Air India (direct), Air France, Lufthansa",time:"~8.5h direct",type:"direct",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Paris (CDG)",airlines:"Air India, Emirates, Etihad",time:"~10–11h",type:"connecting",freq:"Daily"},
+    {from:"Hyderabad (HYD)",to:"Paris (CDG)",airlines:"Air India, Emirates, Qatar Airways",time:"~10h",type:"connecting",freq:"Daily"}
+  ],
+  visa:{type:"Schengen Visa",cost:"EUR 90 (≈ ₹8,000)",validity:"Up to 90 days in 180 days",processing:"2–4 weeks at VFS Global",documents:"Passport, bank statements, ITR, employment letter, travel insurance, hotel bookings, photos",portal:"https://france-visas.gouv.fr",badge:"sticker"},
+  overview:["France is the world's most visited country — around 100 million tourists per year — and for good reason. No country on earth has invested more deliberately in culture, cuisine, architecture and lifestyle, and the returns are visible at every turn. Paris alone contains the Louvre (the world's most visited museum), the Eiffel Tower (the world's most photographed monument), Versailles (the world's most opulent palace) and a restaurant scene that has shaped global fine dining for three centuries.","Beyond Paris, France is revealed as a country of extraordinary regional diversity. The Mediterranean coast — the French Riviera from Nice to Monaco to Cannes — is Europe's most glamorous coastline, where the Côte d'Azur's blue-sea, golden-light palette has been inspiring artists since Matisse and Picasso. Provence's lavender fields, the limestone gorges of the Ardèche, the wine châteaux of Bordeaux and the Alps of Chamonix all add further dimensions to a country that rewards every visit differently.","For Indian travellers, France is among the most aspirational European destinations. The Schengen visa that covers France also unlocks Italy, Switzerland and Greece, making a multi-country Europe trip — Paris, Swiss Alps, Italian Lakes, Greek islands — an enormously popular and high-value product for Indian travel agents."],
+  weather:[
+    {mo:"Jan",temp:"6°",icon:"❄️",type:"low"},{mo:"Feb",temp:"7°",icon:"❄️",type:"low"},{mo:"Mar",temp:"11°",icon:"🌦️",type:"shoulder"},
+    {mo:"Apr",temp:"15°",icon:"🌸",type:"peak"},{mo:"May",temp:"19°",icon:"☀️",type:"peak"},{mo:"Jun",temp:"23°",icon:"☀️",type:"peak"},
+    {mo:"Jul",temp:"26°",icon:"☀️",type:"peak"},{mo:"Aug",temp:"26°",icon:"☀️",type:"peak"},{mo:"Sep",temp:"22°",icon:"🌤️",type:"peak"},
+    {mo:"Oct",temp:"16°",icon:"⛅",type:"shoulder"},{mo:"Nov",temp:"10°",icon:"🌦️",type:"low"},{mo:"Dec",temp:"6°",icon:"❄️",type:"low"}
+  ],
+  weatherTip:"Apr–Jun is the sweet spot — spring blooms, mild temperatures, pre-peak-season crowds. Jul–Aug is peak with crowds and heat — Riviera is at its best. Sep–Oct is excellent — warm, less crowded, harvest season in wine regions. Avoid Aug if possible — Parisians holiday in August and many local restaurants close.",
+  experiences:[
+    {name:"Eiffel Tower",desc:"Summit visit at sunset or evening when the lights sparkle",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🗼"},
+    {name:"Louvre Museum",desc:"Mona Lisa, Venus de Milo, 35,000 artworks — allow 4+ hours",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🎨"},
+    {name:"Versailles Palace & Gardens",desc:"Louis XIV's opulent palace — 2,000 acres of formal gardens",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏰"},
+    {name:"French Riviera",desc:"Nice, Monaco, Cannes — glamour, beaches and the Med",cat:"Beach",color:"#e1f5ee",textColor:"#0f6e56",bg:"🌊"},
+    {name:"Provence Lavender Fields",desc:"Purple carpets of lavender in bloom (Jun–Jul) — magical",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"💜"},
+    {name:"Seine River Cruise",desc:"Bateaux Mouches cruise past Notre-Dame and the Pont Alexandre",cat:"Leisure",color:"#e1f5ee",textColor:"#0f6e56",bg:"⛵"},
+    {name:"Mont Saint-Michel",desc:"Medieval abbey-island — tidal phenomenon off Normandy coast",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏝️"},
+    {name:"Galeries Lafayette",desc:"World's most famous department store — tax refund for non-EU tourists",cat:"Shopping",color:"#faeeda",textColor:"#854f0b",bg:"🛍️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"EUR. 1 EUR ≈ ₹92. Cards accepted almost everywhere. ATMs widely available. Paris pickpocketing — keep valuables secure."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No mandatory vaccinations. European EHIC not available to Indians — comprehensive travel insurance essential."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Type C & E (European 2-pin round). Indian round-pin plugs often fit Type C. A universal adaptor is safest."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Orange or Free Mobile SIM at CDG airport ~EUR 20 (₹1,840). Excellent 4G/5G. Airport WiFi free. Paris Metro has WiFi."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Service compris (included) is standard in restaurants. Rounding up or leaving EUR 1–2 is appreciated. Taxi drivers: round up fare."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: greet with 'Bonjour' — Parisians appreciate the effort. Don't: tip at cafes (unusual). Keep noise low in residential areas. Tax refund: keep all receipts, validate at airport PABLO kiosks."}
+  ],
+  food:[
+    {emoji:"🥐",name:"Croissant",desc:"Buttery, flaky — the benchmark of French baking art"},
+    {emoji:"🍷",name:"Coq au Vin",desc:"Classic chicken braised in Burgundy wine"},
+    {emoji:"🧀",name:"French Cheese Board",desc:"Over 1,000 varieties — Brie, Camembert, Roquefort"},
+    {emoji:"🥗",name:"Salade Niçoise",desc:"Tuna, egg, olive salad from the Riviera — hearty and fresh"},
+    {emoji:"🍮",name:"Crème Brûlée",desc:"Caramelised custard — the definitive French dessert"},
+    {emoji:"🥖",name:"Baguette",desc:"Buy from a boulangerie daily — superior to any bread on earth"}
+  ],
+  dietNotes:"Challenging for strict vegetarians — French cuisine is traditionally meat and seafood-based. However Paris now has excellent vegetarian and vegan restaurants. Halal food is very widely available — large North African community in France. Kosher food available in Paris. Jain food difficult outside specialist restaurants.",
+  links:[
+    {label:"Atout France (Tourism Board)",icon:"ti-globe",url:"https://uk.france.fr"},
+    {label:"France Visas (Schengen)",icon:"ti-id",url:"https://france-visas.gouv.fr"},
+    {label:"Air France",icon:"ti-plane",url:"https://www.airfrance.com"},
+    {label:"Trip Factory — France packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Kerala":{
+  name:"Kerala",flag:"🌴",tagline:"God's Own Country — backwaters, spices, elephants and Ayurveda",
+  quickstats:{Capital:"Thiruvananthapuram",Currency:"INR (₹)",Language:"Malayalam",TimeZone:"IST (UTC+5:30)",BestTime:"Oct–Mar"},
+  ksp:[
+    {title:"No visa needed",desc:"Indian domestic destination — zero barriers for Indian clients, pure convenience"},
+    {title:"Backwater houseboats",desc:"Alleppey houseboat on the Kerala backwaters is a uniquely Indian luxury experience"},
+    {title:"Ayurveda & wellness",desc:"Kerala is the global home of authentic Ayurveda — a compelling wellness sell"},
+    {title:"Year-round appeal",desc:"Beaches, hill stations, wildlife and backwaters across different micro-climates"}
+  ],
+  sell:["The Kerala houseboat experience is entirely unique in the world — vivid, unforgettable, deeply Indian","No passport, no visa — lowest friction sell for any client segment","Ayurvedic retreats are growing rapidly as a wellness travel category — Kerala is the only authentic source","Munnar tea estates, Periyar wildlife, Kovalam beach — outstanding variety for families and couples","Trip Factory recommended duration: 7–9 nights"],
+  travellerTypes:["Family","Honeymoon","Wellness","Nature","Culture","Solo"],
+  highlightTypes:["Honeymoon","Wellness"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Kochi (COK)",airlines:"IndiGo, Air India, SpiceJet",time:"~2h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Kochi (COK)",airlines:"IndiGo, Air India, Vistara",time:"~3h",type:"direct",freq:"Multiple daily"},
+    {from:"Bengaluru (BLR)",to:"Thiruvananthapuram (TRV)",airlines:"IndiGo, Air India",time:"~1.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Hyderabad (HYD)",to:"Kozhikode (CCJ)",airlines:"IndiGo, Air India",time:"~1.5h",type:"direct",freq:"Daily"},
+    {from:"Chennai (MAA)",to:"Kochi (COK)",airlines:"IndiGo, Air India",time:"~1h",type:"direct",freq:"Multiple daily"}
+  ],
+  visa:{type:"No visa required",cost:"Free — domestic destination",validity:"N/A",processing:"N/A",documents:"Valid Indian ID / passport",portal:"https://www.keralatourism.org",badge:"free"},
+  overview:["Kerala stretches along the south-western tip of India for 600km, sandwiched between the Western Ghats and the Arabian Sea. It is a land of extraordinary natural abundance — 44 rivers, 900km of backwater canals, 600km of coastline, and some of India's richest biodiversity, including significant tiger and elephant populations in Periyar and Wayanad.","The Kerala backwaters are unlike anything else in India — a network of still lagoons, palm-lined canals and rice paddy stretches where the pace of life is dictated by the season and the tide. An overnight houseboat (kettuvallam) journey on Lake Vembanad or the Alleppey canals is one of India's most soulful travel experiences. The 600-year-old houseboat tradition has been transformed into floating luxury hotels with air conditioning, fine dining and private decks.","Kerala's wellness credentials are unmatched anywhere in the world. Ayurveda — the 5,000-year-old system of herbal medicine and therapeutic massage — originated in Kerala and is still practised here in its most authentic form. Government-certified Ayurveda resorts offer genuine 14-21 day Panchakarma treatments for clients seeking deep wellness experiences, while shorter Rejuvenation packages of 5-7 days are an increasingly popular add-on to beach and backwater holidays."],
+  weather:[
+    {mo:"Jan",temp:"28°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"29°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"31°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"32°",icon:"🌤️",type:"shoulder"},{mo:"May",temp:"31°",icon:"🌦️",type:"shoulder"},{mo:"Jun",temp:"27°",icon:"🌧️",type:"low"},
+    {mo:"Jul",temp:"26°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"26°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"27°",icon:"🌧️",type:"low"},
+    {mo:"Oct",temp:"28°",icon:"🌦️",type:"shoulder"},{mo:"Nov",temp:"28°",icon:"⛅",type:"peak"},{mo:"Dec",temp:"27°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Oct–Mar is the perfect window — dry, warm and clear. Dec–Jan is peak season — Christmas–New Year is extremely popular with Indian families. Onam festival (Aug–Sep) offers a unique cultural experience despite the monsoon. Monsoon (Jun–Sep) is actually beautiful in the backwaters and hills — lush green, fewer tourists, Ayurveda season.",
+  experiences:[
+    {name:"Alleppey Backwater Houseboat",desc:"Overnight kettuvallam cruise on Kerala's famous canals",cat:"Leisure",color:"#eaf3de",textColor:"#3b6d11",bg:"⛵"},
+    {name:"Munnar Tea Estates",desc:"Rolling hills of emerald tea gardens — sunrise walks and factory tours",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🍵"},
+    {name:"Periyar Wildlife Sanctuary",desc:"Boat safari on Periyar Lake — elephants, bison, otters",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐘"},
+    {name:"Kathakali Dance Performance",desc:"Elaborate face-painted classical dance-drama — a Kerala signature",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🎭"},
+    {name:"Kovalam Beach",desc:"Three crescent beaches — lighthouse, Hawa and Samudra",cat:"Beach",color:"#e1f5ee",textColor:"#0f6e56",bg:"🌊"},
+    {name:"Ayurvedic Retreat",desc:"Panchakarma or Rejuvenation — authentic therapeutic treatment",cat:"Wellness",color:"#e1f5ee",textColor:"#0f6e56",bg:"🧘"},
+    {name:"Thrissur Pooram",desc:"India's most spectacular temple festival (Apr–May) — 100 caparisoned elephants",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🐘"},
+    {name:"Wayanad Forest Trek",desc:"Chembra Peak lake trek, Edakkal cave carvings — Wayanad highlands",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🥾"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"Indian Rupee. Cards widely accepted in cities. UPI works everywhere. ATMs in all major towns."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No special vaccinations needed. Mosquito repellent advisable. Ayurveda treatment requires medical consultation on arrival."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Indian Type D/M standard sockets. All Indian plugs work perfectly."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Indian SIMs work throughout. Jio/Airtel have excellent coverage. Mountain areas (Munnar) may have patchy connectivity."},
+    {label:"Tipping guide",icon:"ti-coin",value:"₹50–100 for boat crew on houseboats. ₹100–200 for guides. 10% at restaurants if no service charge."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: remove footwear at temples. Don't: wear non-veg food packaging near temple precincts. Dress modestly at religious sites. Respect 'Heritage Zone' rules at heritage properties."}
+  ],
+  food:[
+    {emoji:"🍚",name:"Kerala Sadhya",desc:"26-dish banana-leaf feast — vegetarian, served at festivals and weddings"},
+    {emoji:"🥥",name:"Appam & Stew",desc:"Lacey rice pancake with coconut milk vegetable or chicken stew"},
+    {emoji:"🐟",name:"Karimeen Pollichathu",desc:"Pearl-spot fish wrapped in banana leaf and grilled — Kerala's signature"},
+    {emoji:"🍛",name:"Kerala Fish Curry",desc:"Tamarind-based red fish curry cooked in earthen pot"},
+    {emoji:"☕",name:"Filter Coffee",desc:"South Indian style drip coffee with thick milk — in a steel tumbler"},
+    {emoji:"🍌",name:"Pazham Pori",desc:"Ripe banana fritters — Kerala's most beloved street snack"}
+  ],
+  dietNotes:"One of India's most vegetarian-friendly destinations — Kerala Sadhya is entirely vegetarian. Non-vegetarian food heavily features seafood. Beef is consumed openly (unlike North India). Jain food available in upscale hotels on request. No dietary challenges for any Indian traveller.",
+  links:[
+    {label:"Kerala Tourism official site",icon:"ti-globe",url:"https://www.keralatourism.org"},
+    {label:"Houseboat booking info",icon:"ti-id",url:"https://www.keralatourism.org/houseboat"},
+    {label:"Air India to Kochi",icon:"ti-plane",url:"https://www.airindia.com"},
+    {label:"Trip Factory — Kerala packages",icon:"ti-building-store",url:"#"}
+  ]
+},
+"Rajasthan":{
+  name:"Rajasthan",flag:"🏜️",tagline:"Land of Kings — forts, palaces, camels and a thousand shades of sunset",
+  quickstats:{Capital:"Jaipur",Currency:"INR (₹)",Language:"Hindi / Rajasthani",TimeZone:"IST (UTC+5:30)",BestTime:"Oct–Mar"},
+  ksp:[
+    {title:"No visa needed",desc:"Domestic destination — frictionless for all Indian clients and NRI inbound travellers"},
+    {title:"Palace hotels",desc:"Stay inside real Maharaja palaces — Umaid Bhawan, Taj Lake Palace — unmatched anywhere"},
+    {title:"Golden Triangle",desc:"Jaipur + Agra + Delhi is India's most-sold international circuit — Rajasthan anchors it"},
+    {title:"Desert experience",desc:"Jaisalmer camel safari and Sam Sand Dunes — the authentic desert experience of India"}
+  ],
+  sell:["Palace hotels like Taj Lake Palace and Umaid Bhawan are among the world's most spectacular stays — sells itself on imagery","Gateway to the Golden Triangle — Jaipur + Agra + Delhi is India's most popular inbound itinerary","Jaisalmer's golden sandstone city and Sam Sand Dunes camel safari is genuinely unique","Pushkar and Ajmer religious heritage make it meaningful for spiritual travellers","Trip Factory recommended duration: 7–10 nights (full circuit)"],
+  travellerTypes:["Luxury","Culture","Heritage","Honeymoon","Family","International Inbound"],
+  highlightTypes:["Luxury","Heritage"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Jaipur (JAI)",airlines:"IndiGo, Air India, SpiceJet",time:"~1.5h",type:"direct",freq:"Multiple daily"},
+    {from:"Delhi (DEL)",to:"Jaipur (JAI)",airlines:"IndiGo, Air India",time:"~1h",type:"direct",freq:"Multiple daily"},
+    {from:"Bengaluru (BLR)",to:"Jaipur (JAI)",airlines:"IndiGo, Air India",time:"~2.5h",type:"direct",freq:"Daily"},
+    {from:"Mumbai (BOM)",to:"Jodhpur (JDH)",airlines:"IndiGo, Air India",time:"~1.5h",type:"direct",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Udaipur (UDR)",airlines:"IndiGo",time:"~1.5h",type:"direct",freq:"Daily"}
+  ],
+  visa:{type:"No visa required",cost:"Free — domestic destination",validity:"N/A",processing:"N/A",documents:"Valid Indian ID / passport",portal:"https://www.tourism.rajasthan.gov.in",badge:"free"},
+  overview:["Rajasthan is India's largest state and its most magnificently theatrical. It occupies the north-west of the subcontinent where the Thar Desert meets the Aravalli hills, and its landscape — all burnt ochre, sand dunes, and sudden bursts of bougainvillea — has shaped a culture of extraordinary visual richness. The Rajput warrior clans who ruled this land for a thousand years built their legacy in stone and marble: 1,500 palaces, 3,000 forts, and temples of staggering craftsmanship.","The cities of Rajasthan read like a colour palette — Jaipur is the Pink City, Jodhpur is the Blue City, Udaipur is the City of Lakes, and Jaisalmer is the Golden City. Each has a personality as distinct as its colour. Jaipur's Amber Fort and Hawa Mahal are monuments to Mughal-Rajput aesthetic fusion. Jodhpur's Mehrangarh is arguably India's most imposing fort. Udaipur's Lake Pichola with the Taj Lake Palace floating at its centre is among the world's most romantic settings. Jaisalmer rises from the desert like a sandcastle turned to stone.","Rajasthan's luxury hotel infrastructure is exceptional — converted palaces (heritage hotels) operated by the Taj, Oberoi and IHCL groups, and independent royal family properties, offer stays that are genuinely unique in the world. For international inbound clients, Rajasthan is the most aspirational destination in India."],
+  weather:[
+    {mo:"Jan",temp:"15°",icon:"☀️",type:"peak"},{mo:"Feb",temp:"18°",icon:"☀️",type:"peak"},{mo:"Mar",temp:"24°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"31°",icon:"🌡️",type:"shoulder"},{mo:"May",temp:"37°",icon:"🌡️",type:"low"},{mo:"Jun",temp:"38°",icon:"🌡️",type:"low"},
+    {mo:"Jul",temp:"34°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"32°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"31°",icon:"⛅",type:"shoulder"},
+    {mo:"Oct",temp:"26°",icon:"☀️",type:"peak"},{mo:"Nov",temp:"20°",icon:"☀️",type:"peak"},{mo:"Dec",temp:"15°",icon:"☀️",type:"peak"}
+  ],
+  weatherTip:"Oct–Mar is the golden window — warm days, cool nights, perfect for sightseeing and camel safaris. The Pushkar Camel Fair (Oct–Nov) is one of India's great spectacles. Dec–Jan is peak season — book palace hotels months in advance. Avoid May–Jun (extreme heat, 40°C+). The Jaipur Literature Festival runs in January.",
+  experiences:[
+    {name:"Taj Lake Palace, Udaipur",desc:"White marble palace hotel floating on Lake Pichola",cat:"Luxury",color:"#e6f1fb",textColor:"#0c447c",bg:"🏰"},
+    {name:"Amber Fort, Jaipur",desc:"Mughal-Rajput hilltop fort — elephant ride to the gate",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏯"},
+    {name:"Jaisalmer Desert Safari",desc:"Camel trek and overnight camp on Sam Sand Dunes",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"🐪"},
+    {name:"Mehrangarh Fort, Jodhpur",desc:"India's most imposing fort with panoramic Blue City views",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏰"},
+    {name:"Ranthambore Tiger Safari",desc:"One of India's most reliable tiger sighting reserves",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🐅"},
+    {name:"Pushkar Holy Lake",desc:"Sacred Brahma temple town — colourful, spiritual, unique",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🛕"},
+    {name:"Hawa Mahal Jaipur",desc:"Palace of Winds — 953 small windows, iconic facade",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏛️"},
+    {name:"Jodhpur Blue City Walk",desc:"Wander through the blue-painted Brahmin quarter at dawn",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🎨"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"Indian Rupee. UPI works everywhere. ATMs in all cities. Remote desert areas may need cash. Heritage hotels accept cards."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"No special vaccinations. Carry water — dehydration risk in summer. Sun protection essential. Food hygiene varies — eat at reputable establishments."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"230V, Indian standard Type D/M. All Indian plugs work. Power cuts can occur in smaller towns — heritage hotels have generators."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Jio and Airtel have good coverage in cities. Remote desert areas (Jaisalmer outskirts) may have limited connectivity. Most heritage hotels have WiFi."},
+    {label:"Tipping guide",icon:"ti-coin",value:"₹100–200 for guides per day. ₹50–100 for camel safari attendants. Heritage hotel staff: ₹100–200 per service. Restaurant: 10% if no service charge."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Do: carry cash for smaller towns. Don't: haggle at fixed-price heritage shops. Dress modestly at temples and in rural areas. Beware of over-friendly touts near major sights."}
+  ],
+  food:[
+    {emoji:"🫕",name:"Dal Baati Churma",desc:"Baked wheat balls with lentil curry and sweet crumble — signature Rajasthani"},
+    {emoji:"🍛",name:"Laal Maas",desc:"Fiery red mutton curry — Rajasthan's most famous non-veg dish"},
+    {emoji:"🥘",name:"Gatte ki Sabzi",desc:"Gram flour dumplings in yoghurt curry — vegetarian staple"},
+    {emoji:"🍬",name:"Ghewar",desc:"Disc-shaped traditional sweet — famous from Jaipur"},
+    {emoji:"🥛",name:"Masala Chaas",desc:"Spiced buttermilk — served ice-cold throughout Rajasthan"},
+    {emoji:"🫓",name:"Missi Roti",desc:"Gram flour flatbread with spices — eaten with ghee"}
+  ],
+  dietNotes:"Excellent for vegetarians — Rajasthani cuisine has a rich vegetarian tradition. Most dhabas and heritage restaurants have comprehensive vegetarian menus. Jain food widely available — specify to restaurant. Beef not served (Hindu-majority state). Alcohol available at hotel bars but restricted elsewhere.",
+  links:[
+    {label:"Rajasthan Tourism official site",icon:"ti-globe",url:"https://www.tourism.rajasthan.gov.in"},
+    {label:"Heritage Hotels Association",icon:"ti-id",url:"https://www.heritagehotelsofrajasthan.com"},
+    {label:"IndiGo flights to Jaipur",icon:"ti-plane",url:"https://www.goindigo.in"},
+    {label:"Trip Factory — Rajasthan packages",icon:"ti-building-store",url:"#"}
+  ]
+}
+};
+
+const PLACEHOLDER_DATA = {
+  sell:["A compelling destination for Indian travellers with growing connectivity from major metros","Unique cultural and natural experiences that differentiate it from competing destinations","Competitive visa arrangements make client admin straightforward","Trip Factory recommended duration: 6–9 nights"],
+  ksp:[
+    {title:"Growing destination",desc:"Increasing popularity with Indian travellers — an exciting early-mover opportunity"},
+    {title:"Unique experiences",desc:"Experiences unavailable elsewhere — a distinctive sell for discerning clients"},
+    {title:"Good connectivity",desc:"Improving flight connections from Indian cities make this increasingly accessible"},
+    {title:"Competitive pricing",desc:"Strong value for the experience offered — attractive to a wide client range"}
+  ],
+  travellerTypes:["Family","Honeymoon","Adventure","Culture","Nature"],
+  highlightTypes:["Honeymoon"],
+  flights:[
+    {from:"Mumbai (BOM)",to:"Destination",airlines:"Via major hub",time:"~8–12h",type:"connecting",freq:"Daily"},
+    {from:"Delhi (DEL)",to:"Destination",airlines:"Via major hub",time:"~8–12h",type:"connecting",freq:"Daily"},
+    {from:"Bengaluru (BLR)",to:"Destination",airlines:"Via major hub",time:"~9–13h",type:"connecting",freq:"Daily"}
+  ],
+  visa:{type:"Check official portal",cost:"Varies",validity:"Varies",processing:"Apply in advance",documents:"Passport, bank statements, hotel bookings, return ticket",portal:"#",badge:"sticker"},
+  overview:["This destination guide is being compiled. Full destination content including overview, cultural context and India-specific travel tips will be added shortly.","In the meantime, please refer to the destination's official tourism board website or contact the ORN research team for the latest information.","This page follows the same full 11-section structure and will be updated with complete content including flights, visa details, weather guide, experiences and practical information."],
+  weather:[
+    {mo:"Jan",temp:"20°",icon:"⛅",type:"shoulder"},{mo:"Feb",temp:"21°",icon:"🌤️",type:"peak"},{mo:"Mar",temp:"23°",icon:"☀️",type:"peak"},
+    {mo:"Apr",temp:"26°",icon:"☀️",type:"peak"},{mo:"May",temp:"28°",icon:"☀️",type:"peak"},{mo:"Jun",temp:"27°",icon:"🌦️",type:"low"},
+    {mo:"Jul",temp:"26°",icon:"🌧️",type:"low"},{mo:"Aug",temp:"26°",icon:"🌧️",type:"low"},{mo:"Sep",temp:"26°",icon:"⛅",type:"shoulder"},
+    {mo:"Oct",temp:"24°",icon:"🌤️",type:"peak"},{mo:"Nov",temp:"22°",icon:"⛅",type:"peak"},{mo:"Dec",temp:"20°",icon:"⛅",type:"shoulder"}
+  ],
+  weatherTip:"Best time and seasonal details will be added to this guide shortly. Please check the official tourism board site for up-to-date weather and travel advisories.",
+  experiences:[
+    {name:"Top Attraction 1",desc:"Signature experience — details being compiled",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🌍"},
+    {name:"Top Attraction 2",desc:"Natural highlight — details being compiled",cat:"Nature",color:"#eaf3de",textColor:"#3b6d11",bg:"🌿"},
+    {name:"Top Attraction 3",desc:"Adventure experience — details being compiled",cat:"Adventure",color:"#faeeda",textColor:"#854f0b",bg:"⛰️"},
+    {name:"Top Attraction 4",desc:"Cultural site — details being compiled",cat:"Culture",color:"#e6f1fb",textColor:"#0c447c",bg:"🏛️"}
+  ],
+  practical:[
+    {label:"Currency & money",icon:"ti-currency-dollar",value:"Check current exchange rates. Inform your bank before travel. Carry some local currency on arrival."},
+    {label:"Health & vaccinations",icon:"ti-vaccine",value:"Consult your doctor 6–8 weeks before travel for current recommendations. Comprehensive travel insurance essential."},
+    {label:"Electricity & plugs",icon:"ti-plug",value:"Check plug type before departure. Carry a universal travel adaptor to be safe."},
+    {label:"Internet & SIM",icon:"ti-wifi",value:"Local SIM cards are usually available at the airport. Check roaming rates with your Indian carrier before departure."},
+    {label:"Tipping guide",icon:"ti-coin",value:"Tipping customs vary by destination. Check local norms — guide will be updated with specific details."},
+    {label:"Dos & Don'ts",icon:"ti-info-circle",value:"Research local customs and dress codes before travel. Respect religious sites and local sensitivities."}
+  ],
+  food:[
+    {emoji:"🍽️",name:"Local Cuisine",desc:"Signature dishes to be added shortly"},
+    {emoji:"🥗",name:"Vegetarian Options",desc:"Availability details being compiled"},
+    {emoji:"🍵",name:"Local Drinks",desc:"Traditional beverages — details coming soon"}
+  ],
+  dietNotes:"Dietary information for this destination is being compiled. The guide will include specific notes on vegetarian, Jain and halal food availability relevant to Indian travellers.",
+  links:[
+    {label:"Official tourism board",icon:"ti-globe",url:"#"},
+    {label:"Visa information",icon:"ti-id",url:"#"},
+    {label:"Trip Factory — packages",icon:"ti-building-store",url:"#"}
+  ]
+};
+
+const BUILT=["Azerbaijan","Bali","Bhutan","Cambodia","Dubai","France","Japan","Kerala","Maldives","New Zealand","Australia","Rajasthan","Singapore","Sri Lanka","Thailand","Vietnam"];
+
+let currentView="hub";
+let currentRegion="ALL";
+let searchQuery="";
+
+function getD(name){return ALL_DATA[name]||{...PLACEHOLDER_DATA,name,flag:FLAGS[name]||"🌍",tagline:"Destination guide coming soon",quickstats:{Capital:"—",Currency:"—",Language:"—",TimeZone:"—",BestTime:"—"}};}
+
+function render(){
+  const app=document.getElementById("app");
+  if(currentView==="hub"){app.innerHTML=renderHub();}
+  else{app.innerHTML=renderDest(currentView);}
+  attachEvents();
+}
+
+function nav(){
+  return `<div class="top-nav"><div class="nav-logo"><div class="nav-logo-bars">${["#1e3a5f","#185fa5","#1abc9c","#3b6d11","#ba7517","#a32d2d"].map((c,i)=>`<div class="nav-bar" style="background:${c};height:${14+i*2}px"></div>`).join("")}</div><span class="nav-wordmark">ORN</span></div><span class="nav-badge">Destination Wiki</span></div>`;
+}
+
+function renderHub(){
+  const allDests=Object.entries(DESTS);
+  const filtered=allDests.map(([region,dests])=>{
+    let fd=dests;
+    if(currentRegion!=="ALL")fd=region===currentRegion?dests:[];
+    if(searchQuery)fd=fd.filter(d=>d.toLowerCase().includes(searchQuery.toLowerCase()));
+    return[region,fd];
+  }).filter(([_,d])=>d.length>0);
+  const total=Object.values(DESTS).flat().length;
+  return `${nav()}<div class="hub-hero"><h1>Destination Knowledge Hub</h1><p>${total} destinations across 4 regions — everything your team needs to sell with confidence</p><div class="hub-search"><input type="text" placeholder="Search destinations..." id="search-input" value="${searchQuery}" /></div></div><div class="region-tabs">${["ALL","ASIA","EUROPE","INDIA","OCEANIA"].map(r=>`<button class="rtab${currentRegion===r?" active":""}" data-region="${r}">${r==="ALL"?"All regions":r}</button>`).join("")}</div><div class="hub-body">${filtered.map(([region,dests])=>`<div class="region-label">${region}</div><div class="dest-grid">${dests.map(d=>`<div class="dest-card${BUILT.includes(d)?" featured":""}" data-dest="${d}"><span class="flag">${FLAGS[d]||"🌍"}</span><div class="dname">${d}</div>${BUILT.includes(d)?`<span class="built-badge"><i class="ti ti-check" style="font-size:10px"></i> Full guide</span>`:`<span class="soon-tag">Coming soon</span>`}</div>`).join("")}</div>`).join("")}</div>`;
+}
+
+function visaBadge(b){if(b==="voa")return`<span class="voa-badge"><i class="ti ti-check" style="font-size:12px"></i> Visa on Arrival</span>`;if(b==="evisa")return`<span class="evisa-badge"><i class="ti ti-check" style="font-size:12px"></i> e-Visa</span>`;if(b==="free")return`<span class="free-badge"><i class="ti ti-check" style="font-size:12px"></i> Visa Free</span>`;return`<span class="sticker-badge"><i class="ti ti-info-circle" style="font-size:12px"></i> Sticker Visa</span>`;}
+
+function renderDest(name){
+  const d=getD(name);
+  const imgSlug=name.toLowerCase().replace(/\s+/g,"-").replace(/&/g,"and");
+  const heroGrad=HERO_COLORS[name]||"135deg,#1a3a6b 0%,#2e7d5e 100%";
+  return `${nav()}<div class="dest-back" id="back-btn"><i class="ti ti-arrow-left"></i> All destinations</div>
+  <div class="dest-hero" style="background:linear-gradient(${heroGrad})">
+    <img src="https://raw.githubusercontent.com/your-org/orn-wiki/main/images/${imgSlug}.png" alt="${name}" onerror="this.style.display='none'" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
+    <div class="dest-hero-overlay"><div class="dest-hero-name">${d.flag} ${d.name}</div><div class="dest-hero-tagline">${d.tagline}</div></div>
+  </div>
+  <div class="dest-quickstats">${Object.entries(d.quickstats).map(([k,v])=>`<div class="qs-item"><div class="qs-label">${k}</div><div class="qs-value">${v}</div></div>`).join("")}</div>
+  <div class="dest-body">
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-rosette-discount-check" aria-hidden="true"></i> Key selling points</div>
+      <div class="ksp-grid">${(d.ksp||[]).map(k=>`<div class="ksp-item"><div class="ksp-title">${k.title}</div><div class="ksp-desc">${k.desc}</div></div>`).join("")}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-star" aria-hidden="true"></i> Why sell ${d.name}</div>
+      <ul class="sell-bullets">${d.sell.map(s=>`<li>${s}</li>`).join("")}</ul>
+      <div class="traveller-types">${d.travellerTypes.map(t=>`<span class="tt-chip${(d.highlightTypes||[]).some(h=>t.startsWith(h))?" highlight":""}">${t}</span>`).join("")}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-plane" aria-hidden="true"></i> Flights from India</div>
+      <div style="overflow-x:auto"><table class="flight-table"><thead><tr><th>From</th><th>To</th><th>Airlines</th><th>Duration</th><th>Type</th><th>Frequency</th></tr></thead><tbody>${d.flights.map(f=>`<tr><td>${f.from}</td><td>${f.to}</td><td style="color:var(--color-text-secondary)">${f.airlines}</td><td>${f.time}</td><td><span class="${f.type==="direct"?"direct-badge":"connect-badge"}">${f.type==="direct"?"Direct":"Connecting"}</span></td><td style="color:var(--color-text-secondary)">${f.freq}</td></tr>`).join("")}</tbody></table></div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-id" aria-hidden="true"></i> Visa & entry requirements</div>
+      <div style="margin-bottom:12px">${visaBadge(d.visa.badge)}</div>
+      <div class="visa-grid">
+        <div class="visa-item"><div class="visa-item-label">Visa type</div><div class="visa-item-value">${d.visa.type}</div></div>
+        <div class="visa-item"><div class="visa-item-label">Cost</div><div class="visa-item-value">${d.visa.cost}</div></div>
+        <div class="visa-item"><div class="visa-item-label">Validity</div><div class="visa-item-value">${d.visa.validity}</div></div>
+        <div class="visa-item"><div class="visa-item-label">Processing</div><div class="visa-item-value">${d.visa.processing}</div></div>
+      </div>
+      <div style="margin-top:10px;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px">Documents required</div>
+        <div style="font-size:13px;color:var(--color-text-primary)">${d.visa.documents}</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-map" aria-hidden="true"></i> Destination overview</div>
+      <div class="overview-text">${d.overview.map(p=>`<p>${p}</p>`).join("")}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-sun" aria-hidden="true"></i> Weather & best time to visit</div>
+      <div class="weather-grid">${d.weather.map(w=>`<div class="month-cell ${w.type==="peak"?"peak":w.type==="low"?"low":""}"><div class="mo">${w.mo}</div><span class="icon">${w.icon}</span><div class="temp">${w.temp}</div></div>`).join("")}</div>
+      <div class="season-legend"><div class="sl-item"><div class="sl-dot" style="background:#b5d4f4"></div>Peak</div><div class="sl-item"><div class="sl-dot" style="background:var(--color-border-tertiary)"></div>Shoulder</div><div class="sl-item"><div class="sl-dot" style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)"></div>Low / wet</div></div>
+      <div style="margin-top:12px;padding:10px 12px;background:#e6f1fb;border-radius:var(--border-radius-md)"><div style="font-size:12px;color:#0c447c"><strong>India travel tip:</strong> ${d.weatherTip}</div></div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-sparkles" aria-hidden="true"></i> Top experiences & must-see sights</div>
+      <div class="exp-grid">${d.experiences.map(e=>`<div class="exp-card"><div class="exp-img" style="background:${e.color}">${e.bg}</div><div class="exp-info"><div class="exp-name">${e.name}</div><div class="exp-desc">${e.desc}</div><span class="exp-cat" style="background:${e.color};color:${e.textColor}">${e.cat}</span></div></div>`).join("")}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-info-circle" aria-hidden="true"></i> Practical information</div>
+      <div class="practical-grid">${d.practical.map(p=>`<div class="practical-item"><div class="pi-label"><i class="ti ${p.icon}" style="font-size:12px" aria-hidden="true"></i>${p.label}</div><div class="pi-value">${p.value}</div></div>`).join("")}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-bowl-chopsticks" aria-hidden="true"></i> Food & dining</div>
+      <div class="food-grid">${d.food.map(f=>`<div class="food-item"><span class="food-emoji">${f.emoji}</span><div class="food-name">${f.name}</div><div class="food-desc">${f.desc}</div></div>`).join("")}</div>
+      <div style="margin-top:12px;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);line-height:1.6"><strong style="color:var(--color-text-primary)">Dietary note:</strong> ${d.dietNotes}</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title"><i class="ti ti-link" aria-hidden="true"></i> Useful links</div>
+      <div class="links-list">${d.links.map(l=>`<div class="link-row" onclick="openLink('${l.url}')"><div class="link-row-label"><i class="ti ${l.icon}" aria-hidden="true"></i>${l.label}</div><i class="ti ti-external-link" style="font-size:14px;color:var(--color-text-tertiary)" aria-hidden="true"></i></div>`).join("")}</div>
+    </div>
+    <div class="disclaimer"><strong>Disclaimer:</strong> Information in this guide is compiled for sales reference purposes and may change without notice. Visa fees, flight schedules and entry requirements should always be verified against official government and airline sources before advising clients. ORN / Trip Factory accepts no liability for inaccuracies. Last reviewed May 2026.</div>
+  </div>`;
+}
+
+function attachEvents(){
+  document.querySelectorAll(".rtab").forEach(btn=>{btn.addEventListener("click",()=>{currentRegion=btn.dataset.region;render();});});
+  document.querySelectorAll(".dest-card").forEach(card=>{card.addEventListener("click",()=>{currentView=card.dataset.dest;render();window.scrollTo(0,0);});});
+  const si=document.getElementById("search-input");
+  if(si)si.addEventListener("input",e=>{searchQuery=e.target.value;render();});
+  const bb=document.getElementById("back-btn");
+  if(bb)bb.addEventListener("click",()=>{currentView="hub";render();window.scrollTo(0,0);});
+}
+
+render();
+</script>
