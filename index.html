@@ -207,27 +207,26 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;color:var(--navy
 .jd-filters{display:flex;flex-wrap:wrap;gap:4px}
 .jd-filter-chip{font-size:9px;font-weight:600;padding:3px 10px;border-radius:99px;border:1px solid var(--bd2);background:#fff;color:var(--dk2);cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
 .jd-filter-chip:hover{border-color:var(--blu);color:var(--blu)}
-.jd-filter-chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.jd-table-hdr{display:grid;grid-template-columns:160px 200px 180px 1fr;gap:0;background:var(--navy);border-radius:var(--r) var(--r) 0 0;padding:8px 14px;font-size:9px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase}
-.jd-row{display:grid;grid-template-columns:160px 200px 180px 1fr;gap:0;border-bottom:1px solid var(--bd);background:#fff;cursor:pointer;transition:background .12s}
+.jd-filter-chip.active{background:#000;border-color:#000;color:#fff}
+.jd-table-hdr{display:grid;grid-template-columns:150px 190px 170px 1fr;gap:0;background:#000;border-radius:var(--r) var(--r) 0 0;padding:8px 14px;font-size:9px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.06em;text-transform:uppercase}
+.jd-row{display:grid;grid-template-columns:150px 190px 170px 1fr;gap:0;border-bottom:1px solid var(--bd);background:#fff;cursor:pointer;transition:background .12s}
 .jd-row:hover{background:#F8FAFC}
-.jd-row.expanded{background:var(--f2-bg)}
-.jd-row:last-child{border-bottom:none;border-radius:0 0 var(--r) var(--r)}
+.jd-row.expanded{background:#EBF5FF}
 .jd-cell{padding:9px 14px;font-size:10.5px;color:#1a1a1a;line-height:1.4;display:flex;align-items:flex-start}
-.jd-cell-dept{font-weight:600;color:var(--navy);font-size:10px}
-.jd-cell-role{font-weight:700;color:var(--navy);font-size:10.5px}
+.jd-cell-dept{font-weight:600;color:#111;font-size:10px}
+.jd-cell-role{font-weight:700;color:#111;font-size:10.5px}
 .jd-cell-rep{font-size:10px;color:#3a3a3a}
 .jd-cell-desc{font-size:10px;color:#1a1a1a;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .jd-expand-icon{font-size:8px;color:#555;flex-shrink:0;margin-top:2px;transition:transform .18s}
 .jd-row.expanded .jd-expand-icon{transform:rotate(180deg);color:var(--blu)}
-.jd-detail{display:none;grid-column:1/-1;padding:10px 14px 14px;border-top:1px dashed var(--bd2);background:var(--f2-bg)}
-.jd-row.expanded .jd-detail{display:block}
+.jd-detail{display:none;padding:12px 14px 14px;border-top:1px dashed var(--bd2);background:#EBF5FF;border-bottom:2px solid var(--blu)}
+.jd-detail.open{display:block}
 .jd-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .jd-detail-section{display:flex;flex-direction:column;gap:4px}
 .jd-detail-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#3a3a3a;margin-bottom:2px}
 .jd-detail-body{font-size:10.5px;color:#1a1a1a;line-height:1.6;background:#fff;border-radius:4px;padding:8px 10px;border:1px solid var(--bd)}
 .jd-tags{display:flex;flex-wrap:wrap;gap:4px}
-.jd-tag{font-size:9px;padding:2px 8px;border-radius:99px;background:var(--lgrey);border:1px solid var(--bd);color:var(--dk2)}
+.jd-tag{font-size:9px;padding:2px 8px;border-radius:99px;background:var(--lgrey);border:1px solid var(--bd);color:#1a1a1a}
 .jd-dept-badge{display:inline-block;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:2px}
 .jd-container{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
 
@@ -1286,718 +1285,864 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;color:var(--navy
 
 <script>
 // ── Tab switching ──────────────────────────────────────────
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
 }
 
-// ── Role card expand/collapse ──────────────────────────────
-function toggleRole(card) {
-  const wasExpanded = card.classList.contains('expanded');
-  card.classList.toggle('expanded', !wasExpanded);
-  const icon = card.querySelector('.rc-expand-icon');
-  if (icon) icon.classList.toggle('open', !wasExpanded);
+// ── Org Chart role toggle ─────────────────────────────────
+function toggleRole(card){
+  card.classList.toggle('expanded');
+  const icon=card.querySelector('.rc-expand-icon');
+  if(icon)icon.classList.toggle('open',card.classList.contains('expanded'));
+}
+function toggleDept(hdr){
+  const dept=hdr.closest('.org-dept');
+  const roles=dept.querySelector('.org-roles');
+  const dir=dept.querySelector('.org-director');
+  const toggle=hdr.querySelector('.odh-toggle');
+  const hidden=roles&&roles.style.display==='none';
+  if(roles)roles.style.display=hidden?'':'none';
+  if(dir)dir.style.display=hidden?'':'none';
+  if(toggle)toggle.classList.toggle('open',hidden);
 }
 
-// ── Dept collapse ──────────────────────────────────────────
-function toggleDept(hdr) {
-  const dept = hdr.closest('.org-dept');
-  const roles = dept.querySelector('.org-roles');
-  const dir = dept.querySelector('.org-director');
-  const toggle = hdr.querySelector('.odh-toggle');
-  const hidden = roles && roles.style.display === 'none';
-  if (roles) roles.style.display = hidden ? '' : 'none';
-  if (dir)   dir.style.display   = hidden ? '' : 'none';
-  if (toggle) toggle.classList.toggle('open', hidden);
-}
-
-// ── Persist names ──────────────────────────────────────────
+// ── Save / restore ─────────────────────────────────────────
 let saveTimer;
-function save(key, val) {
-  try { localStorage.setItem('tf_' + key, val); } catch(e){}
+function save(key,val){
+  try{localStorage.setItem('tf_'+key,val);}catch(e){}
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(showToast, 400);
+  saveTimer=setTimeout(showToast,400);
 }
-function showToast() {
-  const t = document.getElementById('saveToast');
+function showToast(){
+  const t=document.getElementById('saveToast');
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 1800);
+  setTimeout(()=>t.classList.remove('show'),1800);
 }
-function restoreAll() {
-  document.querySelectorAll('[id^="n-"]').forEach(el => {
-    try { const v = localStorage.getItem('tf_' + el.id); if (v) el.value = v; } catch(e){}
+function restoreAll(){
+  document.querySelectorAll('[id^="n-"]').forEach(el=>{
+    try{const v=localStorage.getItem('tf_'+el.id);if(v)el.value=v;}catch(e){}
   });
 }
 restoreAll();
 
 // ── JD filter ─────────────────────────────────────────────
-function filterJD(dept, btn) {
-  document.querySelectorAll('.jd-filter-chip').forEach(b => b.classList.remove('active'));
+function filterJD(dept,btn){
+  document.querySelectorAll('.jd-filter-chip').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.jd-row-wrap').forEach(row => {
-    row.style.display = (dept === 'all' || row.dataset.dept === dept) ? '' : 'none';
+  document.querySelectorAll('.jd-row-wrap').forEach(row=>{
+    row.style.display=(dept==='all'||row.dataset.dept===dept)?'':'none';
   });
 }
 
-// ── JD Data ───────────────────────────────────────────────
-const JD = [
-  // Leadership
-  { dept:'Leadership', role:'Global CEO', reports:'Raj Kumar — Global CEO (founder)', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Responsible for the global strategic direction of TripFactory.',
-    responsibilities:'Sets global strategy and vision · Owns P&L at group level · Leads the senior leadership team · Represents TripFactory to investors, partners and key markets · Final authority on all major commercial, people and operational decisions',
-    skills:'Strategic leadership · P&L management · Travel industry expertise · Stakeholder management · International business',
-    kpis:'Group revenue growth · EBITDA · Market expansion · Leadership team retention', headcount:'1' },
-  { dept:'Leadership', role:'CEO — India', reports:'Global CEO', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Leads TripFactory India operations and Commercial Product.',
-    responsibilities:'Oversees all India-based operations · Leads Commercial Product function · Manages contracting and product loading · Supports Global CEO on India market strategy · P&L responsibility for India operations',
-    skills:'Operations leadership · India travel market · Commercial acumen · Product management · Team leadership',
-    kpis:'India revenue · Product inventory quality · Contracting SLAs · Team performance', headcount:'1' },
-  { dept:'Leadership', role:'CCO', reports:'Global CEO', badge:'#17426E', badgeTx:'#fff',
-    summary:'Owns all commercial revenue: GIT, Groups/MICE, FIT Travel.',
-    responsibilities:'P&L ownership for all three business verticals · Directs GIT, MICE and FIT Directors · Sets sales strategy and targets · Leads weekly ops review · Signs off on discounts and special pricing · Owns Booking Owner scorecard programme',
-    skills:'Commercial leadership · Sales strategy · Travel product knowledge · People management · Revenue management',
-    kpis:'Total BU revenue · Conversion rates · Booking error rates · Director performance', headcount:'1' },
-  { dept:'Leadership', role:'CPO — People & Governance', reports:'Global CEO', badge:'#1E3A5F', badgeTx:'#fff',
-    summary:'Owns HR, Training, Legal, Payroll, Compliance and Technology.',
-    responsibilities:'Leads HR business partnering across all BUs · Owns training and development programmes · Legal and compliance oversight · Payroll administration · Technology and systems governance',
-    skills:'HR leadership · Employment law · Training design · Compliance management · Systems governance',
-    kpis:'Retention rate · Training completion · Legal risk incidents · Payroll accuracy', headcount:'1' },
-
-  // GIT
-  { dept:'GIT', role:'GIT Director', reports:'CCO', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Owns all Group Inclusive Tour revenue, team and operations.',
-    responsibilities:'Full P&L for GIT vertical · Manages Sales Team Leader and Ops Team Leader · Sets departure calendar and pricing · Attends weekly CCO ops review · Approves all discounts above standard threshold · Reviews Booking Owner scorecard quarterly',
-    skills:'Group tour operations · Revenue management · Team leadership · Supplier negotiation · Product development',
-    kpis:'GIT revenue · Departure fill rate · Booking error rate · Customer satisfaction score', headcount:'1 — TBC' },
-  { dept:'GIT', role:'Sales Team Leader', reports:'GIT Director', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Manages the GIT sales team and drives group tour conversion.',
-    responsibilities:'Coaches Senior Experts and Experts · Monitors team pipeline daily · Owns team conversion rate KPI · Escalation point for complex group enquiries · Attends weekly ops review with Director · Reviews Booking Owner compliance weekly',
-    skills:'Sales management · Group tour product knowledge · Coaching · Pipeline management · Policy compliance',
-    kpis:'Team conversion rate · Pipeline value · Booking error count · Team NPS', headcount:'1' },
-  { dept:'GIT', role:'Senior Expert', reports:'Sales Team Leader', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Handles complex group bookings and mentors junior team.',
-    responsibilities:'Manages high-value or complex group enquiries · Mentors Experts and Trainees · Acts as second escalation for policy queries · Covers Team Leader in absence · Owns key account relationships',
-    skills:'Group tour expertise · Mentoring · Complex itinerary design · Policy knowledge · Key account management',
-    kpis:'Personal conversion · Mentee progression · Error rate · Upsell value', headcount:'3' },
-  { dept:'GIT', role:'Expert', reports:'Senior Expert', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'End-to-end group booking owner — enquiry to departure.',
-    responsibilities:'Full Booking Owner duties · All 7 policy gates · Customer disclosure · Passenger data collection · Visa coordination · Payment collection · Sales-to-Ops handover file',
-    skills:'Group tour bookings · Policy compliance · Customer communication · Data accuracy · Time management',
-    kpis:'Bookings per month · Error rate · Gate compliance · Customer satisfaction', headcount:'~10' },
-  { dept:'GIT', role:'Trainee Expert', reports:'Expert (buddy)', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Learning programme — supervised bookings with progression target.',
-    responsibilities:'Completes TripFactory training programme · Handles supervised bookings under Expert guidance · Achieves policy certification within 6 months · Progresses to Expert grade on completion',
-    skills:'Eagerness to learn · Attention to detail · Customer service · Travel interest',
-    kpis:'Training completion · Policy certification date · Supervised booking quality', headcount:'~3' },
-  { dept:'GIT', role:'Ops Team Leader', reports:'GIT Director', badge:'#1A2E4A', badgeTx:'#fff',
-    summary:'Oversees all GIT operational execution from freeze to departure.',
-    responsibilities:'Accepts Sales-to-Ops handover files · Briefs Tour Managers · Authorises driver floats in LERMS · Manages supplier confirmations · Leads freeze process · Resolves on-road escalations · Ratio: 1 Ops per 20 Sales',
-    skills:'Tour operations · LERMS · Supplier management · Crisis management · TM management',
-    kpis:'On-time departure rate · Handover file acceptance rate · Float settlement time · Complaint rate', headcount:'1' },
-
-  // MICE
-  { dept:'Groups / MICE', role:'MICE Director', reports:'CCO', badge:'#17426E', badgeTx:'#fff',
-    summary:'Owns all MICE and Groups revenue, team and event delivery.',
-    responsibilities:'Full P&L for MICE/Groups · Manages Sales TL and Ops TL · Sets MICE pricing and proposal standards · Attends weekly CCO ops review · Signs off on event proposals above threshold · Reviews team scorecard',
-    skills:'MICE event management · Revenue management · B2B client management · Team leadership · Supplier negotiation',
-    kpis:'MICE revenue · Event delivery score · Proposal conversion · Booking error rate', headcount:'1 — TBC' },
-  { dept:'Groups / MICE', role:'Sales Team Leader', reports:'MICE Director', badge:'#17426E', badgeTx:'#fff',
-    summary:'Manages MICE sales team and drives event/group conversion.',
-    responsibilities:'Coaches team on MICE-specific sales process · Manages team pipeline · Oversees proposal quality · Escalation for complex event requirements · Attends ops review',
-    skills:'MICE sales · Event proposal writing · Team coaching · Pipeline management',
-    kpis:'Team conversion · Pipeline value · Proposal win rate · Error count', headcount:'1' },
-  { dept:'Groups / MICE', role:'Senior Expert', reports:'Sales Team Leader', badge:'#17426E', badgeTx:'#fff',
-    summary:'Handles complex MICE events and large group bookings.',
-    responsibilities:'Manages large-scale MICE events · Key account relationships · Mentors Experts · Complex event costing · Supplier negotiation for bespoke events',
-    skills:'Complex event management · Costing · Supplier negotiation · Mentoring',
-    kpis:'Personal revenue · Mentee progression · Event delivery quality', headcount:'3' },
-  { dept:'Groups / MICE', role:'Expert', reports:'Senior Expert', badge:'#17426E', badgeTx:'#fff',
-    summary:'Full MICE/group booking owner from enquiry to event delivery.',
-    responsibilities:'End-to-end MICE/group booking ownership · Proposal creation · Supplier coordination · All policy gates · Event-day handover to Ops',
-    skills:'MICE bookings · Event logistics · Policy compliance · Client communication',
-    kpis:'Bookings/events per month · Error rate · Client satisfaction', headcount:'~8' },
-  { dept:'Groups / MICE', role:'Ops Team Leader', reports:'MICE Director', badge:'#17426E', badgeTx:'#fff',
-    summary:'MICE operational execution and event-day coordination.',
-    responsibilities:'Operational delivery of MICE events · Handover file acceptance · Event-day supervision · Supplier management · LERMS entries · Ratio: 1 Ops per 10 Sales',
-    skills:'Event operations · LERMS · Supplier management · Crisis response',
-    kpis:'Event delivery score · On-time execution · Float settlement', headcount:'1' },
-
-  // FIT
-  { dept:'FIT Travel', role:'FIT Director', reports:'CCO', badge:'#113257', badgeTx:'#fff',
-    summary:'Owns all FIT/custom travel revenue across 6 destinations.',
-    responsibilities:'Full P&L for FIT · Manages Destination TLs and Ops TL · Sets FIT product strategy per destination · Reviews destination performance weekly · Approves itinerary exceptions · Manages B2B agent relationships at Director level',
-    skills:'FIT/tailor-made operations · Multi-destination product · Revenue management · Team leadership · B2B',
-    kpis:'FIT revenue · Itinerary quality score · B2B agent growth · Booking error rate', headcount:'1 — TBC' },
-  { dept:'FIT Travel', role:'Destination Team Leader', reports:'FIT Director', badge:'#113257', badgeTx:'#fff',
-    summary:'Leads FIT team for one destination — P&L and product owner.',
-    responsibilities:'Owns destination revenue and team performance · Manages Senior Experts and Experts · Destination product knowledge owner · Supplier relationships for that destination · Escalation point for complex itineraries',
-    skills:'Destination expertise · Team leadership · Itinerary design · Supplier management',
-    kpis:'Destination revenue · Team conversion · Product quality score', headcount:'×6 (one per destination)' },
-  { dept:'FIT Travel', role:'Ops Team Leader — ALL', reports:'FIT Director', badge:'#113257', badgeTx:'#fff',
-    summary:'FIT ops across all destinations — central ops function for FIT.',
-    responsibilities:'Oversees operational execution across all 6 FIT destinations · Handover file acceptance · LERMS management · Driver float authorisation · Supplier confirmations · Ratio: 1 Ops per 10 Sales per destination',
-    skills:'Multi-destination ops · LERMS · Supplier management · Cross-team coordination',
-    kpis:'Handover acceptance rate · LERMS accuracy · Float settlement time', headcount:'1' },
-  { dept:'FIT Travel', role:'Senior Expert', reports:'Destination Team Leader', badge:'#113257', badgeTx:'#fff',
-    summary:'Complex FIT itinerary specialist and destination expert.',
-    responsibilities:'Designs complex multi-destination itineraries · High-value client bookings · Mentors Experts · Destination product deep knowledge · B2B agent support',
-    skills:'Complex itinerary design · Destination expertise · High-value sales · Mentoring',
-    kpis:'Personal revenue · Itinerary quality · Mentee progression', headcount:'×6 (one per destination)' },
-  { dept:'FIT Travel', role:'Expert', reports:'Senior Expert', badge:'#113257', badgeTx:'#fff',
-    summary:'Full FIT booking owner — custom itineraries end to end.',
-    responsibilities:'Custom itinerary creation and booking · B2B agent liaison · All 7 policy gates · Full Booking Owner duties · Destination specialist',
-    skills:'FIT bookings · Tailor-made design · Policy compliance · B2B communication',
-    kpis:'Bookings per month · Error rate · B2B satisfaction · Gate compliance', headcount:'×6+ (TBC per destination)' },
-
-  // Customer Services
-  { dept:'Customer Services', role:'Team Leader', reports:'CS Head / Central', badge:'#138A62', badgeTx:'#fff',
-    summary:'Leads customer service team for one destination.',
-    responsibilities:'Day-to-day leadership of destination CS team · SLA monitoring · Escalation management · Reporting to management · Quality checks · Staff scheduling',
-    skills:'Customer service leadership · SLA management · Escalation handling · Team management',
-    kpis:'SLA compliance · CSAT score · Escalation resolution time · Team quality score', headcount:'×6' },
-  { dept:'Customer Services', role:'SME', reports:'Team Leader', badge:'#138A62', badgeTx:'#fff',
-    summary:'Subject matter expert — destination specialist and escalation handler.',
-    responsibilities:'Handles escalated customer queries · Product and destination expertise · Trains new agents · Quality audits · Supports Team Leader on complex cases',
-    skills:'Deep destination knowledge · Escalation handling · Training · Quality review',
-    kpis:'Escalation resolution rate · Training delivery · Quality audit scores', headcount:'×6' },
-  { dept:'Customer Services', role:'Supervisor', reports:'Team Leader', badge:'#138A62', badgeTx:'#fff',
-    summary:'Supervises day-to-day agent performance and queue management.',
-    responsibilities:'Monitors agent performance in real-time · Queue management · First-level escalation · Reports to Team Leader · Shift supervision',
-    skills:'Supervision · Queue management · Real-time performance monitoring',
-    kpis:'Queue SLA · Agent error rate · Daily report accuracy', headcount:'×6' },
-  { dept:'Customer Services', role:'Customer Service Agent', reports:'Supervisor', badge:'#138A62', badgeTx:'#fff',
-    summary:'Front-line customer support across all booking types.',
-    responsibilities:'Handles post-sale customer queries · Complaint intake · Refund requests · Escalates to SME when required · Destination-aligned',
-    skills:'Communication · Problem solving · CRM usage · Destination awareness',
-    kpis:'Contacts handled per day · CSAT · First-contact resolution · Error rate', headcount:'×30' },
-
-  // Ticketing
-  { dept:'Ticketing', role:'Team Leader — International', reports:'Ticketing Head', badge:'#4F46CC', badgeTx:'#fff',
-    summary:'Leads international ticketing team — GDS and group blocks.',
-    responsibilities:'Manages international ticketing agents · GDS team oversight · Group block management · Name amendment escalation · PNR quality control · Liaises with BU Ops for flight sealing',
-    skills:'GDS proficiency · International fares · Group ticketing · Team management',
-    kpis:'PNR error rate · Flight sealing SLA · Group block utilisation', headcount:'1' },
-  { dept:'Ticketing', role:'Team Leader — Domestic', reports:'Ticketing Head', badge:'#4F46CC', badgeTx:'#fff',
-    summary:'Leads domestic ticketing team — LCC and multi-city routes.',
-    responsibilities:'Manages domestic agents · LCC platform management · Multi-city routing · Refund processing oversight · Domestic group fares',
-    skills:'Domestic fares · LCC platforms · Multi-city routing · Team management',
-    kpis:'Booking accuracy · Refund processing time · Agent utilisation', headcount:'1' },
-  { dept:'Ticketing', role:'Ticketing Agent — International', reports:'TL International', badge:'#4F46CC', badgeTx:'#fff',
-    summary:'Issues and manages international flight tickets via GDS.',
-    responsibilities:'PNR creation and management · Fare class booking · Name amendment processing · Void and reissue · Group PNR coordination · Name vs. passport verification',
-    skills:'GDS (Amadeus/Galileo) · Fare rules · Name amendment procedures · Attention to detail',
-    kpis:'Tickets issued per day · Error rate · Amendment turnaround time', headcount:'×20' },
-  { dept:'Ticketing', role:'Ticketing Agent — Domestic', reports:'TL Domestic', badge:'#4F46CC', badgeTx:'#fff',
-    summary:'Issues and manages domestic flight tickets.',
-    responsibilities:'Domestic PNR creation · LCC booking platforms · Group domestic fares · Refund processing · Multi-city routing',
-    skills:'Domestic LCC platforms · Fare rules · Refund processing · Accuracy',
-    kpis:'Tickets issued · Error rate · Refund processing time', headcount:'×10' },
-
-  // Visa
-  { dept:'Visa', role:'Visa Team Leader', reports:'BU Ops / Ops Manager', badge:'#C47800', badgeTx:'#fff',
-    summary:'Manages visa pipeline across all BUs via UDAN outsource.',
-    responsibilities:'Oversees 8-stage visa tracking for all bookings · Embassy liaison · T-45 escalation management · Coordinates with UDAN Udaan India · Advises BU Ops on visa feasibility · Rejection escalation',
-    skills:'Visa processing · Embassy knowledge · Status tracking · Escalation management · UDAN liaison',
-    kpis:'Visa grant rate · T-45 passport possession · Rejection escalation speed', headcount:'×2' },
-  { dept:'Visa', role:'Visa Agent', reports:'Visa Team Leader', badge:'#C47800', badgeTx:'#fff',
-    summary:'Processes visa applications through all 8 stages.',
-    responsibilities:'Document collection from Booking Owners · Embassy appointment scheduling · Biometrics coordination · 8-stage status updates in system · Rejection documentation · Passport tracking',
-    skills:'Visa documentation · Embassy procedures · Status tracking · Organisation',
-    kpis:'Applications processed per week · Status update accuracy · Document completeness rate', headcount:'×10' },
-
-  // Marketing
-  { dept:'Marketing', role:'Marketing Director', reports:'Global CEO', badge:'#1A73E8', badgeTx:'#fff',
-    summary:'Leads all marketing across destinations with localised offices.',
-    responsibilities:'Global marketing strategy · Localised office management · Campaign approval · Brand guardianship · Budget management · Agency and partner relationships · Pricing approval sign-off',
-    skills:'Marketing leadership · Brand management · Digital marketing · Budget management · Travel marketing',
-    kpis:'Lead generation · Brand awareness · Campaign ROI · Cost per lead', headcount:'1 — TBC' },
-  { dept:'Marketing', role:'Marketing Manager', reports:'Marketing Director', badge:'#1A73E8', badgeTx:'#fff',
-    summary:'Owns marketing for one destination region.',
-    responsibilities:'Destination-specific marketing campaigns · Social and digital content direction · Creative team and social team management · Local market knowledge · Localised pricing and promotions',
-    skills:'Digital marketing · Destination knowledge · Campaign management · Team management',
-    kpis:'Destination enquiry volume · Campaign performance · Lead quality', headcount:'×6' },
-  { dept:'Marketing', role:'Creative Team', reports:'Marketing Manager', badge:'#1A73E8', badgeTx:'#fff',
-    summary:'Creates all visual and content assets for a destination.',
-    responsibilities:'Design and visual content production · Brochure and collateral design · Digital asset creation · Brand consistency · Photography and video coordination',
-    skills:'Graphic design · Adobe Suite · Brand guidelines · Digital content · Photography',
-    kpis:'Asset delivery time · Brand consistency score · Volume of assets produced', headcount:'×2 per destination (12 total)' },
-  { dept:'Marketing', role:'Social Media', reports:'Marketing Manager', badge:'#1A73E8', badgeTx:'#fff',
-    summary:'Manages social media presence for one destination.',
-    responsibilities:'Daily social content creation and posting · Community management · Paid social campaigns · Influencer coordination · Performance reporting',
-    skills:'Social media platforms · Content creation · Paid social · Analytics · Community management',
-    kpis:'Follower growth · Engagement rate · Paid social CPL · Reach', headcount:'×1 per destination (6 total)' },
-
-  // Finance
-  { dept:'Finance', role:'Finance Director', reports:'Global CEO', badge:'#2563EB', badgeTx:'#fff',
-    summary:'Leads all finance operations — structure TBC.',
-    responsibilities:'Overall financial control · P&L reporting to Global CEO · Payment gate ownership · Supplier settlement oversight · TCS and regulatory compliance · LERMS administration · Payroll sign-off · Float authorisation above threshold',
-    skills:'Financial leadership · Travel industry finance · TCS · LERMS · Compliance',
-    kpis:'Month-end accuracy · Gate compliance rate · TCS filing accuracy · Supplier payment SLA', headcount:'1 — TBC' },
-
-  // Credits
-  { dept:'Credits', role:'Credits Director', reports:'Global CEO', badge:'#B87800', badgeTx:'#fff',
-    summary:'Global and localised credits function — structure TBC.',
-    responsibilities:'Global credits strategy · Localisation per market · Partner credit integrations · Redemption platform · Customer-facing credits support · P&L for credits function',
-    skills:'Loyalty / rewards programme management · Technology integration · Global/local balance · Commercial acumen',
-    kpis:'Credits issued · Redemption rate · Partner satisfaction · Revenue from credits', headcount:'TBC — Sahil Nijhawan to advise' },
-
-  // Flights
-  { dept:'Flights', role:'Flights Director', reports:'Global CEO / CCO', badge:'#1A73E8', badgeTx:'#fff',
-    summary:'Central flights function — structure to be advised by Ankit Aggarwal.',
-    responsibilities:'Airline contract negotiations · GDS strategy · Group fares management · Integration with all BU ticketing requirements · Fare filing and distribution · Flights team management',
-    skills:'Airline commercial · GDS management · Group fares · Revenue management · Team leadership',
-    kpis:'Cost per seat · Group fare utilisation · GDS error rate · Airline relationship score', headcount:'TBC — Ankit Aggarwal to advise' },
-
-  // Commercial Product
-  { dept:'Commercial Product', role:'Contracting Manager', reports:'CEO India', badge:'#6B46C1', badgeTx:'#fff',
-    summary:'Owns hotel and supplier contracting for one destination.',
-    responsibilities:'Negotiates hotel and ground supplier contracts · Rate loading oversight · Allotment management · Supplier relationship management · Annual contracting cycle · Competitive rate benchmarking',
-    skills:'Hotel contracting · Rate negotiation · Destination knowledge · Relationship management',
-    kpis:'Rate competitiveness · Contract renewal rate · Loading accuracy · Allotment utilisation', headcount:'×6 (one per destination)' },
-  { dept:'Commercial Product', role:'Contracting Loading Team', reports:'Contracting Manager', badge:'#6B46C1', badgeTx:'#fff',
-    summary:'Loads contracted rates into the booking system.',
-    responsibilities:'System loading of hotel and supplier rates · Validity and accuracy checks · Inventory management · Rate update processing · Database maintenance',
-    skills:'Booking system proficiency · Accuracy · Rate loading · Database management',
-    kpis:'Loading accuracy rate · Loading turnaround time · Error rate', headcount:'TBC' },
-
-  // People
-  { dept:'People & Governance', role:'CPO', reports:'Global CEO', badge:'#3D8A14', badgeTx:'#fff',
-    summary:'Alia Taub — leads HR, Training, Legal, Payroll, Compliance.',
-    responsibilities:'HR strategy and business partnering across all BUs · Training programme design and delivery · Legal and compliance oversight · Payroll administration · Technology governance · Structure TBC',
-    skills:'HR leadership · Employment law · L&D · Compliance · Payroll',
-    kpis:'Retention · Training completion · Legal incidents · Payroll accuracy', headcount:'Structure TBC — Alia Taub to confirm' },
+// ══ JD DATA ═══════════════════════════════════════════════
+const JD=[
+  {dept:'Leadership',role:'Global CEO',reports:'Board / Shareholders',badge:'#000',badgeTx:'#fff',
+   summary:'Sets global strategy and leads the TripFactory senior leadership team.',
+   responsibilities:'Sets global strategy and vision · Owns group P&L · Leads senior leadership team · Represents TripFactory to investors and key markets · Final authority on all major commercial, people and operational decisions',
+   skills:'Strategic leadership · P&L management · Travel industry expertise · Stakeholder management · International business',
+   kpis:'Group revenue growth · EBITDA · Market expansion · Leadership retention',headcount:'1 — Raj Kumar'},
+  {dept:'Leadership',role:'CEO — India',reports:'Global CEO',badge:'#000',badgeTx:'#fff',
+   summary:'Leads TripFactory India operations and Commercial Product function.',
+   responsibilities:'Oversees all India-based operations · Leads Commercial Product · Manages contracting and product loading · India market P&L · Supports Global CEO on strategy',
+   skills:'Operations leadership · India travel market · Commercial acumen · Product management · Team leadership',
+   kpis:'India revenue · Product inventory quality · Contracting SLAs · Team performance',headcount:'1 — Lalitha Krishna'},
+  {dept:'Leadership',role:'CCO',reports:'Global CEO',badge:'#000',badgeTx:'#fff',
+   summary:'Owns all commercial revenue across GIT, Groups/MICE and FIT Travel verticals.',
+   responsibilities:'P&L ownership for all three business verticals · Directs BU Directors · Sets sales strategy and targets · Leads weekly ops review · Signs off discounts and special pricing · Owns Booking Owner scorecard programme',
+   skills:'Commercial leadership · Sales strategy · Travel product · People management · Revenue management',
+   kpis:'Total BU revenue · Conversion rates · Booking error rates · Director performance',headcount:'1 — Ajay Kawa'},
+  {dept:'Leadership',role:'CPO — People & Governance',reports:'Global CEO',badge:'#000',badgeTx:'#fff',
+   summary:'Owns HR, Training, Legal, Payroll, Compliance and Technology functions.',
+   responsibilities:'HR strategy across all BUs · Training and development programmes · Legal and compliance oversight · Payroll · Technology governance',
+   skills:'HR leadership · Employment law · Training design · Compliance management · Systems governance',
+   kpis:'Retention rate · Training completion · Legal risk incidents · Payroll accuracy',headcount:'1 — Alia Taub'},
+  {dept:'GIT',role:'GIT Director',reports:'CCO',badge:'#000',badgeTx:'#fff',
+   summary:'Owns all Group Inclusive Tour revenue, team and operations.',
+   responsibilities:'Full P&L for GIT · Manages Sales TL and Ops TL · Sets departure calendar and pricing · Attends weekly CCO ops review · Approves all discounts above standard threshold · Quarterly Booking Owner scorecard review',
+   skills:'Group tour operations · Revenue management · Team leadership · Supplier negotiation · Product development',
+   kpis:'GIT revenue · Departure fill rate · Booking error rate · Customer satisfaction',headcount:'1 — TBC'},
+  {dept:'GIT',role:'Sales Team Leader',reports:'GIT Director',badge:'#000',badgeTx:'#fff',
+   summary:'Manages GIT sales team and drives group tour conversion.',
+   responsibilities:'Coaches Senior Experts and Experts · Monitors team pipeline daily · Owns team conversion KPI · Escalation point for complex enquiries · Attends weekly ops review · Reviews Booking Owner compliance',
+   skills:'Sales management · Group tour product · Coaching · Pipeline management · Policy compliance',
+   kpis:'Team conversion rate · Pipeline value · Booking error count · Team NPS',headcount:'1'},
+  {dept:'GIT',role:'Senior Expert',reports:'Sales Team Leader',badge:'#000',badgeTx:'#fff',
+   summary:'Handles complex group bookings and mentors junior team members.',
+   responsibilities:'Manages high-value and complex group enquiries · Mentors Experts and Trainees · Acts as second escalation for policy queries · Covers Team Leader in absence · Owns key account relationships',
+   skills:'Group tour expertise · Mentoring · Complex itinerary design · Policy knowledge · Key account management',
+   kpis:'Personal conversion · Mentee progression · Error rate · Upsell value',headcount:'×3'},
+  {dept:'GIT',role:'Expert',reports:'Senior Expert',badge:'#000',badgeTx:'#fff',
+   summary:'End-to-end group booking owner — enquiry to departure.',
+   responsibilities:'Full Booking Owner duties · All 7 policy gates · Customer disclosure · Passenger data · Visa coordination · Payment collection · Sales-to-Ops handover file',
+   skills:'Group tour bookings · Policy compliance · Customer communication · Data accuracy · Time management',
+   kpis:'Bookings per month · Error rate · Gate compliance · Customer satisfaction',headcount:'~10'},
+  {dept:'GIT',role:'Trainee Expert',reports:'Expert (buddy)',badge:'#000',badgeTx:'#fff',
+   summary:'Learning programme — supervised bookings with 6-month progression target.',
+   responsibilities:'Completes TripFactory training programme · Supervised bookings under Expert guidance · Achieves policy certification within 6 months · Progresses to Expert grade on completion',
+   skills:'Attention to detail · Customer service · Travel interest · Eagerness to learn',
+   kpis:'Training completion · Policy certification date · Supervised booking quality',headcount:'~3'},
+  {dept:'GIT',role:'Ops Team Leader',reports:'GIT Director',badge:'#000',badgeTx:'#fff',
+   summary:'Oversees all GIT operational execution from freeze to departure.',
+   responsibilities:'Accepts Sales-to-Ops handover files · Briefs Tour Managers · Authorises driver floats in LERMS · Manages supplier confirmations · Leads freeze process · Resolves on-road escalations',
+   skills:'Tour operations · LERMS · Supplier management · Crisis management · TM management',
+   kpis:'On-time departure rate · Handover acceptance rate · Float settlement time · Complaint rate',headcount:'1 — ratio: 1 per 20 Sales'},
+  {dept:'Groups / MICE',role:'MICE Director',reports:'CCO',badge:'#111',badgeTx:'#fff',
+   summary:'Owns all MICE and Groups revenue, team and event delivery.',
+   responsibilities:'Full P&L for MICE/Groups · Manages Sales TL and Ops TL · Sets MICE pricing and proposal standards · Attends weekly CCO ops review · Signs off event proposals above threshold',
+   skills:'MICE event management · Revenue management · B2B client management · Team leadership · Supplier negotiation',
+   kpis:'MICE revenue · Event delivery score · Proposal conversion · Booking error rate',headcount:'1 — TBC'},
+  {dept:'Groups / MICE',role:'Sales Team Leader',reports:'MICE Director',badge:'#111',badgeTx:'#fff',
+   summary:'Manages MICE sales team and drives event/group conversion.',
+   responsibilities:'Coaches team on MICE-specific sales process · Pipeline management · Oversees proposal quality · Escalation for complex event requirements · Attends ops review',
+   skills:'MICE sales · Event proposal writing · Team coaching · Pipeline management',
+   kpis:'Team conversion · Pipeline value · Proposal win rate · Error count',headcount:'1'},
+  {dept:'Groups / MICE',role:'Senior Expert',reports:'Sales Team Leader',badge:'#111',badgeTx:'#fff',
+   summary:'Handles complex MICE events and large group bookings.',
+   responsibilities:'Manages large-scale MICE events · Key account relationships · Mentors Experts · Complex event costing · Supplier negotiation for bespoke events',
+   skills:'Complex event management · Costing · Supplier negotiation · Mentoring',
+   kpis:'Personal revenue · Mentee progression · Event delivery quality',headcount:'×3'},
+  {dept:'Groups / MICE',role:'Expert',reports:'Senior Expert',badge:'#111',badgeTx:'#fff',
+   summary:'Full MICE/group booking owner from enquiry to event delivery.',
+   responsibilities:'End-to-end MICE booking ownership · Proposal creation · Supplier coordination · All policy gates · Event-day handover to Ops',
+   skills:'MICE bookings · Event logistics · Policy compliance · Client communication',
+   kpis:'Bookings per month · Error rate · Client satisfaction',headcount:'~8'},
+  {dept:'Groups / MICE',role:'Ops Team Leader',reports:'MICE Director',badge:'#111',badgeTx:'#fff',
+   summary:'MICE operational execution and event-day coordination.',
+   responsibilities:'Operational delivery of MICE events · Handover file acceptance · Event-day supervision · Supplier management · LERMS · Ratio: 1 Ops per 10 Sales',
+   skills:'Event operations · LERMS · Supplier management · Crisis response',
+   kpis:'Event delivery score · On-time execution · Float settlement',headcount:'1'},
+  {dept:'FIT Travel',role:'FIT Director',reports:'CCO',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'Owns all FIT/custom travel revenue across 6 destinations.',
+   responsibilities:'Full P&L for FIT · Manages Destination TLs and Ops TL · Sets FIT product strategy per destination · Reviews destination performance weekly · Approves itinerary exceptions · Manages B2B agent relationships at Director level',
+   skills:'FIT/tailor-made operations · Multi-destination product · Revenue management · Team leadership · B2B',
+   kpis:'FIT revenue · Itinerary quality score · B2B agent growth · Booking error rate',headcount:'1 — TBC'},
+  {dept:'FIT Travel',role:'Destination Team Leader',reports:'FIT Director',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'Leads FIT team for one destination — P&L and product owner.',
+   responsibilities:'Owns destination revenue and team performance · Manages Senior Experts and Experts · Destination product knowledge owner · Supplier relationships for that destination · Escalation for complex itineraries',
+   skills:'Destination expertise · Team leadership · Itinerary design · Supplier management',
+   kpis:'Destination revenue · Team conversion · Product quality score',headcount:'×6 (one per destination)'},
+  {dept:'FIT Travel',role:'Ops Team Leader — ALL',reports:'FIT Director',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'FIT ops across all destinations — central ops function for FIT.',
+   responsibilities:'Oversees operational execution across all 6 FIT destinations · Handover file acceptance · LERMS management · Driver float authorisation · Supplier confirmations',
+   skills:'Multi-destination ops · LERMS · Supplier management · Cross-team coordination',
+   kpis:'Handover acceptance rate · LERMS accuracy · Float settlement time',headcount:'1 (ratio: 1 per 10 Sales per destination)'},
+  {dept:'FIT Travel',role:'Senior Expert',reports:'Destination Team Leader',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'Complex FIT itinerary specialist and destination expert.',
+   responsibilities:'Designs complex multi-destination itineraries · High-value client bookings · Mentors Experts · Destination product deep knowledge · B2B agent support',
+   skills:'Complex itinerary design · Destination expertise · High-value sales · Mentoring',
+   kpis:'Personal revenue · Itinerary quality · Mentee progression',headcount:'×6 (one per destination)'},
+  {dept:'FIT Travel',role:'Expert',reports:'Senior Expert',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'Full FIT booking owner — custom itineraries end to end.',
+   responsibilities:'Custom itinerary creation and booking · B2B agent liaison · All 7 policy gates · Full Booking Owner duties · Destination specialist',
+   skills:'FIT bookings · Tailor-made design · Policy compliance · B2B communication',
+   kpis:'Bookings per month · Error rate · B2B satisfaction · Gate compliance',headcount:'×6+ (TBC per destination)'},
+  {dept:'FIT Travel',role:'Trainee Expert',reports:'Expert (buddy)',badge:'#1a1a1a',badgeTx:'#fff',
+   summary:'Destination learning programme — supervised bookings.',
+   responsibilities:'Destination learning programme · Supervised custom bookings · Policy and destination training · 6-month progression target',
+   skills:'Attention to detail · Destination interest · Customer service orientation',
+   kpis:'Training completion · Certification date · Supervised booking quality',headcount:'×6+ (TBC per destination)'},
+  {dept:'Customer Services',role:'Team Leader',reports:'CS Head (Central)',badge:'#138A62',badgeTx:'#fff',
+   summary:'Leads customer service team for one destination.',
+   responsibilities:'Day-to-day leadership of destination CS team · SLA monitoring · Escalation management · Reporting to management · Quality checks · Staff scheduling',
+   skills:'Customer service leadership · SLA management · Escalation handling · Team management',
+   kpis:'SLA compliance · CSAT · Escalation resolution time · Quality score',headcount:'×6'},
+  {dept:'Customer Services',role:'SME',reports:'Team Leader',badge:'#138A62',badgeTx:'#fff',
+   summary:'Subject matter expert — destination specialist and escalation handler.',
+   responsibilities:'Handles escalated customer queries · Product and destination expertise · Trains new agents · Quality audits · Supports TL on complex cases',
+   skills:'Deep destination knowledge · Escalation handling · Training · Quality review',
+   kpis:'Escalation resolution rate · Training delivery · Quality audit scores',headcount:'×6'},
+  {dept:'Customer Services',role:'Supervisor',reports:'Team Leader',badge:'#138A62',badgeTx:'#fff',
+   summary:'Supervises day-to-day agent performance and queue management.',
+   responsibilities:'Monitors agent performance in real-time · Queue management · First-level escalation · Reports to Team Leader · Shift supervision',
+   skills:'Supervision · Queue management · Real-time performance monitoring',
+   kpis:'Queue SLA · Agent error rate · Daily report accuracy',headcount:'×6'},
+  {dept:'Customer Services',role:'Customer Service Agent',reports:'Supervisor',badge:'#138A62',badgeTx:'#fff',
+   summary:'Front-line customer support across all booking types.',
+   responsibilities:'Handles post-sale customer queries · Complaint intake · Refund requests · Escalates to SME when required · Destination-aligned',
+   skills:'Communication · Problem solving · CRM usage · Destination awareness',
+   kpis:'Contacts per day · CSAT · First-contact resolution · Error rate',headcount:'×30'},
+  {dept:'Ticketing',role:'Team Leader — International',reports:'Ticketing Head',badge:'#4F46CC',badgeTx:'#fff',
+   summary:'Leads international ticketing team — GDS and group blocks.',
+   responsibilities:'Manages international ticketing agents · GDS oversight · Group block management · Name amendment escalation · PNR quality control · Liaises with BU Ops for flight sealing',
+   skills:'GDS proficiency · International fares · Group ticketing · Team management',
+   kpis:'PNR error rate · Flight sealing SLA · Group block utilisation',headcount:'1'},
+  {dept:'Ticketing',role:'Ticketing Agent — International',reports:'TL International',badge:'#4F46CC',badgeTx:'#fff',
+   summary:'Issues and manages international flight tickets via GDS.',
+   responsibilities:'PNR creation and management · Fare class booking · Name amendment processing · Void and reissue · Group PNR coordination · Name vs passport verification',
+   skills:'GDS (Amadeus/Galileo) · Fare rules · Name amendment procedures · Attention to detail',
+   kpis:'Tickets issued per day · Error rate · Amendment turnaround',headcount:'×20'},
+  {dept:'Ticketing',role:'Team Leader — Domestic',reports:'Ticketing Head',badge:'#4F46CC',badgeTx:'#fff',
+   summary:'Leads domestic ticketing team — LCC and multi-city routes.',
+   responsibilities:'Manages domestic agents · LCC platform management · Multi-city routing · Refund processing oversight · Domestic group fares',
+   skills:'Domestic fares · LCC platforms · Multi-city routing · Team management',
+   kpis:'Booking accuracy · Refund processing time · Agent utilisation',headcount:'1'},
+  {dept:'Ticketing',role:'Ticketing Agent — Domestic',reports:'TL Domestic',badge:'#4F46CC',badgeTx:'#fff',
+   summary:'Issues and manages domestic flight tickets.',
+   responsibilities:'Domestic PNR creation · LCC booking platforms · Group domestic fares · Refund processing · Multi-city routing',
+   skills:'Domestic LCC platforms · Fare rules · Refund processing · Accuracy',
+   kpis:'Tickets issued · Error rate · Refund processing time',headcount:'×10'},
+  {dept:'Visa',role:'Visa Team Leader',reports:'BU Ops / Ops Manager',badge:'#C47800',badgeTx:'#fff',
+   summary:'Manages visa pipeline across all BUs via UDAN outsource.',
+   responsibilities:'Oversees 8-stage visa tracking for all bookings · Embassy liaison · T-45 escalation management · Coordinates with UDAN Udaan India · Advises BU Ops on visa feasibility · Rejection escalation',
+   skills:'Visa processing · Embassy knowledge · Status tracking · Escalation management',
+   kpis:'Visa grant rate · T-45 passport possession · Rejection escalation speed',headcount:'×2'},
+  {dept:'Visa',role:'Visa Agent',reports:'Visa Team Leader',badge:'#C47800',badgeTx:'#fff',
+   summary:'Processes visa applications through all 8 stages.',
+   responsibilities:'Document collection from Booking Owners · Embassy appointment scheduling · Biometrics coordination · 8-stage status updates · Rejection documentation · Passport tracking',
+   skills:'Visa documentation · Embassy procedures · Status tracking · Organisation',
+   kpis:'Applications processed per week · Status update accuracy · Document completeness rate',headcount:'×10'},
+  {dept:'Marketing',role:'Marketing Director',reports:'Global CEO',badge:'#1A73E8',badgeTx:'#fff',
+   summary:'Leads all marketing across destinations with localised offices.',
+   responsibilities:'Global marketing strategy · Localised office management · Campaign approval · Brand guardianship · Budget management · Pricing approval sign-off',
+   skills:'Marketing leadership · Brand management · Digital marketing · Budget management · Travel marketing',
+   kpis:'Lead generation · Brand awareness · Campaign ROI · Cost per lead',headcount:'1 — TBC'},
+  {dept:'Marketing',role:'Marketing Manager',reports:'Marketing Director',badge:'#1A73E8',badgeTx:'#fff',
+   summary:'Owns marketing for one destination region.',
+   responsibilities:'Destination-specific campaigns · Social and digital content direction · Creative team management · Local market knowledge · Localised promotions',
+   skills:'Digital marketing · Destination knowledge · Campaign management · Team management',
+   kpis:'Destination enquiry volume · Campaign performance · Lead quality',headcount:'×6 (one per destination)'},
+  {dept:'Marketing',role:'Creative Team',reports:'Marketing Manager',badge:'#1A73E8',badgeTx:'#fff',
+   summary:'Creates all visual and content assets for a destination.',
+   responsibilities:'Design and visual content production · Brochure and collateral design · Digital asset creation · Brand consistency · Photography and video coordination',
+   skills:'Graphic design · Adobe Suite · Brand guidelines · Digital content',
+   kpis:'Asset delivery time · Brand consistency score · Volume of assets',headcount:'×2 per destination (12 total)'},
+  {dept:'Marketing',role:'Social Media',reports:'Marketing Manager',badge:'#1A73E8',badgeTx:'#fff',
+   summary:'Manages social media presence for one destination.',
+   responsibilities:'Daily social content creation · Community management · Paid social campaigns · Influencer coordination · Performance reporting',
+   skills:'Social platforms · Content creation · Paid social · Analytics · Community management',
+   kpis:'Follower growth · Engagement rate · Paid social CPL · Reach',headcount:'×1 per destination (6 total)'},
+  {dept:'Finance',role:'Finance Director',reports:'Global CEO',badge:'#2563EB',badgeTx:'#fff',
+   summary:'Leads all finance operations across TripFactory — structure TBC.',
+   responsibilities:'Overall financial control · P&L reporting · Payment gate ownership · Supplier settlement oversight · TCS and regulatory compliance · LERMS administration · Payroll sign-off · Float authorisation above threshold',
+   skills:'Financial leadership · Travel industry finance · TCS · LERMS · Compliance',
+   kpis:'Month-end accuracy · Gate compliance rate · TCS filing accuracy · Supplier payment SLA',headcount:'1 — TBC'},
+  {dept:'Credits',role:'Credits Director',reports:'Global CEO',badge:'#B87800',badgeTx:'#fff',
+   summary:'Global and localised credits function — structure TBC.',
+   responsibilities:'Global credits strategy · Localisation per market · Partner credit integrations · Redemption platform · Customer-facing credits support · P&L for credits function',
+   skills:'Loyalty/rewards programme management · Technology integration · Global/local balance · Commercial acumen',
+   kpis:'Credits issued · Redemption rate · Partner satisfaction · Revenue from credits',headcount:'TBC — Sahil Nijhawan to advise'},
+  {dept:'Flights',role:'Flights Director',reports:'Global CEO / CCO',badge:'#1A73E8',badgeTx:'#fff',
+   summary:'Central flights function — structure to be advised by Ankit Aggarwal.',
+   responsibilities:'Airline contract negotiations · GDS strategy · Group fares management · Integration with all BU ticketing · Fare filing and distribution · Flights team management',
+   skills:'Airline commercial · GDS management · Group fares · Revenue management · Team leadership',
+   kpis:'Cost per seat · Group fare utilisation · GDS error rate · Airline relationship score',headcount:'TBC — Ankit Aggarwal to advise'},
+  {dept:'Commercial Product',role:'Contracting Manager',reports:'CEO India',badge:'#6B46C1',badgeTx:'#fff',
+   summary:'Owns hotel and supplier contracting for one destination.',
+   responsibilities:'Negotiates hotel and ground supplier contracts · Rate loading oversight · Allotment management · Supplier relationship management · Annual contracting cycle · Competitive rate benchmarking',
+   skills:'Hotel contracting · Rate negotiation · Destination knowledge · Relationship management',
+   kpis:'Rate competitiveness · Contract renewal rate · Loading accuracy · Allotment utilisation',headcount:'×6 (one per destination)'},
+  {dept:'Commercial Product',role:'Contracting Loading Team',reports:'Contracting Manager',badge:'#6B46C1',badgeTx:'#fff',
+   summary:'Loads contracted rates and inventory into the booking system.',
+   responsibilities:'System loading of hotel and supplier rates · Validity and accuracy checks · Inventory management · Rate update processing · Database maintenance',
+   skills:'Booking system proficiency · Accuracy · Rate loading · Database management',
+   kpis:'Loading accuracy rate · Loading turnaround time · Error rate',headcount:'TBC'},
+  {dept:'People & Governance',role:'CPO',reports:'Global CEO',badge:'#3D8A14',badgeTx:'#fff',
+   summary:'Alia Taub — leads HR, Training, Legal, Payroll, Compliance.',
+   responsibilities:'HR strategy and business partnering across all BUs · Training programme design and delivery · Legal and compliance oversight · Payroll · Technology governance · Structure TBC',
+   skills:'HR leadership · Employment law · L&D · Compliance · Payroll',
+   kpis:'Retention · Training completion · Legal incidents · Payroll accuracy',headcount:'Structure TBC — Alia Taub to confirm'},
 ];
 
-// ── Build JD tab ───────────────────────────────────────────
-function buildJD() {
-  const container = document.getElementById('jdRows');
-  const filterBar = document.getElementById('jdFilters');
-
-  // Unique depts
-  const depts = [...new Set(JD.map(r => r.dept))];
-  depts.forEach(d => {
-    const btn = document.createElement('button');
-    btn.className = 'jd-filter-chip';
-    btn.textContent = d;
-    btn.onclick = function(){ filterJD(d, this); };
+function buildJD(){
+  const container=document.getElementById('jdRows');
+  const filterBar=document.getElementById('jdFilters');
+  const depts=[...new Set(JD.map(r=>r.dept))];
+  depts.forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='jd-filter-chip';
+    btn.textContent=d;
+    btn.onclick=function(){filterJD(d,this);};
     filterBar.appendChild(btn);
   });
-
-  // Wrap in container
-  const wrap = document.createElement('div');
-  wrap.className = 'jd-container';
-
-  JD.forEach((row, i) => {
-    const rowWrap = document.createElement('div');
-    rowWrap.className = 'jd-row-wrap';
-    rowWrap.dataset.dept = row.dept;
-
-    const r = document.createElement('div');
-    r.className = 'jd-row';
-    r.innerHTML = `
-      <div class="jd-cell jd-cell-dept">
-        <span class="jd-dept-badge" style="background:${row.badge};color:${row.badgeTx}">${row.dept}</span>
-      </div>
-      <div class="jd-cell jd-cell-role">${row.role}</div>
-      <div class="jd-cell jd-cell-rep">${row.reports}</div>
-      <div class="jd-cell jd-cell-desc">
-        <span>${row.summary}</span>
-        <span class="jd-expand-icon">▼</span>
-      </div>
-      <div class="jd-detail">
-        <div class="jd-detail-grid">
-          <div class="jd-detail-section">
-            <div class="jd-detail-lbl">Key Responsibilities</div>
-            <div class="jd-detail-body">${row.responsibilities.split(' · ').map(s=>`• ${s}`).join('<br>')}</div>
-          </div>
-          <div class="jd-detail-section">
-            <div class="jd-detail-lbl">Skills & Experience</div>
-            <div class="jd-detail-body" style="margin-bottom:8px">${(row.skills||'').split(' · ').map(s=>`• ${s}`).join('<br>')}</div>
-            ${row.kpis ? `<div class="jd-detail-lbl">Key Metrics / KPIs</div><div class="jd-detail-body">${row.kpis.split(' · ').map(s=>`• ${s}`).join('<br>')}</div>` : ''}
-          </div>
-        </div>
-        <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
-          <span class="jd-detail-lbl" style="margin-bottom:0">Indicative headcount:</span>
-          <span class="jd-tag">${row.headcount}</span>
-          <span style="font-size:8.5px;color:#3a3a3a;font-style:italic">Subject to reconfirmation by Director + CCO/CEO</span>
-        </div>
-      </div>`;
-    r.onclick = function() {
-      this.classList.toggle('expanded');
+  const wrap=document.createElement('div');
+  wrap.className='jd-container';
+  JD.forEach(row=>{
+    const rowWrap=document.createElement('div');
+    rowWrap.className='jd-row-wrap';
+    rowWrap.dataset.dept=row.dept;
+    // The clickable summary row
+    const r=document.createElement('div');
+    r.className='jd-row';
+    r.innerHTML=
+      '<div class="jd-cell jd-cell-dept"><span class="jd-dept-badge" style="background:'+row.badge+';color:'+row.badgeTx+'">'+row.dept+'</span></div>'+
+      '<div class="jd-cell jd-cell-role">'+row.role+'</div>'+
+      '<div class="jd-cell jd-cell-rep">'+row.reports+'</div>'+
+      '<div class="jd-cell jd-cell-desc"><span>'+row.summary+'</span><span class="jd-expand-icon">▼</span></div>';
+    // The expandable detail — a SIBLING, not a child
+    const det=document.createElement('div');
+    det.className='jd-detail';
+    const kpisHtml=row.kpis?'<div class="jd-detail-lbl" style="margin-top:8px">Key Metrics / KPIs</div><div class="jd-detail-body">'+row.kpis.split(' · ').map(s=>'• '+s).join('<br>')+'</div>':'';
+    det.innerHTML=
+      '<div class="jd-detail-grid">'+
+        '<div class="jd-detail-section">'+
+          '<div class="jd-detail-lbl">Key Responsibilities</div>'+
+          '<div class="jd-detail-body">'+row.responsibilities.split(' · ').map(s=>'• '+s).join('<br>')+'</div>'+
+        '</div>'+
+        '<div class="jd-detail-section">'+
+          '<div class="jd-detail-lbl">Skills & Experience</div>'+
+          '<div class="jd-detail-body" style="margin-bottom:8px">'+(row.skills||'').split(' · ').map(s=>'• '+s).join('<br>')+'</div>'+
+          kpisHtml+
+        '</div>'+
+      '</div>'+
+      '<div style="margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
+        '<span class="jd-detail-lbl" style="margin-bottom:0">Indicative headcount:</span>'+
+        '<span class="jd-tag">'+row.headcount+'</span>'+
+        '<span style="font-size:8.5px;color:#555;font-style:italic">Subject to reconfirmation by Director + CCO/CEO</span>'+
+      '</div>';
+    r.onclick=function(){
+      const open=this.classList.toggle('expanded');
+      det.classList.toggle('open',open);
     };
     rowWrap.appendChild(r);
+    rowWrap.appendChild(det);
     wrap.appendChild(rowWrap);
   });
-
   container.appendChild(wrap);
 }
+buildJD();
 
-// ══════════════════════════════════════════════════════════
-// PROCESSES DATA & RENDER
-// ══════════════════════════════════════════════════════════
-const PROC_DATA = [
-  { dept:'Sales (All BUs)', icon:'🗣️', color:'#1A2E4A', roles:[
-    { name:'Sales Expert — Booking Process', tag:'End-to-end', steps:[
-      {n:1,t:'Enquiry Received',s:'Call · WhatsApp · Walk-in · Agent referral',cls:''},
-      {n:2,t:'Ground Reality Disclosure',s:'14 items · customer signs before any payment',cls:'ps-gate'},
-      {n:3,t:'Package & Pricing Locked',s:'Departure · version · inclusions in writing',cls:''},
-      {n:4,t:'GATE A — Disclosure Gate',s:'No payment until signed. Hard stop.',cls:'ps-gate'},
-      {n:5,t:'Deposit Collected',s:'Booking Owner assigned · file opened',cls:''},
-      {n:6,t:'12 Mandatory Fields',s:'Passport · PAN · DOB · rooming · dietary · emergency',cls:'ps-gate'},
-      {n:7,t:'GATE B — Booking Complete',s:'All fields confirmed. No TBDs.',cls:'ps-gate'},
-      {n:8,t:'Visa Feasibility Check',s:'Europe: mandatory before proceeding',cls:'ps-warn'},
-      {n:9,t:'Parallel Processing',s:'Visa · Finance gates · Flight sealing',cls:''},
-      {n:10,t:'Balance Collection',s:'Track all 6 payment gates',cls:'ps-warn'},
-      {n:11,t:'Handover File',s:'18-item file · Sales-to-Ops · GATE G',cls:'ps-gate'},
-      {n:12,t:'Departure',s:'File accepted · zero dues · TM briefed',cls:'ps-done'},
-    ], notes:'<strong>Key rule:</strong> Payment does not equal confirmation. All 12 mandatory fields must be complete. The Booking Owner is personally accountable for every gate from A to G.' },
-    { name:'Sales Team Leader — Daily Process', tag:'Management', steps:[
-      {n:1,t:'Morning Pipeline Review',s:'Review open files · identify blockers',cls:''},
-      {n:2,t:'Gate Compliance Check',s:'Flag any overdue gates in team',cls:'ps-warn'},
-      {n:3,t:'Coaching & Support',s:'Support Experts on complex enquiries',cls:''},
-      {n:4,t:'Escalation Triage',s:'L1 escalations reviewed within 2 hours',cls:''},
-      {n:5,t:'Weekly Ops Review',s:'Attend with Director · report team KPIs',cls:''},
-      {n:6,t:'Scorecard Update',s:'Log errors and gate violations weekly',cls:'ps-warn'},
-    ], notes:'Team Leader is responsible for their team\'s compliance, not individual bookings. Their KPI is team error rate and conversion.' },
+// ══ PROCESSES DATA ════════════════════════════════════════
+const PROC_DATA=[
+  {dept:'Sales (All BUs)',icon:'🗣️',color:'#000',roles:[
+    {name:'Sales Expert — Full Booking Process',tag:'End-to-end | All BUs',
+     steps:[
+       {n:1,t:'Enquiry Received',s:'Call · WhatsApp · Walk-in · Agent referral · No system entry yet',cls:''},
+       {n:2,t:'Ground Reality Disclosure',s:'Present all 14 items · Customer signs before any payment',cls:'ps-gate'},
+       {n:3,t:'Package & Pricing Locked',s:'Departure · version · all inclusions confirmed in writing',cls:''},
+       {n:4,t:'GATE A — Disclosure',s:'Hard stop — no payment until signed by customer or agent',cls:'ps-gate'},
+       {n:5,t:'Deposit Collected',s:'File opened in system · Booking Owner assigned · 11 BO duties active',cls:''},
+       {n:6,t:'12 Mandatory Fields',s:'Passport · PAN · DOB · rooming · dietary · emergency contacts',cls:'ps-gate'},
+       {n:7,t:'GATE B — Booking Complete',s:'All 12 fields confirmed. Zero TBDs. No company action until done.',cls:'ps-gate'},
+       {n:8,t:'Visa Feasibility',s:'Europe bookings: mandatory check before proceeding. Reject if not possible.',cls:'ps-warn'},
+       {n:9,t:'Parallel Processing',s:'Visa 8-stage · 6 Finance payment gates · Flight sealing running simultaneously',cls:''},
+       {n:10,t:'Balance Collection',s:'Track all 6 payment gates · Outstanding dues escalated at T-14',cls:'ps-warn'},
+       {n:11,t:'18-Item Handover File',s:'Prepare and submit to Ops · GATE G must pass before departure',cls:'ps-gate'},
+       {n:12,t:'Departure',s:'Ops accepted file · Zero dues · TM briefed · Driver float signed',cls:'ps-done'},
+     ],notes:'<strong>Key rule (§03):</strong> One named Booking Owner per file. Transfer requires written hand-off note. Payment does not equal confirmation — all 12 fields must be complete first.'},
+    {name:'Sales Team Leader — Daily Management',tag:'Management',
+     steps:[
+       {n:1,t:'Morning Pipeline Review',s:'Review all open files · identify gate blockers · flag overdue items',cls:''},
+       {n:2,t:'Gate Compliance Check',s:'Flag overdue gates in team · T-45 passport · T-30 flights · T-14 dues',cls:'ps-warn'},
+       {n:3,t:'Coaching & Support',s:'Support Experts on complex enquiries · review disclosure quality',cls:''},
+       {n:4,t:'Escalation Triage',s:'L1 escalations reviewed within 2 hours · route to Manager if needed',cls:''},
+       {n:5,t:'Weekly Ops Review',s:'Attend with Director · report team KPIs · raise systemic issues',cls:''},
+       {n:6,t:'Scorecard Update',s:'Log errors and gate violations weekly · flag to HR if pattern emerges',cls:'ps-warn'},
+     ],notes:'Team Leader is responsible for their team\'s compliance, not individual bookings. Their primary KPI is team error rate and conversion ratio.'},
   ]},
-  { dept:'Operations', icon:'⚙️', color:'#17426E', roles:[
-    { name:'Ops Team Leader — Tour Cycle', tag:'Full cycle', steps:[
-      {n:1,t:'Handover File Received',s:'Review all 18 items — reject if incomplete',cls:'ps-gate'},
-      {n:2,t:'Service Block Confirmation',s:'Hotels · guides · coaches confirmed T-21',cls:'ps-warn'},
-      {n:3,t:'Group Strength Review',s:'Proceed / Hold / Merge / Cancel decision',cls:'ps-warn'},
-      {n:4,t:'GATE F — Freeze Gate',s:'No changes after freeze without written approval',cls:'ps-gate'},
-      {n:5,t:'Voucher Release',s:'Only after GATE E zero-dues confirmed',cls:'ps-gate'},
-      {n:6,t:'TM Briefing',s:'Full pack: pax list · meals · flights · hotels · float',cls:''},
-      {n:7,t:'Driver Float',s:'LERMS entry · driver signs receipt before departure',cls:'ps-gate'},
-      {n:8,t:'Departure',s:'Tour Manager takes responsibility from this point',cls:'ps-done'},
-      {n:9,t:'Post-Tour Settlement',s:'Driver submits expenses ≤48hrs · receipts required',cls:''},
-      {n:10,t:'LERMS Close',s:'All entries reconciled · Finance sign-off',cls:'ps-done'},
-    ], notes:'<strong>Critical:</strong> Ops may reject any incomplete handover file. Accountability does not transfer to Ops until the file is formally accepted.' },
+  {dept:'Operations',icon:'⚙️',color:'#111',roles:[
+    {name:'Ops Team Leader — Full Tour Cycle',tag:'Freeze to post-tour',
+     steps:[
+       {n:1,t:'Handover File Received',s:'Review all 18 items — reject if anything missing or TBD',cls:'ps-gate'},
+       {n:2,t:'Service Block Confirmation',s:'Hotels · guides · coaches · restaurants confirmed by T-21',cls:'ps-warn'},
+       {n:3,t:'Group Strength Review',s:'Proceed / Hold (risk in writing) / Merge / Cancel — management sign-off',cls:'ps-warn'},
+       {n:4,t:'GATE F — Freeze',s:'No new bookings or changes after freeze without written Ops Manager approval',cls:'ps-gate'},
+       {n:5,t:'Voucher Release',s:'Only after Finance confirms GATE E zero dues — §26 violation if released early',cls:'ps-gate'},
+       {n:6,t:'TM Briefing',s:'Full pack: pax list · rooming · meals · flights · vouchers · LERMS float · emergency contacts',cls:''},
+       {n:7,t:'Driver Float Issued',s:'LERMS entry created · driver signs receipt before departure day',cls:'ps-gate'},
+       {n:8,t:'Departure',s:'TM takes responsibility · Ops on standby for escalations',cls:'ps-done'},
+       {n:9,t:'Driver Expense Settlement',s:'Driver submits invoice + all receipts within 48 hours of tour return',cls:''},
+       {n:10,t:'LERMS Close',s:'All entries reconciled · Finance sign-off · file marked Settled',cls:'ps-done'},
+     ],notes:'<strong>Critical (§21):</strong> Ops may reject any incomplete handover file. Accountability does not transfer until formal Ops acceptance. Vouchers released with outstanding dues = §26 zero-tolerance violation.'},
   ]},
-  { dept:'Finance', icon:'₹', color:'#2563EB', roles:[
-    { name:'Finance Executive — Payment Gate Process', tag:'6 gates', steps:[
-      {n:1,t:'Gate 1: Booking Gate',s:'Deposit received · file approved to open',cls:'ps-gate'},
-      {n:2,t:'Gate 2: Visa Gate',s:'Visa fee collected · processing authorised',cls:'ps-gate'},
-      {n:3,t:'Gate 3: Flight Gate',s:'Ticketing deposit cleared · PNR sealing approved',cls:'ps-gate'},
-      {n:4,t:'Gate 4: Supplier Gate',s:'Supplier payments authorised · no commitments before this',cls:'ps-gate'},
-      {n:5,t:'Gate 5: Final Gate',s:'100% package + TCS + supplements = zero dues',cls:'ps-gate'},
-      {n:6,t:'Gate 6: Tour Gate',s:'Vouchers released · driver float issued',cls:'ps-done'},
-    ], notes:'<strong>Rule §06:</strong> No company action before the relevant payment gate clears. Finance Manager must authorise any exception in writing. B2B exceptions require credit agreement on file and Finance Manager confirmation.' },
-    { name:'Finance — LERMS & Driver Float', tag:'Post-tour', steps:[
-      {n:1,t:'Float Request',s:'Ops Controller submits · Finance Manager approves if above threshold',cls:''},
-      {n:2,t:'Float Issued',s:'Driver signs receipt · LERMS entry created',cls:'ps-gate'},
-      {n:3,t:'Tour Departs',s:'Float active · driver manages approved expenses',cls:''},
-      {n:4,t:'Tour Returns',s:'Driver submits invoice + receipts ≤48hrs',cls:'ps-warn'},
-      {n:5,t:'Expense Review',s:'Finance verifies: parking · tolls · fuel · pre-approved only',cls:''},
-      {n:6,t:'Settlement',s:'Over-float >10% → Finance Manager sign-off required',cls:'ps-warn'},
-      {n:7,t:'LERMS Closed',s:'Entry marked Settled · audit trail complete',cls:'ps-done'},
-    ], notes:'No receipt = line rejected. No exceptions. LERMS must be updated within 5 working days of tour return.' },
+  {dept:'Finance',icon:'₹',color:'#1E3A8A',roles:[
+    {name:'Finance — 6 Payment Gate Process',tag:'All booking types',
+     steps:[
+       {n:1,t:'Gate 1: Booking Gate',s:'Deposit received · file approved to open in system',cls:'ps-gate'},
+       {n:2,t:'Gate 2: Visa Gate',s:'Visa fee collected · processing authorised · LERMS entry',cls:'ps-gate'},
+       {n:3,t:'Gate 3: Flight Gate',s:'Ticketing deposit cleared · PNR sealing approved by Finance',cls:'ps-gate'},
+       {n:4,t:'Gate 4: Supplier Gate',s:'Supplier payments authorised · no hotel blocks or coach contracts before this',cls:'ps-gate'},
+       {n:5,t:'Gate 5: Final Gate',s:'100% package + TCS + all supplements = zero outstanding dues',cls:'ps-gate'},
+       {n:6,t:'Gate 6: Tour Gate',s:'Vouchers released · driver float issued · LERMS loaded',cls:'ps-done'},
+     ],notes:'<strong>Rule §06:</strong> No company action before the relevant gate clears. Finance Manager must authorise any exception in writing. B2B: credit agreement does not bypass gates — Finance Manager must still confirm in writing.'},
+    {name:'Finance — Driver Float & LERMS Settlement',tag:'Post-tour',
+     steps:[
+       {n:1,t:'Float Request',s:'Ops Controller submits request · amount and purpose stated',cls:''},
+       {n:2,t:'Finance Approval',s:'Finance Manager approves if above standard threshold · LERMS entry',cls:'ps-gate'},
+       {n:3,t:'Float Issued',s:'Driver signs receipt · copy on file · LERMS updated',cls:'ps-gate'},
+       {n:4,t:'Tour Runs',s:'Driver manages approved expenses: parking · tolls · fuel · pre-approved repairs',cls:''},
+       {n:5,t:'Expense Submission',s:'Driver submits invoice + receipts within 48 hours of tour return',cls:'ps-warn'},
+       {n:6,t:'Finance Review',s:'Verify categories · no receipt = line rejected · over 10% = FM sign-off required',cls:'ps-warn'},
+       {n:7,t:'LERMS Settlement',s:'Entry marked Settled · Finance sign-off · audit trail complete',cls:'ps-done'},
+     ],notes:'No receipt = line rejected without exception. LERMS must be updated within 5 working days of tour return. Over-float >10% requires Finance Manager written sign-off.'},
+    {name:'Finance — TCS Compliance',tag:'All bookings',
+     steps:[
+       {n:1,t:'TCS Threshold Check',s:'Finance confirms if booking exceeds TCS threshold at booking stage',cls:''},
+       {n:2,t:'TCS Rate Applied',s:'Correct rate applied per booking type and destination',cls:'ps-gate'},
+       {n:3,t:'TCS Collected',s:'Collected from customer before any tour documentation is issued',cls:'ps-gate'},
+       {n:4,t:'TCS Recorded',s:'LERMS entry · Finance records receivables',cls:''},
+       {n:5,t:'Monthly TCS Filing',s:'Finance Director ensures correct and timely filing',cls:'ps-warn'},
+       {n:6,t:'Audit Trail',s:'All TCS entries auditable · stored per compliance requirements',cls:'ps-done'},
+     ],notes:'TCS applies to international tour packages above the statutory threshold. B2B: TCS collected from agent on net rate basis. Non-compliance is a legal risk — Finance Director accountable.'},
   ]},
-  { dept:'Visa', icon:'🛂', color:'#C47800', roles:[
-    { name:'Visa Officer — 8-Stage Process', tag:'All BUs', steps:[
-      {n:1,t:'1. Not Started',s:'Booking confirmed · visa flag raised',cls:''},
-      {n:2,t:'2. Docs Pending',s:'Checklist sent to Booking Owner',cls:''},
-      {n:3,t:'3. Docs Received',s:'All docs verified by Visa Officer',cls:''},
-      {n:4,t:'4. Appt Booked',s:'Embassy appointment scheduled',cls:''},
-      {n:5,t:'5. Biometrics',s:'Applicant attends biometrics',cls:''},
-      {n:6,t:'6. Submitted',s:'Application at embassy',cls:''},
-      {n:7,t:'7. Decision',s:'Visa Granted ✓ or Rejected ✗',cls:'ps-warn'},
-      {n:8,t:'8. Delivered',s:'Passport returned to Booking Owner',cls:'ps-done'},
-    ], notes:'<strong>T-45 rule:</strong> If passport is not in hand by T-45, escalate immediately to Visa Team Leader and Ops Manager. Europe: visa feasibility must be confirmed at Step 1 of the booking process — not after deposit.' },
+  {dept:'Visa',icon:'🛂',color:'#C47800',roles:[
+    {name:'Visa Officer — 8-Stage Process',tag:'All BUs · UDAN outsource',
+     steps:[
+       {n:1,t:'Stage 1: Not Started',s:'Booking confirmed · visa flag raised in system',cls:''},
+       {n:2,t:'Stage 2: Docs Pending',s:'Checklist issued to Booking Owner · deadline set',cls:''},
+       {n:3,t:'Stage 3: Docs Received',s:'All documents received and verified by Visa Officer',cls:''},
+       {n:4,t:'Stage 4: Appt Booked',s:'Embassy or visa centre appointment scheduled',cls:''},
+       {n:5,t:'Stage 5: Biometrics',s:'Applicant attends biometrics appointment',cls:''},
+       {n:6,t:'Stage 6: Submitted',s:'Application submitted to embassy / processing centre',cls:''},
+       {n:7,t:'Stage 7: Decision',s:'Visa Granted ✓ — proceed · Visa Rejected ✗ — escalate immediately',cls:'ps-warn'},
+       {n:8,t:'Stage 8: Delivered',s:'Passport with visa returned to Booking Owner · confirmed on file',cls:'ps-done'},
+     ],notes:'<strong>T-45 rule:</strong> If passport not in hand by T-45, escalate immediately to Visa TL and Ops Manager. <strong>Europe rule (§05):</strong> Visa feasibility must be confirmed before booking is accepted — zero exceptions.'},
   ]},
-  { dept:'Ticketing', icon:'✈️', color:'#4F46CC', roles:[
-    { name:'Ticketing Agent — PNR Process', tag:'Standard', steps:[
-      {n:1,t:'Booking Received',s:'Booking Owner sends pax names + dates',cls:''},
-      {n:2,t:'Name Verification',s:'Name must match passport exactly',cls:'ps-gate'},
-      {n:3,t:'GDS Availability',s:'Check fare class · routing · group block availability',cls:''},
-      {n:4,t:'Ticketing Deposit Check',s:'Finance confirms Gate 3 cleared before sealing',cls:'ps-gate'},
-      {n:5,t:'PNR Created',s:'Booking confirmed in GDS',cls:''},
-      {n:6,t:'Flight Sealed',s:'Non-refundable commitment made',cls:'ps-gate'},
-      {n:7,t:'Confirmation to Ops',s:'PNR details sent to Ops and Booking Owner',cls:'ps-done'},
-    ], notes:'<strong>T-30 rule:</strong> If flight is not sealed by T-30, escalate to Ticketing Team Leader and Ops Manager. Name amendments after sealing may incur charges — Booking Owner is accountable.' },
+  {dept:'Ticketing',icon:'✈️',color:'#4F46CC',roles:[
+    {name:'Ticketing Agent — PNR Process',tag:'International & Domestic',
+     steps:[
+       {n:1,t:'Request Received',s:'Booking Owner sends passenger names and travel dates to Ticketing',cls:''},
+       {n:2,t:'Name Verification',s:'Name must match passport exactly including middle name — hard stop if mismatch',cls:'ps-gate'},
+       {n:3,t:'GDS Check',s:'Fare class availability · routing options · group block availability',cls:''},
+       {n:4,t:'Gate 3 Confirmation',s:'Finance confirms ticketing deposit has cleared before sealing',cls:'ps-gate'},
+       {n:5,t:'PNR Created',s:'Booking confirmed in GDS · seats held',cls:''},
+       {n:6,t:'Flight Sealed',s:'Non-refundable commitment — only after Gate 3 confirmed',cls:'ps-gate'},
+       {n:7,t:'Confirmation Issued',s:'PNR and flight details sent to Ops and Booking Owner · LERMS updated',cls:'ps-done'},
+     ],notes:'<strong>T-30 rule:</strong> If flight not sealed by T-30, escalate to Ticketing TL and Ops Manager. Name amendments after sealing may attract airline fees — Booking Owner is accountable for correct name submission.'},
   ]},
-  { dept:'Customer Services', icon:'🎧', color:'#138A62', roles:[
-    { name:'Customer Service Agent — Query Process', tag:'Post-sale', steps:[
-      {n:1,t:'Query Received',s:'Phone · email · chat · WhatsApp',cls:''},
-      {n:2,t:'CRM Log',s:'Log query type · booking ref · customer',cls:''},
-      {n:3,t:'Identify Category',s:'Info query / change request / complaint',cls:''},
-      {n:4,t:'Resolve or Escalate',s:'Agent resolves within authority · else escalate',cls:''},
-      {n:5,t:'L1 Escalation',s:'To SME or Supervisor · 2hr SLA',cls:'ps-warn'},
-      {n:6,t:'L2 Escalation',s:'To CS Team Leader · complex or complaint',cls:'ps-warn'},
-      {n:7,t:'Resolution',s:'Customer notified · CRM updated · case closed',cls:'ps-done'},
-    ], notes:'All complaints must be logged in CRM regardless of outcome. No verbal promises on refunds or changes without supervisor approval.' },
+  {dept:'Customer Services',icon:'🎧',color:'#138A62',roles:[
+    {name:'CS Agent — Query & Complaint Process',tag:'Post-sale · All channels',
+     steps:[
+       {n:1,t:'Contact Received',s:'Phone · email · chat · WhatsApp · CRM logged immediately',cls:''},
+       {n:2,t:'Booking Identified',s:'Pull up booking · verify customer identity · note query type',cls:''},
+       {n:3,t:'Categorise',s:'Info query / Change request / Complaint / Refund request',cls:''},
+       {n:4,t:'Resolve (within authority)',s:'Agent resolves standard queries within defined authority limits',cls:''},
+       {n:5,t:'L1 Escalation',s:'Escalate to SME or Supervisor if outside authority · 2hr SLA',cls:'ps-warn'},
+       {n:6,t:'L2 Escalation',s:'TL handles complex complaints · financial decisions need Finance approval',cls:'ps-warn'},
+       {n:7,t:'Resolution & CRM Close',s:'Customer notified of outcome · CRM updated · case closed',cls:'ps-done'},
+     ],notes:'All complaints must be logged in CRM regardless of outcome. No verbal refund promises without Finance Manager approval. Pattern complaints (3+ same issue) must be escalated to CCO.'},
   ]},
-  { dept:'Marketing', icon:'📣', color:'#1A73E8', roles:[
-    { name:'Marketing Manager — Campaign Process', tag:'Per destination', steps:[
-      {n:1,t:'Brief Received',s:'BU Director or Marketing Director sets brief',cls:''},
-      {n:2,t:'Creative Brief',s:'Marketing Manager briefs Creative Team',cls:''},
-      {n:3,t:'Content Production',s:'Creative × 2 + Social Media × 1 produce assets',cls:''},
-      {n:4,t:'Approval',s:'Marketing Director approves before publication',cls:'ps-gate'},
-      {n:5,t:'Pricing Sign-off',s:'Any pricing in marketing materials — CCO must approve',cls:'ps-gate'},
-      {n:6,t:'Publish & Distribute',s:'Digital · social · print · agent comms',cls:''},
-      {n:7,t:'Performance Review',s:'CPL · engagement · lead quality reported weekly',cls:'ps-done'},
-    ], notes:'<strong>Critical:</strong> No pricing can be published in any marketing material without CCO sign-off. Incorrect pricing in market creates liability.' },
+  {dept:'Marketing',icon:'📣',color:'#1A73E8',roles:[
+    {name:'Marketing Manager — Campaign Delivery',tag:'Per destination',
+     steps:[
+       {n:1,t:'Brief Received',s:'BU Director or Marketing Director sets campaign brief',cls:''},
+       {n:2,t:'Creative Brief',s:'Marketing Manager briefs Creative Team × 2 and Social Media × 1',cls:''},
+       {n:3,t:'Content Production',s:'Assets produced: digital · social · print · brochure as required',cls:''},
+       {n:4,t:'Marketing Director Approval',s:'All content approved before any publication',cls:'ps-gate'},
+       {n:5,t:'Pricing Sign-off',s:'Any pricing in materials requires CCO written approval — no exceptions',cls:'ps-gate'},
+       {n:6,t:'Publish & Distribute',s:'Digital · social · print · B2B agent communications',cls:''},
+       {n:7,t:'Performance Review',s:'CPL · engagement · lead quality · enquiry volume reported weekly',cls:'ps-done'},
+     ],notes:'<strong>Critical:</strong> No pricing may appear in any marketing material without CCO written sign-off. Incorrect pricing published = immediate legal and commercial liability.'},
+  ]},
+  {dept:'B2B Agents',icon:'🤝',color:'#6B46C1',roles:[
+    {name:'B2B Account Manager — Agent Booking Process',tag:'Trade agents',
+     steps:[
+       {n:1,t:'Agent Pre-Registration',s:'Agent signs trade agreement · commission agreed · credit terms confirmed (if applicable)',cls:'ps-gate'},
+       {n:2,t:'Enquiry Received',s:'Agent submits booking request · Account Manager is primary contact (not end customer)',cls:''},
+       {n:3,t:'Net Rate + Commission',s:'Account Manager provides net pricing · commission on file · not disclosed to end customer',cls:''},
+       {n:4,t:'Disclosure Responsibility',s:'Agent signs that they are responsible for presenting all 14 disclosure items to end customer',cls:'ps-gate'},
+       {n:5,t:'Passenger Data from Agent',s:'Agent provides all 12 mandatory fields · Account Manager flags incomplete within 24hrs',cls:'ps-gate'},
+       {n:6,t:'Payment / Credit',s:'Standard gates apply · credit terms may apply at Gates 4-5 if agreement on file',cls:'ps-warn'},
+       {n:7,t:'Handover File',s:'Standard 18 items PLUS agent reference and billing summary',cls:'ps-gate'},
+       {n:8,t:'Post-Tour',s:'Refund processed to agent · agent manages customer refund · commission clawback if applicable',cls:'ps-done'},
+     ],notes:'<strong>B2B rule (§14):</strong> No booking accepted from an unregistered agent. Agent is contractually responsible for disclosure to end customer. Credit terms do not bypass Finance payment gates.'},
   ]},
 ];
 
-function buildProc() {
-  const c = document.getElementById('procContainer');
-  PROC_DATA.forEach(dept => {
-    const d = document.createElement('div');
-    d.className = 'proc-dept';
-    d.innerHTML = `<div class="proc-dept-hdr" style="background:${dept.color}">
-      <span class="proc-dept-icon">${dept.icon}</span>
-      <span class="proc-dept-title">${dept.dept}</span>
-      <span class="proc-dept-sub">${dept.roles.length} process${dept.roles.length>1?'es':''}</span>
-    </div><div class="proc-roles"></div>`;
-    const rolesEl = d.querySelector('.proc-roles');
-    dept.roles.forEach(role => {
-      const r = document.createElement('div');
-      r.className = 'proc-role';
-      const steps = role.steps.map((s,i) =>
-        `${i>0?'<span class="proc-arrow">→</span>':''}<div class="proc-step ${s.cls||''}"><span class="proc-step-num">Step ${s.n}</span><span class="proc-step-title">${s.t}</span><span class="proc-step-sub">${s.s}</span></div>`
-      ).join('');
-      r.innerHTML = `<div class="proc-role-hdr" onclick="this.closest('.proc-role').classList.toggle('open')">
-        <span class="proc-role-name">${role.name}</span>
-        <span class="proc-role-tag">${role.tag}</span>
-        <span class="proc-chevron">▼</span>
-      </div>
-      <div class="proc-steps">
-        <div class="proc-flow">${steps}</div>
-        <div class="proc-notes">${role.notes}</div>
-      </div>`;
+function buildProc(){
+  const c=document.getElementById('procContainer');
+  if(!c)return;
+  PROC_DATA.forEach(dept=>{
+    const d=document.createElement('div');
+    d.className='proc-dept';
+    const hdr=document.createElement('div');
+    hdr.className='proc-dept-hdr';
+    hdr.style.background=dept.color;
+    hdr.innerHTML='<span class="proc-dept-icon">'+dept.icon+'</span><span class="proc-dept-title">'+dept.dept+'</span><span class="proc-dept-sub">'+dept.roles.length+' process'+(dept.roles.length>1?'es':'')+'</span>';
+    const rolesEl=document.createElement('div');
+    rolesEl.className='proc-roles';
+    dept.roles.forEach(role=>{
+      const r=document.createElement('div');
+      r.className='proc-role';
+      const rHdr=document.createElement('div');
+      rHdr.className='proc-role-hdr';
+      rHdr.innerHTML='<span class="proc-role-name">'+role.name+'</span><span class="proc-role-tag">'+role.tag+'</span><span class="proc-chevron">▼</span>';
+      const steps=document.createElement('div');
+      steps.className='proc-steps';
+      const flow=document.createElement('div');
+      flow.className='proc-flow';
+      role.steps.forEach((s,i)=>{
+        if(i>0){const arr=document.createElement('span');arr.className='proc-arrow';arr.textContent='→';flow.appendChild(arr);}
+        const step=document.createElement('div');
+        step.className='proc-step '+(s.cls||'');
+        step.innerHTML='<span class="proc-step-num">Step '+s.n+'</span><span class="proc-step-title">'+s.t+'</span><span class="proc-step-sub">'+s.s+'</span>';
+        flow.appendChild(step);
+      });
+      steps.appendChild(flow);
+      const notes=document.createElement('div');
+      notes.className='proc-notes';
+      notes.innerHTML=role.notes;
+      steps.appendChild(notes);
+      rHdr.onclick=function(){
+        r.classList.toggle('open');
+        steps.style.display=r.classList.contains('open')?'block':'none';
+        const ch=this.querySelector('.proc-chevron');
+        if(ch)ch.style.transform=r.classList.contains('open')?'rotate(180deg)':'';
+      };
+      r.appendChild(rHdr);
+      r.appendChild(steps);
       rolesEl.appendChild(r);
     });
+    d.appendChild(hdr);
+    d.appendChild(rolesEl);
     c.appendChild(d);
   });
 }
 buildProc();
 
-// ══════════════════════════════════════════════════════════
-// POLICIES DATA & RENDER
-// ══════════════════════════════════════════════════════════
-const POL_DATA = [
-  { section:'Booking Protection Policies', color:'#FEE2E2', hdrTx:'#7F1D1D', border:'#FCA5A5', icon:'📋', policies:[
-    { icon:'🔒', name:'Disclosure Before Deposit', sev:'hard', sevTx:'HARD STOP',
-      body:'No deposit may be collected before the customer (or agent) has signed the 14-item Ground Reality Disclosure. This policy applies to all booking types — GIT, MICE, FIT, B2B.',
-      rules:[
-        {txt:'Verbal disclosure is not sufficient. Written acknowledgement required.', cls:'pr-hard'},
-        {txt:'B2B agents are contractually responsible for passing disclosure to end customer.', cls:'pr-warn'},
-        {txt:'If disclosure is skipped: booking is invalid regardless of payment status.', cls:'pr-hard'},
-      ]},
-    { icon:'📝', name:'Mandatory Fields Policy', sev:'hard', sevTx:'HARD STOP',
-      body:'All 12 mandatory fields must be complete before a booking is confirmed. Any TBD or blank field makes the booking Incomplete. Payment does not override this.',
-      rules:[
-        {txt:'2 or more TBD fields = Incomplete status. No company action until resolved.', cls:'pr-hard'},
-        {txt:'Name must match passport exactly — including middle names and special characters.', cls:'pr-hard'},
-        {txt:'Booking Owner is accountable for data completeness.', cls:'pr-warn'},
-      ]},
-    { icon:'✍️', name:'Booking Owner Policy', sev:'std', sevTx:'REQUIRED',
-      body:'Every booking must have one named Booking Owner who is accountable from booking to departure. No booking may be transferred without a formal hand-off note.',
-      rules:[
-        {txt:'One named Booking Owner per file — no exceptions.', cls:'pr-hard'},
-        {txt:'Transfer requires written hand-off note with acknowledgement from receiving BO.', cls:'pr-warn'},
-        {txt:'BO is accountable for all 7 policy gates A through G.', cls:'pr-warn'},
-      ]},
-    { icon:'🗣️', name:'Verbal Inclusion Policy', sev:'hard', sevTx:'ZERO TOLERANCE',
-      body:'No verbal promise of an inclusion, upgrade, discount or special service may be made. Everything must be documented in writing on the booking file.',
-      rules:[
-        {txt:'Verbal inclusion = zero-tolerance §26 violation.', cls:'pr-hard'},
-        {txt:'Special requests must be approved in writing by the relevant supplier before being communicated to the customer.', cls:'pr-hard'},
-      ]},
+// ══ POLICIES DATA ════════════════════════════════════════
+const POL_DATA=[
+  {section:'Booking Protection',color:'#FEE2E2',hdrTx:'#7F1D1D',border:'#FCA5A5',icon:'📋',policies:[
+    {icon:'🔒',name:'Disclosure Before Deposit (§01)',sev:'hard',sevTx:'HARD STOP',
+     body:'No deposit may be collected before the customer (or B2B agent) has signed the 14-item Ground Reality Disclosure. Applies to all booking types without exception.',
+     rules:[
+       {txt:'Verbal disclosure is insufficient — written signed acknowledgement required.',cls:'pr-hard'},
+       {txt:'B2B agents are contractually responsible for passing disclosure to end customer.',cls:'pr-warn'},
+       {txt:'Skipping disclosure = booking invalid regardless of payment status. §26 violation.',cls:'pr-hard'},
+     ]},
+    {icon:'📝',name:'12 Mandatory Fields Policy (§04)',sev:'hard',sevTx:'HARD STOP',
+     body:'All 12 mandatory fields must be complete before a booking is confirmed. Any TBD field makes the booking Incomplete. Payment does not override this requirement.',
+     rules:[
+       {txt:'2 or more TBD fields = Incomplete status. No company action until resolved.',cls:'pr-hard'},
+       {txt:'Name must match passport exactly — middle names and special characters included.',cls:'pr-hard'},
+       {txt:'Booking Owner is personally accountable for data completeness.',cls:'pr-warn'},
+     ]},
+    {icon:'✍️',name:'Single Booking Owner Policy (§03)',sev:'std',sevTx:'REQUIRED',
+     body:'Every booking must have one named Booking Owner accountable from booking to departure. Transfers require a formal written hand-off note.',
+     rules:[
+       {txt:'One named Booking Owner per file at all times — no exceptions.',cls:'pr-hard'},
+       {txt:'Transfer requires written hand-off note with acknowledgement from receiving BO.',cls:'pr-warn'},
+       {txt:'BO is accountable for all 7 policy gates A through G.',cls:'pr-warn'},
+     ]},
+    {icon:'🗣️',name:'No Verbal Inclusions Policy (§26)',sev:'hard',sevTx:'ZERO TOLERANCE',
+     body:'No verbal promise of any inclusion, upgrade, discount or special service may be made to a customer. Everything must be documented in writing on the booking file.',
+     rules:[
+       {txt:'Verbal inclusion = zero-tolerance §26 violation. Booking Owner scorecard entry.',cls:'pr-hard'},
+       {txt:'Special requests require written supplier approval before communicating to customer.',cls:'pr-hard'},
+       {txt:'Unrecorded discount = immediate escalation to Director and CCO.',cls:'pr-hard'},
+     ]},
+    {icon:'🇪🇺',name:'Europe Visa Feasibility Rule (§05)',sev:'hard',sevTx:'HARD STOP',
+     body:'No Europe booking may be confirmed without visa feasibility being confirmed first. This check must happen before deposit is collected.',
+     rules:[
+       {txt:'No Europe booking without confirmed visa feasibility. Zero exceptions.',cls:'pr-hard'},
+       {txt:'Feasibility check must reference departure date, nationality and passport validity.',cls:'pr-warn'},
+       {txt:'Late booking with infeasible visa timeline = must decline or reschedule.',cls:'pr-hard'},
+     ]},
+    {icon:'🛂',name:'Visa T-45 Escalation Policy',sev:'warn',sevTx:'WARNING',
+     body:'If a customer passport is not in Visa team hands by T-45 (45 days before departure), an immediate escalation is required to the Visa Team Leader and Ops Manager.',
+     rules:[
+       {txt:'T-45 without passport = escalate same day to Visa TL and Ops Manager.',cls:'pr-hard'},
+       {txt:'Booking Owner is responsible for chasing customer to get passport submitted.',cls:'pr-warn'},
+       {txt:'Visa rejection after T-45 = cancellation charges apply. Customer must be advised.',cls:'pr-warn'},
+     ]},
   ]},
-  { section:'Finance & Payment Policies', color:'#EFF4FF', hdrTx:'#1E3A8A', border:'#BFDBFE', icon:'₹', policies:[
-    { icon:'💳', name:'6-Gate Payment Policy', sev:'hard', sevTx:'HARD STOP',
-      body:'No company action (supplier payment, service confirmation, flight sealing, voucher release) may occur before the relevant payment gate has cleared. Finance Manager must authorise any exception in writing.',
-      rules:[
-        {txt:'Gate 4 (Supplier): no hotel blocks, coach contracts or guide fees before this gate clears.', cls:'pr-hard'},
-        {txt:'Gate 5 (Final): 100% package + TCS + all supplements. Zero dues = zero exceptions.', cls:'pr-hard'},
-        {txt:'Gate 6 (Tour): vouchers only release after zero dues confirmed. §26 violation if released early.', cls:'pr-hard'},
-        {txt:'B2B exception: requires signed credit agreement AND Finance Manager written confirmation.', cls:'pr-fin'},
-      ]},
-    { icon:'📊', name:'TCS Compliance Policy', sev:'std', sevTx:'REQUIRED',
-      body:'Tax Collected at Source (TCS) must be calculated, collected and filed correctly on all eligible bookings. Finance is responsible for TCS compliance across all business units.',
-      rules:[
-        {txt:'TCS applies to international tour packages above threshold — Finance must confirm rates per booking.', cls:'pr-fin'},
-        {txt:'TCS must be collected before issuing any tour documentation.', cls:'pr-hard'},
-        {txt:'TCS filings must be completed on schedule — Finance Director accountable.', cls:'pr-fin'},
-      ]},
-    { icon:'🚌', name:'Driver Float Policy', sev:'std', sevTx:'REQUIRED',
-      body:'All driver float requests must go through LERMS. Driver signs receipt before departure. Expense settlement within 48 hours of tour return. No receipt = line rejected.',
-      rules:[
-        {txt:'Float above standard threshold requires Finance Manager approval before issue.', cls:'pr-warn'},
-        {txt:'Only approved categories: parking, tolls above cap, fuel, pre-approved repairs, ferry/tunnel.', cls:'pr-warn'},
-        {txt:'Over-float >10% requires Finance Manager sign-off. No exceptions.', cls:'pr-hard'},
-      ]},
-    { icon:'🤝', name:'B2B Credit Terms Policy', sev:'warn', sevTx:'WARNING',
-      body:'B2B agents may be granted credit terms subject to a signed credit agreement confirmed by the Finance Manager. Credit is not automatic and must be reviewed periodically.',
-      rules:[
-        {txt:'No credit extended without signed agreement on file.', cls:'pr-hard'},
-        {txt:'Credit limit review required annually or on volume change.', cls:'pr-warn'},
-        {txt:'Outstanding dues beyond credit period trigger immediate escalation to CCO.', cls:'pr-warn'},
-      ]},
+  {section:'Finance & Payment Policies',color:'#EFF4FF',hdrTx:'#1E3A8A',border:'#BFDBFE',icon:'₹',policies:[
+    {icon:'💳',name:'6-Gate Payment Policy (§06)',sev:'hard',sevTx:'HARD STOP',
+     body:'No company action (supplier payment, service confirmation, flight sealing, voucher release) may occur before the relevant payment gate clears. Finance Manager must authorise any exception in writing.',
+     rules:[
+       {txt:'Gate 4: no hotel blocks, coach contracts or guide fees before Supplier Gate clears.',cls:'pr-hard'},
+       {txt:'Gate 5: 100% package + TCS + supplements. Zero dues = zero exceptions.',cls:'pr-hard'},
+       {txt:'Gate 6: vouchers only after zero dues confirmed. §26 violation if released early.',cls:'pr-hard'},
+       {txt:'B2B exception: requires signed credit agreement AND Finance Manager written confirmation.',cls:'pr-warn'},
+     ]},
+    {icon:'🧾',name:'TCS Collection & Compliance Policy',sev:'std',sevTx:'REQUIRED',
+     body:'Tax Collected at Source (TCS) must be calculated, collected and filed correctly on all eligible bookings. Finance is responsible for TCS compliance across all BUs.',
+     rules:[
+       {txt:'TCS applies to international packages above statutory threshold — Finance confirms rate per booking.',cls:'pr-warn'},
+       {txt:'TCS must be collected before any tour documentation is issued.',cls:'pr-hard'},
+       {txt:'TCS filings must be completed on schedule. Finance Director is legally accountable.',cls:'pr-hard'},
+       {txt:'B2B: TCS collected from agent on net rate basis. Agent may collect from customer separately.',cls:'pr-warn'},
+     ]},
+    {icon:'🚌',name:'Driver Float & LERMS Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All driver float requests must go through LERMS. Driver signs receipt before departure. Expense settlement within 48 hours of tour return. No receipt = line rejected.',
+     rules:[
+       {txt:'Float above standard threshold requires Finance Manager approval before issue.',cls:'pr-warn'},
+       {txt:'Only approved expense categories: parking, tolls above cap, fuel, pre-approved repairs, ferry/tunnel.',cls:'pr-warn'},
+       {txt:'Over-float >10% requires Finance Manager sign-off. No exceptions.',cls:'pr-hard'},
+       {txt:'LERMS must be updated within 5 working days of tour return.',cls:'pr-warn'},
+     ]},
+    {icon:'🤝',name:'B2B Credit Terms Policy',sev:'warn',sevTx:'WARNING',
+     body:'B2B agents may be granted credit terms subject to a signed credit agreement confirmed by the Finance Manager. Credit is not automatic.',
+     rules:[
+       {txt:'No credit extended without signed agent agreement on file.',cls:'pr-hard'},
+       {txt:'Credit limit must be reviewed annually or on significant volume change.',cls:'pr-warn'},
+       {txt:'Outstanding dues beyond credit period = immediate escalation to CCO.',cls:'pr-hard'},
+       {txt:'Credit does not bypass Finance payment gates — Finance Manager must still confirm in writing.',cls:'pr-warn'},
+     ]},
+    {icon:'🎫',name:'Voucher Release Policy (§26)',sev:'hard',sevTx:'ZERO TOLERANCE',
+     body:'Vouchers must never be released while any outstanding dues remain. Gate 6 (zero dues) must be confirmed by Finance before Ops releases any voucher.',
+     rules:[
+       {txt:'Zero dues confirmed by Finance = prerequisite for any voucher release.',cls:'pr-hard'},
+       {txt:'Vouchers with outstanding dues = §26 violation + Booking Owner scorecard entry.',cls:'pr-hard'},
+       {txt:'B2B exception: Finance Manager credit confirmation in writing required before release.',cls:'pr-warn'},
+     ]},
+    {icon:'💸',name:'Discount & Special Pricing Policy',sev:'hard',sevTx:'HARD STOP',
+     body:'No discount or special price may be offered without proper authorisation on file. All pricing must be confirmed in writing.',
+     rules:[
+       {txt:'Standard discounts: Sales Manager written approval.',cls:'pr-warn'},
+       {txt:'Above-threshold discounts: BU Director written approval.',cls:'pr-hard'},
+       {txt:'Unrecorded discount = §26 violation. Immediate escalation to CCO.',cls:'pr-hard'},
+     ]},
   ]},
-  { section:'Data & Customer Protection Policies', color:'#DCFCE7', hdrTx:'#14532D', border:'#86EFAC', icon:'🔐', policies:[
-    { icon:'🛂', name:'Passport & Personal Data Policy', sev:'std', sevTx:'REQUIRED',
-      body:'All personal data collected from customers (passport, PAN, DOB, medical) must be handled securely, used only for booking purposes, and stored per data protection requirements.',
-      rules:[
-        {txt:'Passport data collected only as required for bookings — not retained beyond tour completion without consent.', cls:'pr-fin'},
-        {txt:'No personal data shared with third parties beyond operational need (visa, hotel, airline).', cls:'pr-hard'},
-        {txt:'Data breaches must be escalated to CPO within 24 hours.', cls:'pr-hard'},
-      ]},
-    { icon:'💬', name:'Customer Communication Policy', sev:'std', sevTx:'REQUIRED',
-      body:'All material communications with customers regarding bookings, pricing, inclusions and changes must be in writing. WhatsApp and email are acceptable. Verbal-only communications are not.',
-      rules:[
-        {txt:'Pricing changes communicated in writing within 4 hours of identification.', cls:'pr-warn'},
-        {txt:'Cancellation or change notifications must state reasons and options clearly.', cls:'pr-warn'},
-        {txt:'No promises on refund timelines without Finance sign-off.', cls:'pr-hard'},
-      ]},
-    { icon:'⭐', name:'Complaint Handling Policy', sev:'std', sevTx:'REQUIRED',
-      body:'All complaints must be logged in CRM regardless of outcome. Level 1 must respond within 2 hours. Financial resolution requires Finance Manager approval.',
-      rules:[
-        {txt:'L1 (Agent): respond within 2 hours. L2 (Manager): within 4 hours. L3 (Head): same day.', cls:'pr-warn'},
-        {txt:'No financial promises (refunds, credits) without Finance Manager written approval.', cls:'pr-hard'},
-        {txt:'Pattern complaints (3+ for same booking type/destination) must be escalated to CCO.', cls:'pr-warn'},
-      ]},
+  {section:'Data & Customer Protection',color:'#DCFCE7',hdrTx:'#14532D',border:'#86EFAC',icon:'🔐',policies:[
+    {icon:'🛂',name:'Passport & Personal Data Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All personal data (passport, PAN, DOB, medical information) must be handled securely, used only for booking purposes, and stored per data protection requirements.',
+     rules:[
+       {txt:'Passport data collected only as required for bookings — not retained beyond tour without consent.',cls:'pr-warn'},
+       {txt:'No personal data shared with third parties beyond operational need (visa, hotel, airline).',cls:'pr-hard'},
+       {txt:'Data breaches must be escalated to CPO within 24 hours.',cls:'pr-hard'},
+     ]},
+    {icon:'💬',name:'Written Communication Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All material communications about bookings, pricing, inclusions and changes must be in writing. WhatsApp and email are acceptable. Verbal-only is not.',
+     rules:[
+       {txt:'Pricing changes communicated in writing within 4 hours of identification.',cls:'pr-warn'},
+       {txt:'Cancellation or change notifications must state reasons and customer options clearly.',cls:'pr-warn'},
+       {txt:'No refund timeline promises without Finance sign-off.',cls:'pr-hard'},
+     ]},
+    {icon:'⭐',name:'Complaint Handling Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All complaints must be logged in CRM regardless of outcome. Financial resolution requires Finance Manager approval. Pattern complaints must reach CCO.',
+     rules:[
+       {txt:'L1: respond within 2hrs. L2: within 4hrs. L3 (Head): same day.',cls:'pr-warn'},
+       {txt:'No financial promises (refunds, credits) without Finance Manager written approval.',cls:'pr-hard'},
+       {txt:'3+ complaints for same booking type/destination = escalate to CCO.',cls:'pr-warn'},
+     ]},
+    {icon:'🔑',name:'System Access & Booking Records Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All booking system access must be under individual login credentials. Shared logins are prohibited. All actions must be auditable.',
+     rules:[
+       {txt:'No shared logins. Each team member has individual system credentials.',cls:'pr-hard'},
+       {txt:'Booking record amendments must be logged with reason and authoriser.',cls:'pr-warn'},
+       {txt:'System access removed within 24 hours of a team member leaving.',cls:'pr-hard'},
+     ]},
   ]},
-  { section:'Operations & Handover Policies', color:'#FFF3DC', hdrTx:'#7A4B00', border:'#FCD34D', icon:'⚙️', policies:[
-    { icon:'📁', name:'18-Item Handover File Policy', sev:'hard', sevTx:'HARD STOP',
-      body:'Every file passed from Sales to Operations must contain all 18 required items. Ops may reject any incomplete file. Accountability does not transfer until formal acceptance.',
-      rules:[
-        {txt:'Missing any of 18 items = file rejected. Booking Owner accountable until accepted.', cls:'pr-hard'},
-        {txt:'No TBDs permitted in rooming, meals, or emergency contact at handover.', cls:'pr-hard'},
-        {txt:'Special requests must have written supplier approval attached.', cls:'pr-warn'},
-      ]},
-    { icon:'❄️', name:'Departure Freeze Policy', sev:'warn', sevTx:'WARNING',
-      body:'Once a departure is frozen, no new bookings, amendments or supplier changes may be made without written Ops Manager approval. Freeze date is set by Ops, not Sales.',
-      rules:[
-        {txt:'Post-freeze booking changes require Ops Manager written approval — no exceptions.', cls:'pr-hard'},
-        {txt:'Cancellation after freeze: standard cancellation charges apply immediately.', cls:'pr-warn'},
-        {txt:'Merge/cancel decisions require management sign-off at Director level.', cls:'pr-warn'},
-      ]},
-    { icon:'🎫', name:'Voucher Release Policy', sev:'hard', sevTx:'ZERO TOLERANCE',
-      body:'Vouchers must never be released while any outstanding dues remain. Gate E (zero dues) must be confirmed by Finance before Ops releases any voucher. §26 violation.',
-      rules:[
-        {txt:'Zero dues confirmed by Finance = prerequisite for any voucher release.', cls:'pr-hard'},
-        {txt:'Vouchers with outstanding dues = §26 violation + Booking Owner scorecard entry.', cls:'pr-hard'},
-        {txt:'B2B exception requires Finance Manager written confirmation of credit coverage.', cls:'pr-fin'},
-      ]},
+  {section:'Operations & Handover Policies',color:'#FFF3DC',hdrTx:'#7A4B00',border:'#FCD34D',icon:'⚙️',policies:[
+    {icon:'📁',name:'18-Item Handover File Policy (§21)',sev:'hard',sevTx:'HARD STOP',
+     body:'Every file passed from Sales to Operations must contain all 18 required items. Ops may reject any incomplete file. Accountability does not transfer until formal Ops acceptance.',
+     rules:[
+       {txt:'Missing any of 18 items = file rejected. Booking Owner accountable until Ops formally accepts.',cls:'pr-hard'},
+       {txt:'No TBDs permitted in rooming, meals or emergency contacts at handover.',cls:'pr-hard'},
+       {txt:'Special requests require written supplier approval attached to file.',cls:'pr-warn'},
+     ]},
+    {icon:'❄️',name:'Departure Freeze Policy (§20)',sev:'warn',sevTx:'WARNING',
+     body:'Once frozen, no new bookings or amendments may be made without written Ops Manager approval. Freeze date is set by Ops, not Sales.',
+     rules:[
+       {txt:'Post-freeze changes require Ops Manager written approval — no exceptions.',cls:'pr-hard'},
+       {txt:'Cancellation after freeze: standard cancellation charges apply immediately.',cls:'pr-warn'},
+       {txt:'Merge or cancel decisions require Director-level management sign-off.',cls:'pr-warn'},
+     ]},
+    {icon:'📋',name:'Tour Manager Briefing Policy (§22)',sev:'std',sevTx:'REQUIRED',
+     body:'Every Tour Manager must be fully briefed before departure. The briefing pack must cover all operational, passenger and financial information.',
+     rules:[
+       {txt:'TM briefing must occur before departure day — not on the day.',cls:'pr-warn'},
+       {txt:'Briefing pack must include: pax list · rooming · meals · flights · vouchers · LERMS float · emergency contacts.',cls:'pr-hard'},
+       {txt:'TM signs receipt of briefing pack. Copy retained on file.',cls:'pr-warn'},
+     ]},
+    {icon:'🔄',name:'Phase 2 Transition Policy',sev:'warn',sevTx:'FOR REVIEW',
+     body:'The planned Phase 2 merger of Sales and Ops into one full-process function requires a formal policy framework before implementation. This policy will govern the transition.',
+     rules:[
+       {txt:'Phase 2 cannot commence without a CCO-approved transition plan and timeline.',cls:'pr-hard'},
+       {txt:'Technology readiness (centralised ops system) must be confirmed before transition.',cls:'pr-warn'},
+       {txt:'All staff must complete combined role training before taking on full-process responsibilities.',cls:'pr-warn'},
+     ]},
   ]},
-  { section:'People & HR Policies', color:'#F0FFF4', hdrTx:'#14532D', border:'#86EFAC', icon:'👤', policies:[
-    { icon:'📈', name:'Booking Owner Scorecard Policy', sev:'std', sevTx:'REQUIRED',
-      body:'Every Booking Owner, FIT Consultant and B2B Account Manager is assessed on a seasonal scorecard covering errors, gate violations, complaints and escalations. Persistent violations trigger a managed performance review.',
-      rules:[
-        {txt:'Scorecard reviewed quarterly by Ops Manager and HR.', cls:'pr-fin'},
-        {txt:'3+ gate violations in a quarter = mandatory coaching session.', cls:'pr-warn'},
-        {txt:'Persistent violations (2 quarters) = formal managed performance process.', cls:'pr-hard'},
-      ]},
-    { icon:'🎓', name:'Training Certification Policy', sev:'std', sevTx:'REQUIRED',
-      body:'All Booking Owners, Experts and Trainees must hold current TripFactory policy certification before handling bookings independently. Certification must be renewed annually.',
-      rules:[
-        {txt:'Trainee must achieve policy certification within 6 months of start date.', cls:'pr-warn'},
-        {txt:'Annual recertification required for all customer-facing roles.', cls:'pr-fin'},
-        {txt:'No independent booking handling without current certification on file.', cls:'pr-hard'},
-      ]},
+  {section:'People & HR Policies',color:'#F0FFF4',hdrTx:'#14532D',border:'#86EFAC',icon:'👤',policies:[
+    {icon:'📈',name:'Booking Owner Scorecard Policy (§25)',sev:'std',sevTx:'REQUIRED',
+     body:'Every Booking Owner, FIT Consultant and B2B Account Manager is assessed on a seasonal scorecard. Persistent violations trigger managed performance review.',
+     rules:[
+       {txt:'Scorecard reviewed quarterly by Ops Manager and HR.',cls:'pr-warn'},
+       {txt:'3+ gate violations in a quarter = mandatory coaching session.',cls:'pr-warn'},
+       {txt:'Persistent violations (2 consecutive quarters) = formal managed performance process.',cls:'pr-hard'},
+     ]},
+    {icon:'🎓',name:'Training Certification Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All Booking Owners, Experts and Trainees must hold current TripFactory policy certification before handling bookings independently.',
+     rules:[
+       {txt:'Trainee must achieve policy certification within 6 months of start date.',cls:'pr-warn'},
+       {txt:'Annual recertification required for all customer-facing roles.',cls:'pr-warn'},
+       {txt:'No independent booking handling without current certification on file.',cls:'pr-hard'},
+     ]},
+    {icon:'⚠️',name:'Escalation & Disciplinary Policy (§24)',sev:'std',sevTx:'REQUIRED',
+     body:'A clear 3-level escalation process applies for all booking, operational and compliance issues. L1 through L3 with defined response times.',
+     rules:[
+       {txt:'L1 (Agent/Expert): Booking Owner → Control Desk. 24-hour resolution target.',cls:'pr-warn'},
+       {txt:'L2 (Manager): Control Desk → Management. 4-hour escalation if L1 unresolved.',cls:'pr-warn'},
+       {txt:'L3 (Business Head): Final decision — documented on file. No further appeal within the process.',cls:'pr-hard'},
+     ]},
+    {icon:'🧑‍💼',name:'EPP (Employee Purchase Programme) Policy',sev:'warn',sevTx:'TO BE DEFINED',
+     body:'The Employee Purchase Programme has not yet been formally defined. This policy will govern how employees access discounted travel, how EPP bookings are processed and how they interact with standard booking workflows.',
+     rules:[
+       {txt:'EPP policy must be approved by Global CEO, CCO and CPO before implementation.',cls:'pr-hard'},
+       {txt:'EPP bookings must go through a defined channel — to be confirmed (separate vs standard BU).',cls:'pr-warn'},
+       {txt:'EPP interaction with LERMS, Finance gates and Credits function must be mapped.',cls:'pr-warn'},
+     ]},
+  ]},
+  {section:'B2B Agent Policies',color:'#F5F0FF',hdrTx:'#4C1D95',border:'#C4B5FD',icon:'🤝',policies:[
+    {icon:'📋',name:'Agent Registration & Agreement Policy (§14)',sev:'hard',sevTx:'HARD STOP',
+     body:'No booking may be accepted from an unregistered agent. Every B2B agent must have a signed trade agreement on file before any business is conducted.',
+     rules:[
+       {txt:'No booking accepted from unregistered agent — zero exceptions.',cls:'pr-hard'},
+       {txt:'Signed trade agreement must include: commission rates, credit terms (if any), disclosure responsibility.',cls:'pr-hard'},
+       {txt:'Agent agreement reviewed annually or on material change to terms.',cls:'pr-warn'},
+     ]},
+    {icon:'👥',name:'Agent Disclosure Responsibility Policy',sev:'hard',sevTx:'HARD STOP',
+     body:'B2B agents are contractually responsible for presenting all 14 Ground Reality Disclosure items to the end customer. TripFactory is not liable for failure to disclose.',
+     rules:[
+       {txt:'Agent signs disclosure responsibility clause as part of trade agreement.',cls:'pr-hard'},
+       {txt:'Agent must confirm end customer has received and acknowledged disclosure before booking proceeds.',cls:'pr-hard'},
+       {txt:'If agent fails to disclose: liability rests with agent per trade agreement.',cls:'pr-warn'},
+     ]},
+    {icon:'📦',name:'Net Rate & Commission Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All B2B pricing must be on net rates. Commission rates must be agreed and documented before first booking. No commission paid without booking completion.',
+     rules:[
+       {txt:'Net rates are confidential — not to be disclosed to end customers by TripFactory staff.',cls:'pr-hard'},
+       {txt:'Commission rates documented in signed trade agreement.',cls:'pr-warn'},
+       {txt:'Commission clawback applies if booking is cancelled after agent is paid.',cls:'pr-warn'},
+     ]},
+  ]},
+  {section:'Marketing & Compliance',color:'#EBF5FF',hdrTx:'#1E40AF',border:'#93C5FD',icon:'📣',policies:[
+    {icon:'💰',name:'Pricing Approval in Marketing Materials',sev:'hard',sevTx:'HARD STOP',
+     body:'Any pricing published in any marketing material (digital, print, social, agent communications) must receive CCO written approval before publication.',
+     rules:[
+       {txt:'No pricing in any medium without CCO written sign-off.',cls:'pr-hard'},
+       {txt:'Incorrect published pricing = immediate recall and legal review.',cls:'pr-hard'},
+       {txt:'Marketing Director must maintain an approval log with sign-off dates and versions.',cls:'pr-warn'},
+     ]},
+    {icon:'🏷️',name:'Brand & Visual Identity Policy',sev:'std',sevTx:'REQUIRED',
+     body:'All customer-facing materials must adhere to the ORN brand guidelines. Localised offices may adapt content for market but must maintain brand standards.',
+     rules:[
+       {txt:'Brand guidelines must be followed for all customer-facing materials.',cls:'pr-warn'},
+       {txt:'Localised adaptations require Marketing Director approval.',cls:'pr-warn'},
+       {txt:'Third-party agency work must be approved before publication.',cls:'pr-warn'},
+     ]},
   ]},
 ];
 
-function buildPol() {
-  const c = document.getElementById('polContainer');
-  POL_DATA.forEach(sec => {
-    const s = document.createElement('div');
-    s.className = 'pol-section';
-    s.innerHTML = `<div class="pol-section-hdr" style="background:${sec.color};color:${sec.hdrTx};border:1px solid ${sec.border};border-bottom:none" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'">
-      <span>${sec.icon}</span><span>${sec.section}</span><span style="margin-left:auto;font-size:9px;color:rgba(255,255,255,.7)">${sec.policies.length} policies</span>
-    </div>
-    <div class="pol-cards"></div>`;
-    const grid = s.querySelector('.pol-cards');
-    sec.policies.forEach(pol => {
-      const card = document.createElement('div');
-      card.className = 'pol-card';
-      const rules = pol.rules.map(r=>`<div class="pol-rule ${r.cls}">${r.txt}</div>`).join('');
-      card.innerHTML = `<div class="pol-card-hdr" onclick="this.closest('.pol-card').classList.toggle('open')">
-        <span class="pol-icon">${pol.icon}</span>
-        <span class="pol-name">${pol.name}</span>
-        <span class="pol-sev ${pol.sev==='hard'?'sev-hard':pol.sev==='warn'?'sev-warn':'sev-std'}">${pol.sevTx}</span>
-        <span class="pol-chevron">▼</span>
-      </div>
-      <div class="pol-body"><p style="margin-bottom:6px">${pol.body}</p>${rules}</div>`;
+function buildPol(){
+  const c=document.getElementById('polContainer');
+  if(!c)return;
+  POL_DATA.forEach(sec=>{
+    const s=document.createElement('div');
+    s.className='pol-section';
+    const hdr=document.createElement('div');
+    hdr.className='pol-section-hdr';
+    hdr.style.cssText='background:'+sec.color+';color:'+sec.hdrTx+';border:1px solid '+sec.border+';border-bottom:none';
+    hdr.innerHTML='<span>'+sec.icon+'</span><span>'+sec.section+'</span><span style="margin-left:auto;font-size:9px;opacity:.7">'+sec.policies.length+' policies — click to expand</span>';
+    const grid=document.createElement('div');
+    grid.className='pol-cards';
+    grid.style.cssText='border:1px solid var(--bd);border-top:none;border-radius:0 0 var(--r) var(--r);padding:8px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:#fff';
+    sec.policies.forEach(pol=>{
+      const card=document.createElement('div');
+      card.className='pol-card';
+      const cardHdr=document.createElement('div');
+      cardHdr.className='pol-card-hdr';
+      const sevCls=pol.sev==='hard'?'sev-hard':pol.sev==='warn'?'sev-warn':'sev-std';
+      cardHdr.innerHTML='<span class="pol-icon">'+pol.icon+'</span><span class="pol-name">'+pol.name+'</span><span class="pol-sev '+sevCls+'">'+pol.sevTx+'</span><span class="pol-chevron">▼</span>';
+      const body=document.createElement('div');
+      body.className='pol-body';
+      const rulesHtml=pol.rules.map(r=>'<div class="pol-rule '+r.cls+'">'+r.txt+'</div>').join('');
+      body.innerHTML='<p style="margin-bottom:6px;color:#1a1a1a">'+pol.body+'</p>'+rulesHtml;
+      cardHdr.onclick=function(){
+        const open=card.classList.toggle('open');
+        body.style.display=open?'block':'none';
+        const ch=this.querySelector('.pol-chevron');
+        if(ch)ch.style.transform=open?'rotate(180deg)':'';
+      };
+      card.appendChild(cardHdr);
+      card.appendChild(body);
       grid.appendChild(card);
     });
+    hdr.onclick=function(){
+      grid.style.display=grid.style.display==='none'?'grid':'none';
+    };
+    s.appendChild(hdr);
+    s.appendChild(grid);
     c.appendChild(s);
   });
 }
 buildPol();
 
-// ══════════════════════════════════════════════════════════
-// B2B vs B2C DATA & RENDER
-// ══════════════════════════════════════════════════════════
-const B2B_SECTIONS = [
-  { title:'Sales & First Contact', icon:'🗣️', rows:[
-    { aspect:'Who makes the booking', b2c:'Direct customer — walks in, calls, WhatsApp', b2b:'Registered trade agent submits on behalf of end customer', diff:true },
-    { aspect:'Agent pre-registration', b2c:'Not applicable', b2b:'Agent must be pre-registered with signed terms before any booking can be accepted (§14)', diff:true },
-    { aspect:'First point of contact', b2c:'Sales Expert — direct relationship from day 1', b2b:'B2B Account Manager — agent is the primary contact, not end customer', diff:true },
-    { aspect:'Pricing', b2c:'Retail price as published', b2b:'Net rate + commission as per signed agreement — not disclosed to end customer', diff:true },
-    { aspect:'Package customisation', b2c:'Standard package or FIT custom quote direct to customer', b2b:'Agent may request bespoke pricing — requires Account Manager + Director approval', diff:true },
+// ══ B2B vs B2C DATA ════════════════════════════════════════
+const B2B_SECTIONS=[
+  {title:'First Contact & Sales',icon:'🗣️',rows:[
+    {aspect:'Who makes the booking',b2c:'Direct customer — walks in, calls, WhatsApp or online',b2b:'Registered trade agent submits on behalf of end customer. Account Manager is primary contact.',diff:true},
+    {aspect:'Agent pre-registration',b2c:'Not applicable',b2b:'Agent must hold signed trade agreement before any booking (§14). No exceptions.',diff:true},
+    {aspect:'Pricing',b2c:'Retail price as published and approved by CCO',b2b:'Net rate + commission as per signed agreement. Net rate not disclosed to end customer.',diff:true},
+    {aspect:'First enquiry handled by',b2c:'Sales Expert — builds direct relationship with customer from day 1',b2b:'B2B Account Manager — all communications routed via agent, not end customer directly',diff:true},
+    {aspect:'Bespoke pricing / group quote',b2c:'Standard package or FIT custom quote sent directly to customer',b2b:'Agent requests bespoke pricing — Account Manager + Director approval required before quoting',diff:true},
   ]},
-  { title:'Disclosure & Compliance', icon:'📋', rows:[
-    { aspect:'Ground Reality Disclosure', b2c:'Sales Expert presents all 14 items directly — customer signs before deposit', b2b:'Agent is contractually responsible for presenting disclosure to end customer', diff:true },
-    { aspect:'Who signs disclosure', b2c:'End customer signs directly', b2b:'Agent signs on behalf — legally responsible for passing to end customer', diff:true },
-    { aspect:'Passport data collection', b2c:'Booking Owner collects directly from customer', b2b:'Agent collects from end customer and submits to TripFactory', diff:true },
-    { aspect:'12 mandatory fields', b2c:'Collected directly by Booking Owner · no TBDs accepted', b2b:'Agent provides all fields · B2B Account Manager flags incomplete to agent within 24hrs', diff:false },
+  {title:'Disclosure & Compliance',icon:'📋',rows:[
+    {aspect:'Ground Reality Disclosure (§01)',b2c:'Sales Expert presents all 14 items directly to customer before deposit. Customer signs.',b2b:'Agent signs declaration that they are responsible for presenting all 14 items to end customer.',diff:true},
+    {aspect:'Who signs the disclosure',b2c:'End customer signs directly — physically or digitally',b2b:'Agent signs on behalf — legally responsible for passing all 14 items to end customer',diff:true},
+    {aspect:'Passport and personal data collection',b2c:'Booking Owner collects all 12 fields directly from customer',b2b:'Agent collects all 12 fields from end customer and submits to TripFactory Account Manager',diff:true},
+    {aspect:'12 mandatory fields (§04)',b2c:'Collected directly. Booking Owner accountable. No TBDs accepted.',b2b:'Agent provides all fields. Account Manager flags incomplete to agent within 24hrs. Same zero-TBD rule.',diff:false},
+    {aspect:'Europe visa feasibility (§05)',b2c:'Sales Expert must confirm feasibility before deposit. Decline if not feasible.',b2b:'Agent must confirm end customer feasibility. Account Manager validates before accepting booking.',diff:false},
   ]},
-  { title:'Payment & Finance', icon:'₹', rows:[
-    { aspect:'Payment terms', b2c:'Deposit + balance schedule · no credit (standard)', b2b:'Net rate settlement · credit terms possible if signed agreement + Finance Manager confirms', diff:true },
-    { aspect:'6-gate payment policy', b2c:'All 6 gates apply — customer pays on schedule', b2b:'All 6 gates apply — credit agreement may modify timing for Gates 4-5 only', diff:false },
-    { aspect:'TCS collection', b2c:'TCS collected from end customer on full package', b2b:'TCS collected from agent on net rate basis — agent may collect from customer separately', diff:true },
-    { aspect:'Outstanding dues at voucher', b2c:'Zero dues = zero exceptions. Vouchers held.', b2b:'Finance Manager credit confirmation covers — still requires written confirmation before release', diff:false },
-    { aspect:'Refund processing', b2c:'Refund to customer directly · standard cancellation policy', b2b:'Refund to agent · agent responsible for customer refund · commission clawback may apply', diff:true },
+  {title:'Payment & Finance',icon:'₹',rows:[
+    {aspect:'Payment schedule',b2c:'Standard deposit + balance per schedule. No credit for direct customers.',b2b:'Net rate settlement. Credit terms possible if signed agreement on file + Finance Manager confirms.',diff:true},
+    {aspect:'6 payment gates',b2c:'All 6 gates apply. Customer pays per standard schedule.',b2b:'All 6 gates apply. Signed credit agreement may adjust timing of Gates 4-5 only, with FM confirmation.',diff:false},
+    {aspect:'TCS calculation',b2c:'TCS collected from end customer on full retail package price.',b2b:'TCS collected from agent on net rate. Agent may collect from end customer separately.',diff:true},
+    {aspect:'Voucher release (Gate 6)',b2c:'Zero outstanding dues = absolute prerequisite. No exceptions.',b2b:'Same rule. Finance Manager credit confirmation in writing counts as zero dues for B2B.',diff:false},
+    {aspect:'Refund processing',b2c:'Refund paid directly to end customer. Standard cancellation policy.',b2b:'Refund paid to agent. Agent is responsible for customer refund. Commission clawback may apply.',diff:true},
+    {aspect:'Outstanding dues handling',b2c:'Finance escalates to Sales TL and Booking Owner at T-14.',b2b:'Finance escalates to Account Manager who chases agent. CCO notified if not resolved.',diff:true},
   ]},
-  { title:'Operations & Handover', icon:'⚙️', rows:[
-    { aspect:'Handover file', b2c:'18-item file — standard', b2b:'18-item file PLUS agent reference number and billing summary', diff:true },
-    { aspect:'Special requests', b2c:'Booking Owner owns and documents all special requests', b2b:'Agent submits special requests · B2B Account Manager validates and documents · same approval required', diff:false },
-    { aspect:'Communication during tour', b2c:'Customer communicates directly with Customer Services', b2b:'Ideally via agent — Customer Services may handle directly for urgent operational issues', diff:true },
-    { aspect:'Departure freeze', b2c:'Standard freeze policy applies', b2b:'Agent must confirm final pax count by freeze deadline — no additions after. Seats released = cancellation charges.', diff:false },
+  {title:'Operations & Handover',icon:'⚙️',rows:[
+    {aspect:'18-item handover file (§21)',b2c:'Standard 18 items. Sales Expert is Booking Owner.',b2b:'Standard 18 items PLUS agent reference number and billing summary.',diff:true},
+    {aspect:'Special requests',b2c:'Booking Owner documents and gets written supplier approval.',b2b:'Agent submits requests. Account Manager validates and documents. Same written approval requirement.',diff:false},
+    {aspect:'Communication during tour',b2c:'Customer communicates directly with Customer Services.',b2b:'Ideally via agent for non-urgent queries. CS handles urgent operational issues directly.',diff:true},
+    {aspect:'Departure freeze',b2c:'Standard freeze policy. No changes after freeze without written Ops approval.',b2b:'Agent must confirm final pax count by freeze deadline. Seats released post-freeze = cancellation charges.',diff:false},
+    {aspect:'Booking Owner accountability',b2c:'Named Sales Expert is Booking Owner throughout',b2b:'B2B Account Manager is Booking Owner. Agent is a channel, not the Booking Owner.',diff:true},
   ]},
-  { title:'Visa', icon:'🛂', rows:[
-    { aspect:'Document collection', b2c:'Visa Officer collects docs from Booking Owner who chases customer', b2b:'Agent collects all docs from end customer and submits to Visa team · Visa team does not chase customers', diff:true },
-    { aspect:'Agent SLA', b2c:'Not applicable', b2b:'Agent SLA: document submission within 48 hours of request', diff:true },
-    { aspect:'Rejection handling', b2c:'Visa team and Booking Owner handle together with customer', b2b:'Visa team informs agent · agent manages customer communication', diff:true },
-    { aspect:'8-stage tracking', b2c:'Standard 8-stage process', b2b:'Standard 8-stage process — same gates apply', diff:false },
+  {title:'Visa Processing',icon:'🛂',rows:[
+    {aspect:'Document collection',b2c:'Visa Officer issues checklist to Booking Owner who chases customer',b2b:'Agent collects all documents from end customer and submits to Visa team. Visa team does not contact end customer.',diff:true},
+    {aspect:'Agent document SLA',b2c:'Not applicable',b2b:'Agent must submit complete documents within 48 hours of request. Failure = escalation to Account Manager.',diff:true},
+    {aspect:'Rejection handling',b2c:'Visa team and Booking Owner manage directly with customer',b2b:'Visa team informs Account Manager. Account Manager informs agent. Agent manages customer communication.',diff:true},
+    {aspect:'8-stage tracking process',b2c:'Standard process. Booking Owner monitors status.',b2b:'Same 8-stage process. Account Manager monitors on behalf of agent.',diff:false},
+    {aspect:'T-45 passport rule',b2c:'Standard T-45 escalation applies',b2b:'Same T-45 rule. Account Manager chases agent for passport — not end customer directly.',diff:false},
   ]},
-  { title:'Customer Services', icon:'🎧', rows:[
-    { aspect:'Post-sale queries', b2c:'Customer contacts CS directly — CRM logged against booking', b2b:'Agent is first point of contact for most queries — CS available for urgent operational issues', diff:true },
-    { aspect:'Complaint handling', b2c:'Customer raises complaint with CS → standard escalation path', b2b:'Agent raises complaint on behalf of customer → same L1/L2/L3 escalation path applies', diff:false },
-    { aspect:'Refund authority', b2c:'CS may offer information but Finance Manager authorises all refunds', b2b:'No refund discussion with end customer — all via agent with Finance Manager sign-off', diff:true },
-    { aspect:'Quality of service standard', b2c:'Measured by CSAT from end customer', b2b:'Measured by agent satisfaction + end customer CSAT where available', diff:true },
+  {title:'Customer Services',icon:'🎧',rows:[
+    {aspect:'Post-sale queries',b2c:'Customer contacts CS directly via phone/email/chat. CRM logged.',b2b:'Agent is first point of contact for most queries. CS available for urgent operational issues.',diff:true},
+    {aspect:'Complaint handling',b2c:'Customer raises complaint with CS directly. Standard L1/L2/L3 escalation.',b2b:'Agent raises on behalf of customer. Same escalation path. Account Manager copied on all escalations.',diff:false},
+    {aspect:'Refund authority',b2c:'CS provides information. Finance Manager authorises all refunds.',b2b:'No refund discussion with end customer directly. All via agent with Finance Manager sign-off.',diff:true},
+    {aspect:'CSAT measurement',b2c:'CSAT collected directly from end customer post-tour',b2b:'CSAT collected from agent AND from end customer where possible. Both tracked.',diff:true},
+    {aspect:'SLA standard',b2c:'L1: 2hrs. L2: 4hrs. L3: same day.',b2b:'Same SLA. Account Manager notified of any escalation involving their agents.',diff:false},
   ]},
-  { title:'Ticketing', icon:'✈️', rows:[
-    { aspect:'Name submission', b2c:'Booking Owner submits names from customer data', b2b:'Agent submits names · B2B Account Manager spot-checks vs passport copies', diff:true },
-    { aspect:'Amendment authority', b2c:'Customer requests via Booking Owner', b2b:'Agent requests amendment · B2B Account Manager validates before submitting to Ticketing', diff:true },
-    { aspect:'T-30 sealing rule', b2c:'Standard — Booking Owner responsible', b2b:'Standard — B2B Account Manager responsible for chasing agent', diff:false },
+  {title:'Ticketing',icon:'✈️',rows:[
+    {aspect:'Name submission',b2c:'Booking Owner submits passenger names directly from customer records',b2b:'Agent submits names. Account Manager spot-checks against passport copies before passing to Ticketing.',diff:true},
+    {aspect:'Amendment authority',b2c:'Customer requests amendment via Booking Owner',b2b:'Agent requests amendment. Account Manager validates before submitting to Ticketing.',diff:true},
+    {aspect:'T-30 sealing rule',b2c:'Booking Owner responsible for ensuring flight sealed by T-30',b2b:'Account Manager responsible for chasing agent to ensure T-30 is met',diff:false},
+    {aspect:'Name mismatch',b2c:'Booking Owner corrects with customer directly before sealing',b2b:'Account Manager notifies agent. Agent corrects with customer and resubmits.',diff:true},
+  ]},
+  {title:'Marketing & Communications',icon:'📣',rows:[
+    {aspect:'Pricing communications',b2c:'Retail pricing as approved by CCO. Published openly.',b2b:'Net rates and commission — confidential to agent. Never published or shared externally.',diff:true},
+    {aspect:'Campaign materials',b2c:'Standard B2C campaigns using retail pricing and brand identity',b2b:'Separate B2B agent communications and rate sheets. Different materials to retail.',diff:true},
+    {aspect:'Agent trade communications',b2c:'Not applicable',b2b:'Regular B2B newsletters, rate updates and promotional materials sent to agent network.',diff:true},
+    {aspect:'Promotional offers',b2c:'Retail promotions approved by CCO and published to customers',b2b:'Agent-specific overrides or net rate incentives require separate Director and Finance approval.',diff:true},
   ]},
 ];
 
-function buildB2B() {
-  const c = document.getElementById('b2bContainer');
-  B2B_SECTIONS.forEach(sec => {
-    const s = document.createElement('div');
-    s.className = 'b2b-section';
-    const rows = sec.rows.map(row => `
-      <div class="b2b-row">
-        <div class="b2b-aspect-cell">${row.aspect}</div>
-        <div class="b2b-b2c-cell">${row.b2c}</div>
-        <div class="b2b-b2b-cell">${row.b2b}${row.diff?'<span class="b2b-diff">DIFFERS</span>':'<span class="b2b-same">SAME</span>'}</div>
-      </div>`).join('');
-    s.innerHTML = `<div class="b2b-section-title"><span>${sec.icon}</span>${sec.title}</div>
-      <div class="b2b-grid">
-        <div class="b2b-col-hdr b2b-aspect">Aspect</div>
-        <div class="b2b-col-hdr b2b-b2c">🧑 B2C — Direct Customer</div>
-        <div class="b2b-col-hdr b2b-b2b">🤝 B2B — Trade Agent</div>
-        ${rows}
-      </div>`;
+function buildB2B(){
+  const c=document.getElementById('b2bContainer');
+  if(!c)return;
+  B2B_SECTIONS.forEach(sec=>{
+    const s=document.createElement('div');
+    s.className='b2b-section';
+    const title=document.createElement('div');
+    title.className='b2b-section-title';
+    title.innerHTML='<span>'+sec.icon+'</span>'+sec.title;
+    const grid=document.createElement('div');
+    grid.className='b2b-grid';
+    grid.innerHTML=
+      '<div class="b2b-col-hdr b2b-aspect">Aspect</div>'+
+      '<div class="b2b-col-hdr b2b-b2c">🧑 B2C — Direct Customer</div>'+
+      '<div class="b2b-col-hdr b2b-b2b">🤝 B2B — Trade Agent</div>';
+    sec.rows.forEach(row=>{
+      grid.innerHTML+=
+        '<div class="b2b-aspect-cell">'+row.aspect+'</div>'+
+        '<div class="b2b-b2c-cell">'+row.b2c+'</div>'+
+        '<div class="b2b-b2b-cell">'+row.b2b+(row.diff?'<span class="b2b-diff">DIFFERS</span>':'<span class="b2b-same">SAME</span>')+'</div>';
+    });
+    s.appendChild(title);
+    s.appendChild(grid);
     c.appendChild(s);
   });
 }
