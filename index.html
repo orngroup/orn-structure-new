@@ -3,767 +3,1504 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TripFactory — Business Structure</title>
+<title>TripFactory — Structure & Org Chart</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ─────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── Reset ──────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1A2E4A; --navy2:#17426E; --navy3:#113257;
+  --dkblue:#1E3A5F; --midblue:#243B55;
+  --red:#E8373A; --yel:#F5C200; --grn:#2BAD4E; --blu:#1A73E8;
+  --grey:#8A94A8; --lgrey:#F4F6FA; --bd:#D4DBE8; --bd2:#B0BDD4; --dk2:#3D4F6E;
+  --s-bg:#EEF8E4; --s-bd:#3D8A14; --s-tx:#1E5A08;
+  --v-bg:#FFF3DC; --v-bd:#C47800; --v-tx:#7A4B00;
+  --o-bg:#ECEAFF; --o-bd:#4F46CC; --o-tx:#2D2590;
+  --t-bg:#E2F7F0; --t-bd:#138A62; --t-tx:#085A40;
+  --d-bg:#C8E6F0; --d-bd:#1A73E8; --d-tx:#0A3E96;
+  --f2-bg:#E8F2FF; --f2-bd:#1565D8; --f2-tx:#0A3E96;
+  --fin-bg:#EFF4FF; --fin-bd:#2563EB; --fin-tx:#1E3A8A;
+  --cred-bg:#FFF8E6; --cred-bd:#B87800; --cred-tx:#6A4800;
+  --r:6px; --r-lg:10px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif}
 
-:root {
-  --navy:   #1A2E4A;
-  --navy2:  #17426E;
-  --navy3:  #113257;
-  --dkblue: #1E3A5F;
-  --midblue:#243B55;
-  --red:    #E8373A;
-  --yel:    #F5C200;
-  --grn:    #2BAD4E;
-  --blu:    #1A73E8;
-  --grey:   #8A94A8;
-  --lgrey:  #F4F6FA;
-  --bd:     #D4DBE8;
-  --bd2:    #B0BDD4;
-  --dk2:    #3D4F6E;
+/* ── Page shell ─────────────────────────────────────────────── */
+.page{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:0}
 
-  --s-bg: #EEF8E4; --s-bd: #3D8A14; --s-tx: #1E5A08;
-  --v-bg: #FFF3DC; --v-bd: #C47800; --v-tx: #7A4B00;
-  --o-bg: #ECEAFF; --o-bd: #4F46CC; --o-tx: #2D2590;
-  --t-bg: #E2F7F0; --t-bd: #138A62; --t-tx: #085A40;
-  --d-bg: #C8E6F0; --d-bd: #1A73E8; --d-tx: #0A3E96;
-  --f2-bg:#E8F2FF;  --f2-bd:#1565D8; --f2-tx:#0A3E96;
-  --fin-bg:#EFF4FF; --fin-bd:#2563EB;--fin-tx:#1E3A8A;
-  --cred-bg:#FFF8E6;--cred-bd:#B87800;--cred-tx:#6A4800;
+/* ── Header ─────────────────────────────────────────────────── */
+.hdr{background:var(--navy);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:18px 28px 14px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 25%,var(--yel) 25% 50%,var(--grn) 50% 75%,var(--blu) 75%)}
+.hdr-logo-name{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1}
+.hdr-logo-sub{font-size:9px;font-weight:600;color:var(--yel);letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+.hdr-centre{text-align:center}
+.hdr-title{font-size:16px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:3px}
+.hdr-sub{font-size:10px;color:rgba(142,184,224,.8);letter-spacing:.03em}
+.hdr-badge{display:inline-block;background:var(--yel);color:var(--navy);font-size:8px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.08em}
 
-  --r: 6px;
-  --r-lg: 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
+/* ── Tab bar ─────────────────────────────────────────────────── */
+.tab-bar{background:rgba(0,0,0,.25);border-bottom:1px solid rgba(255,255,255,.08);display:flex;padding:0 20px;gap:2px}
+.tab-btn{padding:10px 20px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .18s;letter-spacing:.02em;font-family:'Plus Jakarta Sans',sans-serif}
+.tab-btn:hover{color:rgba(255,255,255,.75)}
+.tab-btn.active{color:#fff;border-bottom-color:var(--yel)}
 
-body {
-  background: #0D1B2A;
-  min-height: 100vh;
-  padding: 32px 24px 48px;
-  color: var(--navy);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+/* ── Tab panels ─────────────────────────────────────────────── */
+.tab-panel{display:none;background:var(--lgrey);border-radius:0 0 var(--r-lg) var(--r-lg);padding:20px}
+.tab-panel.active{display:flex;flex-direction:column;gap:8px}
 
-/* ── Page wrapper ─────────────────────────────────────────── */
-.page {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+/* ══════════════════════════════════════════════════════════════
+   TAB 1 — BUSINESS STRUCTURE (existing styles preserved)
+══════════════════════════════════════════════════════════════ */
+.box{border-radius:var(--r);padding:10px 14px;display:flex;flex-direction:column;gap:3px}
+.box-title{font-size:12px;font-weight:700;line-height:1.2}
+.box-sub{font-size:10.5px;color:var(--dk2);line-height:1.4}
+.box-note{font-size:9px;color:var(--grey);line-height:1.35;margin-top:1px}
+.box-dark{background:var(--navy);padding:10px 16px;border-radius:var(--r);display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.box-dark .box-title{color:var(--yel)}
+.box-dark .box-sub{color:rgba(142,184,224,.85);font-size:10.5px}
+.box-midblue{background:var(--midblue);padding:10px 16px;border-radius:var(--r);display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center}
+.box-midblue .box-title{color:#fff;font-size:12px}
+.box-midblue .box-sub{color:rgba(142,184,224,.85);font-size:10.5px}
+.divider{display:flex;align-items:center;gap:10px;margin:4px 0 2px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bd2)}
+.divider span{font-size:9px;font-weight:600;color:var(--grey);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.row-2col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.row-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:start}
+.bu-header{border-radius:var(--r) var(--r) 0 0;padding:10px 12px 9px;text-align:center}
+.bu-header .bu-title{font-size:13px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:3px}
+.bu-header .bu-sub{font-size:10px;color:rgba(144,184,216,.85);margin-bottom:2px}
+.bu-header .bu-head{font-size:9px;color:var(--yel);font-weight:500}
+.fit-wrapper{display:flex;flex-direction:column;border-radius:var(--r);overflow:hidden;border:1.5px solid var(--navy3)}
+.fit-dest{background:var(--d-bg);border-top:1px solid var(--d-bd);padding:7px 12px 8px;text-align:center}
+.fit-dest .box-title{color:var(--d-tx);font-size:11px}
+.fit-dest .box-sub{font-size:9.5px}
+.fit-dest .box-note{font-size:8.5px}
+.dept-sales{background:var(--s-bg);border:1px solid var(--s-bd);border-left:3px solid var(--s-bd)}
+.dept-sales .box-title{color:var(--s-tx);font-size:11px}
+.dept-ops{background:var(--v-bg);border:1px solid var(--v-bd);border-left:3px solid var(--v-bd)}
+.dept-ops .box-title{color:var(--v-tx);font-size:11px}
+.dept-visa{background:var(--v-bg);border:1px solid var(--v-bd);border-left:3px solid var(--v-bd)}
+.dept-visa .box-title{color:var(--v-tx);font-size:11px}
+.dept-central-tik{background:var(--o-bg);border:1px solid var(--o-bd);border-left:3px solid var(--o-bd)}
+.dept-central-tik .box-title{color:var(--o-tx)}
+.dept-central-cs{background:var(--t-bg);border:1px solid var(--t-bd);border-left:3px solid var(--t-bd)}
+.dept-central-cs .box-title{color:var(--t-tx)}
+.dept-central-fin{background:var(--fin-bg);border:1px solid var(--fin-bd);border-left:3px solid var(--fin-bd)}
+.dept-central-fin .box-title{color:var(--fin-tx)}
+.ops-body{display:flex;flex-direction:column;gap:0}
+.ops-ratio{display:flex;gap:4px;margin:6px 0 2px}
+.ratio-chip{flex:1;border-radius:4px;padding:5px 4px;text-align:center;font-size:9.5px;font-weight:600;border:1px solid}
+.ratio-chip.rc-s{background:var(--s-bg);color:var(--s-tx);border-color:var(--s-bd)}
+.ratio-chip.rc-o{background:var(--v-bg);color:var(--v-tx);border-color:var(--v-bd)}
+.ratio-chip.rc-v{background:var(--cred-bg);color:var(--cred-tx);border-color:var(--cred-bd)}
+.ratio-label{font-size:8px;color:var(--grey);text-align:center;margin-bottom:6px}
+.ops-phase2{background:var(--f2-bg);border:1px solid var(--f2-bd);border-radius:4px;padding:6px 8px;margin-top:4px}
+.ops-phase2 .p2-title{font-size:9px;font-weight:600;color:var(--f2-tx);margin-bottom:2px}
+.ops-phase2 .p2-sub{font-size:9px;color:var(--f2-tx);opacity:.8}
+.box-horiz{background:var(--dkblue);padding:10px 12px;border-radius:var(--r);text-align:center;display:flex;flex-direction:column;gap:3px}
+.box-horiz .box-title{color:#fff;font-size:11.5px}
+.box-horiz .box-sub{color:rgba(142,184,224,.85);font-size:10px}
+.box-horiz .box-note{color:rgba(142,184,224,.55);font-size:9px}
+.box-horiz .box-tag{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:99px;font-size:8.5px;color:rgba(255,255,255,.6);padding:2px 8px;margin-top:3px;align-self:center}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;padding:10px 14px;background:#fff;border:1px solid var(--bd);border-radius:var(--r);margin-top:4px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--dk2)}
+.legend-swatch{width:12px;height:12px;border-radius:3px;border:1px solid;flex-shrink:0}
 
-/* ── Header ───────────────────────────────────────────────── */
-.hdr {
-  background: var(--navy);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  padding: 20px 28px 16px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  overflow: hidden;
-}
-.hdr::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--red) 25%, var(--yel) 25% 50%, var(--grn) 50% 75%, var(--blu) 75%);
-}
-.hdr-logo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.hdr-logo-name {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -0.5px;
-  line-height: 1;
-}
-.hdr-logo-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  color: var(--yel);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.hdr-centre {
-  text-align: center;
-}
-.hdr-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.2;
-  margin-bottom: 4px;
-}
-.hdr-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10px;
-  color: rgba(142,184,224,.8);
-  letter-spacing: .04em;
-}
-.hdr-leaders {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.leader {
-  font-size: 11px;
-  color: rgba(255,255,255,.55);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.leader strong {
-  color: var(--yel);
-  font-weight: 600;
-}
-.hdr-badge {
-  margin-top: 4px;
-  display: inline-block;
-  background: var(--yel);
-  color: var(--navy);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 8px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 99px;
-  letter-spacing: .08em;
-  text-align: center;
-}
+/* ══════════════════════════════════════════════════════════════
+   TAB 2 — ORG CHART
+══════════════════════════════════════════════════════════════ */
 
-/* ── Structure body ───────────────────────────────────────── */
-.structure {
-  background: var(--lgrey);
-  border-radius: 0 0 var(--r-lg) var(--r-lg);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+/* Top leadership row */
+.org-leadership{display:flex;gap:10px;margin-bottom:4px}
+.org-lead-card{flex:1;background:var(--navy);border-radius:var(--r);padding:12px 14px;text-align:center;position:relative;overflow:hidden}
+.org-lead-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px}
+.olc-ceo::after{background:var(--yel)}
+.olc-cco::after{background:var(--blu)}
+.olc-cpo::after{background:var(--grn)}
+.olc-cfo::after{background:var(--red)}
+.lead-role{font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--yel);margin-bottom:4px}
+.lead-name-input{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:5px 8px;font-size:12px;font-weight:700;color:#fff;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .15s}
+.lead-name-input:focus{border-color:var(--yel);background:rgba(255,255,255,.15)}
+.lead-name-input::placeholder{color:rgba(255,255,255,.3);font-weight:400;font-style:italic}
+.lead-title{font-size:9px;color:rgba(255,255,255,.45);margin-top:4px}
 
-/* ── Generic box ──────────────────────────────────────────── */
-.box {
-  border-radius: var(--r);
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.box-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-.box-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10.5px;
-  color: var(--dk2);
-  line-height: 1.4;
-}
-.box-note {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  color: var(--grey);
-  line-height: 1.35;
-  margin-top: 1px;
-}
+/* Dept grid */
+.org-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+.org-grid-wide{grid-column:span 2}
 
-/* ── Full-width dark boxes ───────────────────────────────── */
-.row-full {
-  border-radius: var(--r);
-}
-.box-dark {
-  background: var(--navy);
-  padding: 10px 16px;
-  border-radius: var(--r);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  align-items: center;
-  text-align: center;
-}
-.box-dark .box-title { color: var(--yel); }
-.box-dark .box-sub   { color: rgba(142,184,224,.85); font-size: 10.5px; }
+/* Dept column */
+.org-dept{background:#fff;border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.org-dept-hdr{padding:9px 12px 8px;position:relative;cursor:pointer;user-select:none;display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+.org-dept-hdr:hover{filter:brightness(.95)}
+.odh-left{}
+.odh-icon{font-size:11px;margin-bottom:2px}
+.odh-title{font-size:11px;font-weight:800;line-height:1.2;margin-bottom:1px}
+.odh-sub{font-size:8.5px;opacity:.7;line-height:1.3}
+.odh-count{font-size:8px;background:rgba(0,0,0,.12);border-radius:99px;padding:1px 6px;margin-top:3px;display:inline-block;font-weight:600}
+.odh-toggle{font-size:9px;opacity:.5;flex-shrink:0;margin-top:2px;transition:transform .2s}
+.odh-toggle.open{transform:rotate(180deg)}
 
-.box-midblue {
-  background: var(--midblue);
-  padding: 10px 16px;
-  border-radius: var(--r);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  align-items: center;
-  text-align: center;
-}
-.box-midblue .box-title { color: #fff; font-size: 12px; }
-.box-midblue .box-sub   { color: rgba(142,184,224,.85); font-size: 10.5px; }
+/* Director slot */
+.org-director{padding:8px 12px;background:rgba(0,0,0,.03);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px}
+.dir-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--grey);white-space:nowrap;flex-shrink:0}
+.dir-input{flex:1;border:1px solid var(--bd);border-radius:4px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .15s;background:#fff}
+.dir-input:focus{border-color:var(--blu)}
+.dir-input::placeholder{color:var(--bd2);font-weight:400;font-style:italic}
 
-/* ── Divider label ────────────────────────────────────────── */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 4px 0 2px;
-}
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--bd2);
-}
-.divider span {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--grey);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  white-space: nowrap;
-}
+/* Roles list */
+.org-roles{padding:8px 10px;display:flex;flex-direction:column;gap:4px}
+.role-card{border-radius:5px;border:1px solid var(--bd);background:var(--lgrey);overflow:hidden;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.role-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:var(--bd2)}
+.role-card.expanded{border-color:var(--blu);box-shadow:0 2px 10px rgba(26,115,232,.12)}
+.rc-top{padding:6px 10px;display:flex;align-items:center;gap:8px}
+.rc-icon{font-size:13px;flex-shrink:0}
+.rc-info{flex:1;min-width:0}
+.rc-title{font-size:10.5px;font-weight:700;color:var(--navy);line-height:1.2}
+.rc-reports{font-size:8.5px;color:var(--grey)}
+.rc-name-wrap{display:flex;align-items:center;gap:4px}
+.rc-name-input{flex:1;border:none;border-bottom:1px dashed var(--bd2);background:transparent;font-size:10px;color:var(--dk2);font-family:'Plus Jakarta Sans',sans-serif;padding:1px 2px;outline:none;min-width:0;font-weight:500}
+.rc-name-input:focus{border-bottom-color:var(--blu)}
+.rc-name-input::placeholder{color:var(--bd2);font-style:italic}
+.rc-qty{font-size:9px;font-weight:700;background:var(--bd);color:var(--dk2);padding:1px 5px;border-radius:99px;flex-shrink:0}
+.rc-expand-icon{font-size:8px;color:var(--grey);flex-shrink:0;transition:transform .2s}
+.role-card.expanded .rc-expand-icon{transform:rotate(180deg);color:var(--blu)}
 
-/* ── 2-col row (Horizontal functions) ────────────────────── */
-.row-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-}
+/* Role detail panel */
+.rc-detail{display:none;padding:8px 10px 10px;border-top:1px solid var(--bd);background:#fff}
+.role-card.expanded .rc-detail{display:block}
+.rcd-section{margin-bottom:6px}
+.rcd-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--grey);margin-bottom:3px}
+.rcd-tags{display:flex;flex-wrap:wrap;gap:3px}
+.rcd-tag{font-size:8.5px;padding:2px 7px;border-radius:4px;border:1px solid var(--bd);background:var(--lgrey);color:var(--dk2)}
+.rcd-note{font-size:9px;color:var(--dk2);line-height:1.5;background:var(--lgrey);border-radius:4px;padding:5px 8px}
 
-/* ── 3-col BU grid ────────────────────────────────────────── */
-.row-3col {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  align-items: start;
-}
+/* Destination sub-sections inside FIT */
+.dest-section{margin:0 -10px;border-top:1px solid var(--bd)}
+.dest-hdr{padding:6px 10px;background:var(--d-bg);border-bottom:1px solid var(--d-bd);display:flex;align-items:center;gap:6px}
+.dest-hdr-title{font-size:9.5px;font-weight:700;color:var(--d-tx)}
+.dest-hdr-sub{font-size:8px;color:var(--d-tx);opacity:.7}
+.dest-roles{padding:6px 10px;display:flex;flex-direction:column;gap:3px}
 
-/* ── BU Header boxes ──────────────────────────────────────── */
-.bu-header {
-  border-radius: var(--r) var(--r) 0 0;
-  padding: 10px 12px 9px;
-  text-align: center;
-}
-.bu-header .bu-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.1;
-  margin-bottom: 3px;
-}
-.bu-header .bu-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10px;
-  color: rgba(144,184,216,.85);
-  margin-bottom: 2px;
-}
-.bu-header .bu-head {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  color: var(--yel);
-  font-weight: 500;
-}
+/* TBC badge */
+.tbc-badge{display:inline-flex;align-items:center;gap:3px;background:#FFF8E6;border:1px solid #B87800;border-radius:4px;padding:3px 7px;font-size:8.5px;color:#7A4800;font-weight:600;margin-top:6px;width:100%;justify-content:center}
 
-/* FIT column wrapper — keeps header + destinations together */
-.fit-wrapper {
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--r);
-  overflow: hidden;
-  border: 1.5px solid var(--navy3);
-}
-.fit-dest {
-  background: var(--d-bg);
-  border-top: 1px solid var(--d-bd);
-  padding: 7px 12px 8px;
-  text-align: center;
-}
-.fit-dest .box-title { color: var(--d-tx); font-size: 11px; }
-.fit-dest .box-sub   { font-size: 9.5px; }
-.fit-dest .box-note  { font-size: 8.5px; }
+/* Saved indicator */
+.save-indicator{position:fixed;bottom:20px;right:20px;background:var(--grn);color:#fff;font-size:11px;font-weight:600;padding:8px 14px;border-radius:6px;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;z-index:100}
+.save-indicator.show{opacity:1;transform:translateY(0)}
 
-/* ── BU content column wrapper ────────────────────────────── */
-.bu-col {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+/* Footer */
+.footer{text-align:center;padding:16px 0 0;font-size:9.5px;color:rgba(255,255,255,.3);letter-spacing:.04em}
 
-/* Connector dots between rows in a column */
-.col-connector {
-  display: flex;
-  justify-content: center;
-  height: 4px;
-}
-.col-connector::after {
-  content: '';
-  width: 1px;
-  height: 4px;
-  background: var(--bd2);
-}
+/* Responsive */
+@media(max-width:1100px){.org-grid{grid-template-columns:repeat(2,1fr)}.org-grid-wide{grid-column:span 1}}
+@media(max-width:700px){.row-2col,.row-3col,.org-leadership,.org-grid{grid-template-columns:1fr}.hdr{grid-template-columns:1fr;text-align:center}}
+/* ── Notice bars ─────────────────────────────────────────── */
+.notice-bar{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--r);font-size:10.5px;line-height:1.5;margin-bottom:4px}
+.notice-amber{background:#FFF8E6;border:1px solid #B87800;color:#7A4B00}
+.notice-blue{background:var(--f2-bg);border:1px solid var(--f2-bd);color:var(--f2-tx)}
 
-/* ── Dept boxes ────────────────────────────────────────────── */
-.dept-sales {
-  background: var(--s-bg);
-  border: 1px solid var(--s-bd);
-  border-left: 3px solid var(--s-bd);
-}
-.dept-sales .box-title { color: var(--s-tx); font-size: 11px; }
+/* ── JD Tab ──────────────────────────────────────────────── */
+.jd-filter-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:#fff;border:1px solid var(--bd);border-radius:var(--r)}
+.jd-filter-label{font-size:9.5px;font-weight:600;color:var(--grey);white-space:nowrap}
+.jd-filters{display:flex;flex-wrap:wrap;gap:4px}
+.jd-filter-chip{font-size:9px;font-weight:600;padding:3px 10px;border-radius:99px;border:1px solid var(--bd2);background:#fff;color:var(--dk2);cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.jd-filter-chip:hover{border-color:var(--blu);color:var(--blu)}
+.jd-filter-chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.jd-table-hdr{display:grid;grid-template-columns:160px 200px 180px 1fr;gap:0;background:var(--navy);border-radius:var(--r) var(--r) 0 0;padding:8px 14px;font-size:9px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase}
+.jd-row{display:grid;grid-template-columns:160px 200px 180px 1fr;gap:0;border-bottom:1px solid var(--bd);background:#fff;cursor:pointer;transition:background .12s}
+.jd-row:hover{background:#F8FAFC}
+.jd-row.expanded{background:var(--f2-bg)}
+.jd-row:last-child{border-bottom:none;border-radius:0 0 var(--r) var(--r)}
+.jd-cell{padding:9px 14px;font-size:10.5px;color:var(--dk2);line-height:1.4;display:flex;align-items:flex-start}
+.jd-cell-dept{font-weight:600;color:var(--navy);font-size:10px}
+.jd-cell-role{font-weight:700;color:var(--navy);font-size:10.5px}
+.jd-cell-rep{font-size:10px;color:var(--grey)}
+.jd-cell-desc{font-size:10px;color:var(--dk2);display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.jd-expand-icon{font-size:8px;color:var(--grey);flex-shrink:0;margin-top:2px;transition:transform .18s}
+.jd-row.expanded .jd-expand-icon{transform:rotate(180deg);color:var(--blu)}
+.jd-detail{display:none;grid-column:1/-1;padding:10px 14px 14px;border-top:1px dashed var(--bd2);background:var(--f2-bg)}
+.jd-row.expanded .jd-detail{display:block}
+.jd-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.jd-detail-section{display:flex;flex-direction:column;gap:4px}
+.jd-detail-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--grey);margin-bottom:2px}
+.jd-detail-body{font-size:10.5px;color:var(--dk2);line-height:1.6;background:#fff;border-radius:4px;padding:8px 10px;border:1px solid var(--bd)}
+.jd-tags{display:flex;flex-wrap:wrap;gap:4px}
+.jd-tag{font-size:9px;padding:2px 8px;border-radius:99px;background:var(--lgrey);border:1px solid var(--bd);color:var(--dk2)}
+.jd-dept-badge{display:inline-block;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:2px}
+.jd-container{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
 
-.dept-ops {
-  background: var(--v-bg);
-  border: 1px solid var(--v-bd);
-  border-left: 3px solid var(--v-bd);
-}
-.dept-ops .box-title { color: var(--v-tx); font-size: 11px; }
+/* ── To Define Tab ───────────────────────────────────────── */
+.todo-section-hdr{padding:10px 14px;border-radius:var(--r);font-size:11px;font-weight:700;margin:8px 0 4px}
+.todo-p1{background:#FEE2E2;color:#7F1D1D;border:1px solid #FCA5A5}
+.todo-p2{background:#FEF3C7;color:#78350F;border:1px solid #FCD34D}
+.todo-p3{background:#FFF8E6;color:#6A4800;border:1px solid #FCD34D}
+.todo-confirmed{background:#DCFCE7;color:#14532D;border:1px solid #86EFAC}
+.todo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.todo-card{background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:6px;position:relative}
+.todo-card-done{background:#F0FFF4;border-color:#86EFAC;opacity:.85}
+.todo-card-hdr{font-size:11px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px;line-height:1.3}
+.todo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-red{background:#EF4444}
+.dot-amber{background:#F97316}
+.dot-yel{background:#EAB308}
+.dot-green{background:#22C55E}
+.todo-owner{font-size:9px;font-weight:600;color:var(--grey);letter-spacing:.04em}
+.todo-body{font-size:10px;color:var(--dk2);line-height:1.6}
+.todo-suggestion{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:4px;padding:8px 10px;font-size:9.5px;color:#1E40AF;line-height:1.6}
+.sug-label{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#3B82F6;margin-bottom:4px}
+.todo-status{font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:99px;align-self:flex-start;margin-top:auto}
+.todo-open{background:#FEE2E2;color:#B91C1C;border:1px solid #FCA5A5}
+.todo-done{background:#DCFCE7;color:#15803D;border:1px solid #86EFAC}
 
-.dept-visa {
-  background: var(--v-bg);
-  border: 1px solid var(--v-bd);
-  border-left: 3px solid var(--v-bd);
-}
-.dept-visa .box-title { color: var(--v-tx); font-size: 11px; }
-
-.dept-central-tik {
-  background: var(--o-bg);
-  border: 1px solid var(--o-bd);
-  border-left: 3px solid var(--o-bd);
-}
-.dept-central-tik .box-title { color: var(--o-tx); }
-
-.dept-central-cs {
-  background: var(--t-bg);
-  border: 1px solid var(--t-bd);
-  border-left: 3px solid var(--t-bd);
-}
-.dept-central-cs .box-title { color: var(--t-tx); }
-
-.dept-central-fin {
-  background: var(--fin-bg);
-  border: 1px solid var(--fin-bd);
-  border-left: 3px solid var(--fin-bd);
-}
-.dept-central-fin .box-title { color: var(--fin-tx); }
-
-/* ── Operations internal layout ───────────────────────────── */
-.ops-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.ops-ratio {
-  display: flex;
-  gap: 4px;
-  margin: 6px 0 2px;
-}
-.ratio-chip {
-  flex: 1;
-  border-radius: 4px;
-  padding: 5px 4px;
-  text-align: center;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9.5px;
-  font-weight: 600;
-  border: 1px solid;
-}
-.ratio-chip.rc-s  { background: var(--s-bg); color: var(--s-tx); border-color: var(--s-bd); }
-.ratio-chip.rc-o  { background: var(--v-bg); color: var(--v-tx); border-color: var(--v-bd); }
-.ratio-chip.rc-v  { background: var(--cred-bg); color: var(--cred-tx); border-color: var(--cred-bd); }
-.ratio-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 8px;
-  color: var(--grey);
-  text-align: center;
-  margin-bottom: 6px;
-}
-.ops-phase2 {
-  background: var(--f2-bg);
-  border: 1px solid var(--f2-bd);
-  border-radius: 4px;
-  padding: 6px 8px;
-  margin-top: 4px;
-}
-.ops-phase2 .p2-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--f2-tx);
-  margin-bottom: 2px;
-}
-.ops-phase2 .p2-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  color: var(--f2-tx);
-  opacity: .8;
-}
-
-/* ── Central section 3-col ───────────────────────────────── */
-.central-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4px;
-}
-
-/* ── Legend ────────────────────────────────────────────────── */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  padding: 10px 14px;
-  background: #fff;
-  border: 1px solid var(--bd);
-  border-radius: var(--r);
-  margin-top: 4px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  color: var(--dk2);
-}
-.legend-swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  border: 1px solid;
-  flex-shrink: 0;
-}
-
-/* ── Footer ────────────────────────────────────────────────── */
-.footer {
-  text-align: center;
-  padding: 16px 0 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9.5px;
-  color: rgba(255,255,255,.3);
-  letter-spacing: .04em;
-}
-
-/* ── Horiz function boxes ─────────────────────────────────── */
-.box-horiz {
-  background: var(--dkblue);
-  padding: 10px 12px;
-  border-radius: var(--r);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.box-horiz .box-title { color: #fff; font-size: 11.5px; }
-.box-horiz .box-sub   { color: rgba(142,184,224,.85); font-size: 10px; }
-.box-horiz .box-note  { color: rgba(142,184,224,.55); font-size: 9px; }
-.box-horiz .box-tag {
-  display: inline-block;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 99px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 8.5px;
-  color: rgba(255,255,255,.6);
-  padding: 2px 8px;
-  margin-top: 3px;
-  align-self: center;
-}
-
-/* ── Entrance animation ───────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity:0; transform: translateY(12px); }
-  to   { opacity:1; transform: translateY(0); }
-}
-.structure > * {
-  animation: fadeUp .4s ease both;
-}
-.structure > *:nth-child(1)  { animation-delay: .05s }
-.structure > *:nth-child(2)  { animation-delay: .10s }
-.structure > *:nth-child(3)  { animation-delay: .15s }
-.structure > *:nth-child(4)  { animation-delay: .18s }
-.structure > *:nth-child(5)  { animation-delay: .21s }
-.structure > *:nth-child(6)  { animation-delay: .24s }
-.structure > *:nth-child(7)  { animation-delay: .27s }
-.structure > *:nth-child(8)  { animation-delay: .30s }
-.structure > *:nth-child(9)  { animation-delay: .33s }
-.structure > *:nth-child(10) { animation-delay: .36s }
-.structure > *:nth-child(11) { animation-delay: .39s }
-.structure > *:nth-child(12) { animation-delay: .42s }
-
-/* ── Print ────────────────────────────────────────────────── */
-@media print {
-  body { background: #fff; padding: 8mm; }
-  .hdr { border-radius: 6px 6px 0 0; }
-  .structure { border-radius: 0 0 6px 6px; }
-  .structure > * { animation: none; }
-  .footer { color: #aaa; }
-  @page { size: A3 landscape; margin: 8mm; }
-}
-
-/* ── Responsive ────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .row-2col, .row-3col { grid-template-columns: 1fr; }
-  .hdr { grid-template-columns: 1fr; gap: 8px; text-align: center; }
-  .hdr-leaders { align-items: center; }
-}
+@media(max-width:1000px){.todo-grid{grid-template-columns:1fr 1fr}.jd-table-hdr,.jd-row{grid-template-columns:120px 160px 140px 1fr}}
+@media(max-width:700px){.todo-grid{grid-template-columns:1fr}.jd-table-hdr,.jd-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- ══ HEADER ══════════════════════════════════════════════ -->
-  <div class="hdr">
-    <div class="hdr-logo">
-      <div class="hdr-logo-name">TripFactory</div>
-      <div class="hdr-logo-sub">Tour Operator</div>
+<!-- ── HEADER ──────────────────────────────────────────────── -->
+<div class="hdr">
+  <div class="hdr-logo">
+    <div class="hdr-logo-name">TripFactory</div>
+    <div class="hdr-logo-sub">Tour Operator</div>
+  </div>
+  <div class="hdr-centre">
+    <div class="hdr-title">Organisation & Business Structure</div>
+    <div class="hdr-sub">Department overview &nbsp;·&nbsp; People structure &nbsp;·&nbsp; Edition I, 2026</div>
+  </div>
+  <div style="text-align:right">
+    <div class="hdr-badge">WORKING DRAFT · I</div>
+  </div>
+</div>
+
+<!-- ── TAB BAR ─────────────────────────────────────────────── -->
+<div class="tab-bar" style="background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1)">
+  <button class="tab-btn active" onclick="switchTab('bs',this)">Business Structure</button>
+  <button class="tab-btn" onclick="switchTab('org',this)">Org Chart Structure</button>
+  <button class="tab-btn" onclick="switchTab('jd',this)">Job Roles &amp; Descriptions</button>
+  <button class="tab-btn" onclick="switchTab('todo',this)">To Define &amp; Confirm</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 1 — BUSINESS STRUCTURE
+══════════════════════════════════════════════════════════════ -->
+<div id="tab-bs" class="tab-panel active">
+
+  <div class="box-dark box">
+    <div class="box-title">LEADERSHIP</div>
+    <div class="box-sub">CEO &nbsp;·&nbsp; CCO &nbsp;·&nbsp; CPO &nbsp;·&nbsp; CFO</div>
+  </div>
+
+  <div class="row-2col">
+    <div class="box-horiz">
+      <div class="box-title">MARKETING</div>
+      <div class="box-sub">All Marketing &nbsp;·&nbsp; All Destinations</div>
+      <div class="box-note">Central function &nbsp;·&nbsp; Driven by business &amp; market demand</div>
+      <span class="box-tag">Localised offices per region</span>
     </div>
-    <div class="hdr-centre">
-      <div class="hdr-title">Business Structure — Department &amp; Function Overview</div>
-      <div class="hdr-sub">High-level organisational structure &nbsp;·&nbsp; Edition I, 2026 &nbsp;·&nbsp; Working Draft</div>
+    <div class="box-horiz" style="background:#1C3550;border:1px solid rgba(196,120,0,.4)">
+      <div class="box-title" style="color:#FFE0A0">CREDITS</div>
+      <div class="box-sub">Global &amp; Localised Function</div>
+      <div class="box-note">Credit management &nbsp;·&nbsp; Rewards programme &nbsp;·&nbsp; Partner credits &nbsp;·&nbsp; Local market redemption</div>
+      <span class="box-tag" style="border-color:rgba(196,120,0,.35);color:rgba(255,214,128,.7)">Global + Localised</span>
     </div>
-    <div class="hdr-leaders">
-      <div class="hdr-badge">WORKING DRAFT · I</div>
+    <div class="box-horiz">
+      <div class="box-title">PEOPLE, LEGAL &amp; GOVERNANCE &nbsp;<span style="font-size:9.5px;font-weight:400;opacity:.7">(CPO)</span></div>
+      <div class="box-sub">HR &nbsp;·&nbsp; Training &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Payroll &nbsp;·&nbsp; Compliance &nbsp;·&nbsp; Technology</div>
+      <div class="box-note">Central horizontal function &nbsp;·&nbsp; Supports all business units</div>
     </div>
   </div>
 
-  <!-- ══ STRUCTURE BODY ═══════════════════════════════════════ -->
-  <div class="structure">
+  <div class="box-midblue box">
+    <div class="box-title">DESTINATION MANAGEMENT</div>
+    <div class="box-sub">Each region / destination has its own dedicated business unit &nbsp;·&nbsp; 360 supplier contracts globally &nbsp;·&nbsp; Hotels + DMC &nbsp;·&nbsp; Supports all three verticals</div>
+  </div>
 
-    <!-- ── Leadership ──────────────────────────────────────── -->
-    <div class="box-dark box">
-      <div class="box-title">LEADERSHIP</div>
-      <div class="box-sub">CEO &nbsp;·&nbsp; CCO &nbsp;·&nbsp; CPO</div>
+  <div class="divider"><span>Three Vertical Business Units</span></div>
+
+  <div class="row-3col">
+    <div class="bu-header" style="background:var(--navy)">
+      <div class="bu-title">GIT</div>
+      <div class="bu-sub">Group Inclusive Tours</div>
+      <div class="bu-head">Head: Director TBC</div>
     </div>
-
-    <!-- ── Horizontal Functions (3 boxes) ──────────────────── -->
-    <div class="row-2col">
-
-      <div class="box-horiz">
-        <div class="box-title">MARKETING</div>
-        <div class="box-sub">All Marketing &nbsp;·&nbsp; All Destinations</div>
-        <div class="box-note">Central function &nbsp;·&nbsp; Driven by business &amp; market demand</div>
-        <span class="box-tag">Localised offices per region</span>
-      </div>
-
-      <div class="box-horiz" style="background:#1C3550;border:1px solid rgba(196,120,0,.4)">
-        <div class="box-title" style="color:#FFE0A0">CREDITS</div>
-        <div class="box-sub">Global &amp; Localised Function</div>
-        <div class="box-note">Credit management &nbsp;·&nbsp; Rewards programme &nbsp;·&nbsp; Partner credits &nbsp;·&nbsp; Local market redemption</div>
-        <span class="box-tag" style="border-color:rgba(196,120,0,.35);color:rgba(255,214,128,.7)">Global + Localised</span>
-      </div>
-
-      <div class="box-horiz">
-        <div class="box-title">PEOPLE, LEGAL &amp; GOVERNANCE &nbsp;<span style="font-size:9.5px;font-weight:400;opacity:.7">(CPO)</span></div>
-        <div class="box-sub">HR &nbsp;·&nbsp; Training &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Payroll &nbsp;·&nbsp; Compliance &nbsp;·&nbsp; Technology</div>
-        <div class="box-note">Central horizontal function &nbsp;·&nbsp; Supports all business units</div>
-      </div>
-
+    <div class="bu-header" style="background:var(--navy2)">
+      <div class="bu-title">GROUPS / MICE</div>
+      <div class="bu-sub">Incentive · Conference · Event · Bespoke</div>
+      <div class="bu-head">Head: Director TBC</div>
     </div>
-
-    <!-- ── Destination Management ───────────────────────────── -->
-    <div class="box-midblue box">
-      <div class="box-title">DESTINATION MANAGEMENT</div>
-      <div class="box-sub">Each region / destination has its own dedicated business unit &nbsp;·&nbsp; 360 supplier contracts globally &nbsp;·&nbsp; Hotels + DMC &nbsp;·&nbsp; Supports all three verticals</div>
-    </div>
-
-    <!-- ── BU Divider ────────────────────────────────────────── -->
-    <div class="divider"><span>Three Vertical Business Units</span></div>
-
-    <!-- ── BU Column Headers ────────────────────────────────── -->
-    <div class="row-3col">
-
-      <!-- GIT -->
-      <div class="bu-header" style="background:var(--navy)">
-        <div class="bu-title">GIT</div>
-        <div class="bu-sub">Group Inclusive Tours</div>
-        <div class="bu-head">Head: [GIT Director]</div>
+    <div class="fit-wrapper">
+      <div class="bu-header" style="background:var(--navy3);border-radius:0">
+        <div class="bu-title">FIT TRAVEL</div>
+        <div class="bu-sub">Custom · Tailor-Made · B2B Agent</div>
+        <div class="bu-head">Head: Director TBC</div>
       </div>
-
-      <!-- MICE -->
-      <div class="bu-header" style="background:var(--navy2)">
-        <div class="bu-title">GROUPS / MICE</div>
-        <div class="bu-sub">Incentive · Conference · Event · Bespoke</div>
-        <div class="bu-head">Head: [Groups &amp; MICE Director]</div>
-      </div>
-
-      <!-- FIT — header + Destinations combined -->
-      <div class="fit-wrapper">
-        <div class="bu-header" style="background:var(--navy3); border-radius:0">
-          <div class="bu-title">FIT TRAVEL</div>
-          <div class="bu-sub">Custom · Tailor-Made · B2B Agent</div>
-          <div class="bu-head">Head: [FIT Director]</div>
-        </div>
-        <div class="fit-dest">
-          <div class="box-title">DESTINATIONS</div>
-          <div class="box-sub">Curated supplier relationships per destination</div>
-          <div class="box-note">Product building &nbsp;·&nbsp; Ground arrangements &nbsp;·&nbsp; DMC partnerships</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── BU Department Rows ─────────────────────────────────
-         Sales, Operations, Visa run in 3 columns in sync      -->
-
-    <!-- Sales -->
-    <div class="row-3col">
-      <div class="box dept-sales">
-        <div class="box-title">SALES</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts per vertical</div>
-      </div>
-      <div class="box dept-sales">
-        <div class="box-title">SALES</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts per vertical</div>
-      </div>
-      <div class="box dept-sales">
-        <div class="box-title">SALES</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts per vertical</div>
+      <div class="fit-dest">
+        <div class="box-title">DESTINATIONS</div>
+        <div class="box-sub">Asia · Domestic · Europe · Australia · CIS · RTW</div>
+        <div class="box-note">Product building &nbsp;·&nbsp; Ground arrangements &nbsp;·&nbsp; DMC partnerships</div>
       </div>
     </div>
+  </div>
 
-    <!-- Operations -->
-    <div class="row-3col">
+  <div class="row-3col">
+    <div class="box dept-sales"><div class="box-title">SALES</div><div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts &nbsp;·&nbsp; GIT ratio: 20:1 Sales/Ops</div></div>
+    <div class="box dept-sales"><div class="box-title">SALES</div><div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts &nbsp;·&nbsp; MICE ratio: 10:1 Sales/Ops</div></div>
+    <div class="box dept-sales"><div class="box-title">SALES</div><div class="box-sub">By Business Unit &nbsp;·&nbsp; Dedicated trained experts &nbsp;·&nbsp; FIT ratio: 10:1 Sales/Ops</div></div>
+  </div>
 
-      <div class="box dept-ops ops-body">
-        <div class="box-title">OPERATIONS</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
-        <div class="ops-ratio">
-          <div class="ratio-chip rc-s">3 × Sales</div>
-          <div class="ratio-chip rc-o">1 × Ops</div>
-          <div class="ratio-chip rc-v">1 × Visa</div>
-        </div>
-        <div class="ratio-label">Staff ratio per team</div>
-        <div class="ops-phase2">
-          <div class="p2-title">Phase 2 →</div>
-          <div class="p2-sub">Sales + Ops merge into one full-process function &nbsp;·&nbsp; Centralised operations system</div>
-        </div>
+  <div class="row-3col">
+    <div class="box dept-ops ops-body">
+      <div class="box-title">OPERATIONS</div>
+      <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
+      <div class="ops-ratio">
+        <div class="ratio-chip rc-s">20 × Sales</div>
+        <div class="ratio-chip rc-o">1 × Ops</div>
+        <div class="ratio-chip rc-v">1 × Visa</div>
       </div>
-
-      <div class="box dept-ops ops-body">
-        <div class="box-title">OPERATIONS</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
-        <div class="ops-ratio">
-          <div class="ratio-chip rc-s">3 × Sales</div>
-          <div class="ratio-chip rc-o">1 × Ops</div>
-          <div class="ratio-chip rc-v">1 × Visa</div>
-        </div>
-        <div class="ratio-label">Staff ratio per team</div>
-        <div class="ops-phase2">
-          <div class="p2-title">Phase 2 →</div>
-          <div class="p2-sub">Sales + Ops merge into one full-process function &nbsp;·&nbsp; Centralised operations system</div>
-        </div>
-      </div>
-
-      <div class="box dept-ops ops-body">
-        <div class="box-title">OPERATIONS</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
-        <div class="ops-ratio">
-          <div class="ratio-chip rc-s">3 × Sales</div>
-          <div class="ratio-chip rc-o">1 × Ops</div>
-          <div class="ratio-chip rc-v">1 × Visa</div>
-        </div>
-        <div class="ratio-label">Staff ratio per team</div>
-        <div class="ops-phase2">
-          <div class="p2-title">Phase 2 →</div>
-          <div class="p2-sub">Sales + Ops merge into one full-process function &nbsp;·&nbsp; Centralised operations system</div>
-        </div>
-      </div>
-
+      <div class="ratio-label">GIT staff ratio</div>
+      <div class="ops-phase2"><div class="p2-title">Phase 2 →</div><div class="p2-sub">Sales + Ops merge &nbsp;·&nbsp; Centralised operations system</div></div>
     </div>
-
-    <!-- Visa -->
-    <div class="row-3col">
-      <div class="box dept-visa">
-        <div class="box-title">VISA UNIT</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Internal or Outsourced per unit</div>
-        <div class="box-note">Each unit has different priorities &amp; requirements</div>
+    <div class="box dept-ops ops-body">
+      <div class="box-title">OPERATIONS</div>
+      <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
+      <div class="ops-ratio">
+        <div class="ratio-chip rc-s">10 × Sales</div>
+        <div class="ratio-chip rc-o">1 × Ops</div>
+        <div class="ratio-chip rc-v">1 × Visa</div>
       </div>
-      <div class="box dept-visa">
-        <div class="box-title">VISA UNIT</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Internal or Outsourced per unit</div>
-        <div class="box-note">Each unit has different priorities &amp; requirements</div>
-      </div>
-      <div class="box dept-visa">
-        <div class="box-title">VISA UNIT</div>
-        <div class="box-sub">By Business Unit &nbsp;·&nbsp; Internal or Outsourced per unit</div>
-        <div class="box-note">Each unit has different priorities &amp; requirements</div>
-      </div>
+      <div class="ratio-label">MICE staff ratio</div>
+      <div class="ops-phase2"><div class="p2-title">Phase 2 →</div><div class="p2-sub">Sales + Ops merge &nbsp;·&nbsp; Centralised operations system</div></div>
     </div>
+    <div class="box dept-ops ops-body">
+      <div class="box-title">OPERATIONS</div>
+      <div class="box-sub">By Business Unit &nbsp;·&nbsp; Phase 1: dedicated ops per unit</div>
+      <div class="ops-ratio">
+        <div class="ratio-chip rc-s">10 × Sales</div>
+        <div class="ratio-chip rc-o">1 × Ops</div>
+        <div class="ratio-chip rc-v">1 × Visa</div>
+      </div>
+      <div class="ratio-label">FIT staff ratio (per destination)</div>
+      <div class="ops-phase2"><div class="p2-title">Phase 2 →</div><div class="p2-sub">Sales + Ops merge &nbsp;·&nbsp; Centralised operations system</div></div>
+    </div>
+  </div>
 
-    <!-- ── Central Divider ──────────────────────────────────── -->
-    <div class="divider"><span>Central (Shared) Functions</span></div>
+  <div class="row-3col">
+    <div class="box dept-visa"><div class="box-title">VISA UNIT</div><div class="box-sub">Outsourced to UDAN (Udaan India) &nbsp;·&nbsp; 3rd party visa company</div><div class="box-note">Visa Team Leader × 2 &nbsp;·&nbsp; Visa Agent × 10</div></div>
+    <div class="box dept-visa"><div class="box-title">VISA UNIT</div><div class="box-sub">Outsourced to UDAN (Udaan India) &nbsp;·&nbsp; 3rd party visa company</div><div class="box-note">Internal/Outsourced per BU requirements</div></div>
+    <div class="box dept-visa"><div class="box-title">VISA UNIT</div><div class="box-sub">Outsourced to UDAN (Udaan India) &nbsp;·&nbsp; 3rd party visa company</div><div class="box-note">Internal/Outsourced per BU requirements</div></div>
+  </div>
 
-    <!-- ── Central Rows ─────────────────────────────────────── -->
+  <div class="divider"><span>Central (Shared) Functions</span></div>
+
+  <div class="row-3col">
     <div class="box dept-central-tik">
-      <div class="box-title">TICKETING — Central Function</div>
-      <div class="box-sub">No differentiation across business units &nbsp;·&nbsp; Single centralised ticketing team</div>
-      <div class="box-note">TBC: Review whether group bookings should be handled separately</div>
+      <div class="box-title">TICKETING — Central</div>
+      <div class="box-sub">Team Leader International &nbsp;·&nbsp; Team Leader Domestic</div>
+      <div class="box-note">Ticketing Agent International × 20 &nbsp;·&nbsp; Ticketing Agent Domestic × 10</div>
     </div>
-
     <div class="box dept-central-cs">
-      <div class="box-title">CUSTOMER SERVICES — Central Function</div>
-      <div class="box-sub">Centralised team covering all business units &nbsp;·&nbsp; OR by Business Unit with Groups separate</div>
-      <div class="box-note">Under review &nbsp;·&nbsp; Recommendation: Central with BU escalation path</div>
+      <div class="box-title">CUSTOMER SERVICES — Central</div>
+      <div class="box-sub">By destination: Asia · Domestic · Europe · Australia · CIS · RTW</div>
+      <div class="box-note">Team Leader × 6 &nbsp;·&nbsp; SME × 6 &nbsp;·&nbsp; Supervisor × 6 &nbsp;·&nbsp; Agent × 30</div>
     </div>
-
     <div class="box dept-central-fin">
-      <div class="box-title">FINANCE — Central Function</div>
-      <div class="box-sub">Centralised finance across all business units &nbsp;·&nbsp; Accounts &nbsp;·&nbsp; Payments &nbsp;·&nbsp; Supplier settlements &nbsp;·&nbsp; TCS &nbsp;·&nbsp; LERMS reconciliation</div>
-      <div class="box-note">Reporting to CEO &nbsp;·&nbsp; Supports GIT · Groups/MICE · FIT &nbsp;·&nbsp; Driver float &amp; expense authorisation</div>
+      <div class="box-title">FINANCE — Central</div>
+      <div class="box-sub">Centralised finance &nbsp;·&nbsp; Accounts &nbsp;·&nbsp; Payments &nbsp;·&nbsp; TCS &nbsp;·&nbsp; LERMS</div>
+      <div class="box-note">Director TBC &nbsp;·&nbsp; Structure TBC &nbsp;·&nbsp; Reporting to CEO</div>
     </div>
-
-    <!-- ── Legend ───────────────────────────────────────────── -->
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--s-bg);border-color:var(--s-bd)"></div>
-        Sales (by BU)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--v-bg);border-color:var(--v-bd)"></div>
-        Operations / Visa (by BU)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--d-bg);border-color:var(--d-bd)"></div>
-        Destinations (FIT only)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--o-bg);border-color:var(--o-bd)"></div>
-        Ticketing (Central)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--t-bg);border-color:var(--t-bd)"></div>
-        Customer Services (Central)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--fin-bg);border-color:var(--fin-bd)"></div>
-        Finance (Central)
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--f2-bg);border-color:var(--f2-bd)"></div>
-        Phase 2 / Under Review
-      </div>
-      <div class="legend-item">
-        <div class="legend-swatch" style="background:var(--cred-bg);border-color:var(--cred-bd)"></div>
-        Credits (Global + Localised)
-      </div>
-    </div>
-
-  </div><!-- /structure -->
-
-  <div class="footer">
-    TripFactory &nbsp;·&nbsp; Business Structure Overview &nbsp;·&nbsp; Edition I, MMXXVI &nbsp;·&nbsp;
-    CEO: Raj Kumar &nbsp;·&nbsp; CCO: Ajay Kawa &nbsp;·&nbsp; CPO: Alia Taub
   </div>
+
+  <div class="row-3col">
+    <div class="box" style="background:#F0F7FF;border:1px solid #1A73E8;border-left:3px solid #1A73E8">
+      <div class="box-title" style="color:#0A3E96">FLIGHTS — Central</div>
+      <div class="box-sub">Director: Ankit Aggarwal &nbsp;·&nbsp; Structure to be advised by Ankit</div>
+      <div class="box-note">Central function supporting all business units</div>
+    </div>
+    <div class="box" style="background:var(--cred-bg);border:1px solid var(--cred-bd);border-left:3px solid var(--cred-bd)">
+      <div class="box-title" style="color:var(--cred-tx)">CREDITS — Global/Local</div>
+      <div class="box-sub">Director: Sahil Nijhawan &nbsp;·&nbsp; Structure TBC &nbsp;·&nbsp; Global + Localised</div>
+      <div class="box-note">Finalise globally then localise per market</div>
+    </div>
+    <div class="box" style="background:#F5F0FF;border:1px solid #6B46C1;border-left:3px solid #6B46C1">
+      <div class="box-title" style="color:#4C1D95">COMMERCIAL PRODUCT — Central</div>
+      <div class="box-sub">CPO: Ajay Kawa &nbsp;·&nbsp; Contracting by destination</div>
+      <div class="box-note">Asia · Domestic · Europe · Australia · CIS · RTW &nbsp;·&nbsp; Contracting loading team</div>
+    </div>
+  </div>
+
+  <div class="row-3col">
+    <div class="box" style="background:#F0FFF4;border:1px solid #3D8A14;border-left:3px solid #3D8A14">
+      <div class="box-title" style="color:#1E5A08">TRANSPORT — Central</div>
+      <div class="box-sub">Director TBC &nbsp;·&nbsp; Structure to be advised</div>
+      <div class="box-note">Central function &nbsp;·&nbsp; Structure TBC</div>
+    </div>
+    <div class="box" style="background:#FDF4FF;border:1px solid #9333EA;border-left:3px solid #9333EA">
+      <div class="box-title" style="color:#6B21A8">TECHNOLOGY / DEV — Central</div>
+      <div class="box-sub">Vinay / Amit to confirm structure</div>
+      <div class="box-note">Systems &nbsp;·&nbsp; Platform &nbsp;·&nbsp; Development &nbsp;·&nbsp; Data</div>
+    </div>
+    <div class="box" style="background:#F0F7EE;border:1px solid #3D8A14;border-left:3px solid #3D8A14">
+      <div class="box-title" style="color:#1E5A08">PEOPLE, LEGAL &amp; GOVERNANCE</div>
+      <div class="box-sub">CPO: Alia Taub &nbsp;·&nbsp; HR · Training · Legal · Payroll · Compliance</div>
+      <div class="box-note">Structure to be confirmed by Alia Taub</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--s-bg);border-color:var(--s-bd)"></div>Sales (by BU)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--v-bg);border-color:var(--v-bd)"></div>Operations / Visa (by BU)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--d-bg);border-color:var(--d-bd)"></div>Destinations (FIT)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--o-bg);border-color:var(--o-bd)"></div>Ticketing (Central)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--t-bg);border-color:var(--t-bd)"></div>Customer Services (Central)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--fin-bg);border-color:var(--fin-bd)"></div>Finance (Central)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--f2-bg);border-color:var(--f2-bd)"></div>Phase 2 / Under Review</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--cred-bg);border-color:var(--cred-bd)"></div>Credits</div>
+  </div>
+
+</div><!-- /tab-bs -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 2 — ORG CHART STRUCTURE
+══════════════════════════════════════════════════════════════ -->
+<div id="tab-org" class="tab-panel">
+
+  <!-- ── Edit hint ────────────────────────────────────────── -->
+  <div style="background:var(--f2-bg);border:1px solid var(--f2-bd);border-radius:var(--r);padding:8px 14px;font-size:10px;color:var(--f2-tx);display:flex;align-items:center;gap:8px">
+    <span>✏️</span>
+    <span><strong>Click any name field to type a name.</strong> Names save automatically to your browser. Click a role card to expand its details.</span>
+  </div>
+
+  <!-- ── Leadership ───────────────────────────────────────── -->
+  <div class="org-leadership">
+    <div class="org-lead-card olc-ceo">
+      <div class="lead-role">Global Chief Executive Officer</div>
+      <input class="lead-name-input" id="n-ceo" placeholder="Enter name…" oninput="save('n-ceo',this.value)">
+      <div class="lead-title">Global CEO · TripFactory</div>
+    </div>
+    <div class="org-lead-card olc-cco">
+      <div class="lead-role">Chief Commercial Officer</div>
+      <input class="lead-name-input" id="n-cco" placeholder="Ajay Kawa" oninput="save('n-cco',this.value)">
+      <div class="lead-title">CCO · GIT · MICE · FIT</div>
+    </div>
+    <div class="org-lead-card olc-cpo">
+      <div class="lead-role">Chief People Officer</div>
+      <input class="lead-name-input" id="n-cpo" placeholder="Alia Taub" oninput="save('n-cpo',this.value)">
+      <div class="lead-title">CPO · HR · Legal · Training · Payroll</div>
+    </div>
+    <div class="org-lead-card olc-cfo">
+      <div class="lead-role">Chief Executive Officer — India</div>
+      <input class="lead-name-input" id="n-cfo" placeholder="Lalitha Krishna" oninput="save('n-cfo',this.value)">
+      <div class="lead-title">CEO India · Commercial Product</div>
+    </div>
+  </div>
+
+  <!-- ── Dept grid ─────────────────────────────────────────── -->
+  <div class="org-grid">
+
+    <!-- GIT -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#EBF0F7;border-bottom:2px solid var(--navy)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🏨</div>
+          <div class="odh-title" style="color:var(--navy)">GIT</div>
+          <div class="odh-sub">Group Inclusive Tours</div>
+          <div class="odh-count" style="background:rgba(26,46,74,.12);color:var(--navy)">~50 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-git-dir" placeholder="TBC — enter name…" oninput="save('n-git-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top">
+            <span class="rc-icon">👥</span>
+            <div class="rc-info">
+              <div class="rc-title">Sales Team Leader</div>
+              <div class="rc-reports">Reports to: GIT Director</div>
+              <div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" oninput="save('n-git-stl',this.value)" id="n-git-stl" onclick="event.stopPropagation()"></div>
+            </div>
+            <span class="rc-expand-icon">▼</span>
+          </div>
+          <div class="rc-detail">
+            <div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Manages the GIT sales team · coaches experts · monitors conversion rates · attends weekly CCO ops review · owns team pipeline</div></div>
+            <div class="rcd-section"><div class="rcd-label">Team below</div><div class="rcd-tags"><span class="rcd-tag">Senior Expert</span><span class="rcd-tag">Expert</span><span class="rcd-tag">Trainee Expert</span></div></div>
+          </div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⭐</span><div class="rc-info"><div class="rc-title">Senior Expert</div><div class="rc-reports">Reports to: Sales Team Leader</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-git-se" oninput="save('n-git-se',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×3</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Handles complex group enquiries · mentors junior experts · manages key accounts · escalation point for policies</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎯</span><div class="rc-info"><div class="rc-title">Expert</div><div class="rc-reports">Reports to: Senior Expert</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-git-ex" oninput="save('n-git-ex',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×10</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">End-to-end group booking · enquiry to departure · full Booking Owner duties · all 7 policy gates</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌱</span><div class="rc-info"><div class="rc-title">Trainee Expert</div><div class="rc-reports">Reports to: Expert (buddy system)</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-git-te" oninput="save('n-git-te',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×3</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Learning programme · supervised bookings · policy training · 6-month progression target</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⚙️</span><div class="rc-info"><div class="rc-title">Ops Team Leader</div><div class="rc-reports">Reports to: GIT Director</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-git-otl" oninput="save('n-git-otl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Oversees all GIT operational execution · handover file acceptance · TM briefings · driver float authorisation · LERMS oversight · ratio: 1 Ops per 20 Sales</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUPS / MICE -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#E8EFF8;border-bottom:2px solid var(--navy2)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🎯</div>
+          <div class="odh-title" style="color:var(--navy2)">Groups / MICE</div>
+          <div class="odh-sub">Incentive · Conference · Events</div>
+          <div class="odh-count" style="background:rgba(23,66,110,.12);color:var(--navy2)">~50 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-mice-dir" placeholder="TBC — enter name…" oninput="save('n-mice-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">👥</span><div class="rc-info"><div class="rc-title">Sales Team Leader</div><div class="rc-reports">Reports to: MICE Director</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-mice-stl" oninput="save('n-mice-stl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Manages MICE/Groups sales team · event enquiry conversion · MICE proposal management · team coaching · pipeline reporting</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⭐</span><div class="rc-info"><div class="rc-title">Senior Expert</div><div class="rc-reports">Reports to: Sales Team Leader</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-mice-se" oninput="save('n-mice-se',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×3</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Complex MICE event management · large group proposals · key account handling · event costing</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎯</span><div class="rc-info"><div class="rc-title">Expert</div><div class="rc-reports">Reports to: Senior Expert</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-mice-ex" oninput="save('n-mice-ex',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×8</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Bespoke group & MICE bookings · full Booking Owner duties · event logistics · supplier coordination</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌱</span><div class="rc-info"><div class="rc-title">Trainee Expert</div><div class="rc-reports">Reports to: Expert (buddy system)</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-mice-te" oninput="save('n-mice-te',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×3</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Learning programme · supervised MICE bookings · event policy training</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⚙️</span><div class="rc-info"><div class="rc-title">Ops Team Leader</div><div class="rc-reports">Reports to: MICE Director</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-mice-otl" oninput="save('n-mice-otl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">MICE operational execution · event-day coordination · handover acceptance · supplier management · ratio: 1 Ops per 10 Sales</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIT TRAVEL (spans 2 cols) -->
+    <div class="org-dept org-grid-wide">
+      <div class="org-dept-hdr" style="background:#E5EBF5;border-bottom:2px solid var(--navy3)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🧳</div>
+          <div class="odh-title" style="color:var(--navy3)">FIT Travel</div>
+          <div class="odh-sub">Custom · Tailor-Made · B2B Agent &nbsp;·&nbsp; By Destination: Asia · Domestic · Europe · Australia · CIS · RTW</div>
+          <div class="odh-count" style="background:rgba(17,50,87,.12);color:var(--navy3)">~200 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-fit-dir" placeholder="TBC — enter name…" oninput="save('n-fit-dir',this.value)">
+      </div>
+      <div class="org-roles" style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌍</span><div class="rc-info"><div class="rc-title">Destination Team Leader</div><div class="rc-reports">Reports to: FIT Director &nbsp;·&nbsp; One per destination</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-fit-dtl" oninput="save('n-fit-dtl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Destinations</div><div class="rcd-tags"><span class="rcd-tag">Asia</span><span class="rcd-tag">Domestic</span><span class="rcd-tag">Europe</span><span class="rcd-tag">Australia</span><span class="rcd-tag">CIS</span><span class="rcd-tag">RTW</span></div></div><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Destination P&L · team management · product knowledge ownership · supplier relationships · pipeline for that destination</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⚙️</span><div class="rc-info"><div class="rc-title">Ops Team Leader — ALL</div><div class="rc-reports">Reports to: FIT Director &nbsp;·&nbsp; Cross all destinations</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-fit-otl" oninput="save('n-fit-otl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">FIT operations across all destinations · handover file oversight · LERMS · ratio: 1 Ops per 10 Sales per destination group</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⭐</span><div class="rc-info"><div class="rc-title">Senior Expert</div><div class="rc-reports">Reports to: Destination Team Leader</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="By destination…" id="n-fit-se" oninput="save('n-fit-se',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Complex FIT itinerary design · high-value custom bookings · destination product expertise · mentoring</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎯</span><div class="rc-info"><div class="rc-title">Expert</div><div class="rc-reports">Reports to: Senior Expert</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="By destination…" id="n-fit-ex" oninput="save('n-fit-ex',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×6+</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Full FIT booking ownership · tailor-made itineraries · B2B agent liaison · all 7 policy gates · destination specialist</div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌱</span><div class="rc-info"><div class="rc-title">Trainee Expert</div><div class="rc-reports">Reports to: Expert (buddy)</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="By destination…" id="n-fit-te" oninput="save('n-fit-te',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×6+</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Responsibilities</div><div class="rcd-note">Destination learning programme · supervised custom bookings · policy training · 6-month progression target</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMER SERVICES -->
+    <div class="org-dept org-grid-wide">
+      <div class="org-dept-hdr" style="background:var(--t-bg);border-bottom:2px solid var(--t-bd)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🎧</div>
+          <div class="odh-title" style="color:var(--t-tx)">Customer Services</div>
+          <div class="odh-sub">Central &nbsp;·&nbsp; By destination: Asia · Domestic · Europe · Australia · CIS · RTW</div>
+          <div class="odh-count" style="background:rgba(8,90,64,.1);color:var(--t-tx)">~48 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-roles" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">👥</span><div class="rc-info"><div class="rc-title">Team Leader</div><div class="rc-reports">One per destination</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Destinations</div><div class="rcd-tags"><span class="rcd-tag">Asia</span><span class="rcd-tag">Domestic</span><span class="rcd-tag">Europe</span><span class="rcd-tag">Australia</span><span class="rcd-tag">CIS</span><span class="rcd-tag">RTW</span></div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🔬</span><div class="rc-info"><div class="rc-title">SME</div><div class="rc-reports">Subject Matter Expert</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Product & destination expert supporting agents · escalation handling · quality checks · training</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎖️</span><div class="rc-info"><div class="rc-title">Supervisor</div><div class="rc-reports">One per destination</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Day-to-day supervision · complaint escalation · SLA monitoring · team reporting</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">📞</span><div class="rc-info"><div class="rc-title">Customer Service Agent</div><div class="rc-reports">Reports to: Supervisor</div></div><span class="rc-qty">×30</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Front-line customer support · post-sale queries · complaints · refund requests · escalation to SME</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TICKETING -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:var(--o-bg);border-bottom:2px solid var(--o-bd)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">✈️</div>
+          <div class="odh-title" style="color:var(--o-tx)">Ticketing</div>
+          <div class="odh-sub">Central Function</div>
+          <div class="odh-count" style="background:rgba(45,37,144,.1);color:var(--o-tx)">~32 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-roles">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌐</span><div class="rc-info"><div class="rc-title">Team Leader — International</div><div class="rc-reports">Reports to: Ticketing Head</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-tik-tli" oninput="save('n-tik-tli',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">International flight bookings · GDS management · PNR sealing · name verification · group block management</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🏠</span><div class="rc-info"><div class="rc-title">Team Leader — Domestic</div><div class="rc-reports">Reports to: Ticketing Head</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-tik-tld" oninput="save('n-tik-tld',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Domestic flight bookings · low-cost carrier management · domestic group fares · route optimisation</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎫</span><div class="rc-info"><div class="rc-title">Ticketing Agent — International</div><div class="rc-reports">Reports to: TL International</div></div><span class="rc-qty">×20</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">PNR creation · fare class booking · name amendments · void & reissue · GDS proficiency required</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎟️</span><div class="rc-info"><div class="rc-title">Ticketing Agent — Domestic</div><div class="rc-reports">Reports to: TL Domestic</div></div><span class="rc-qty">×10</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Domestic bookings · multi-city routing · group domestic fares · refund processing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISA DEPT -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:var(--v-bg);border-bottom:2px solid var(--v-bd)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🛂</div>
+          <div class="odh-title" style="color:var(--v-tx)">Visa Department</div>
+          <div class="odh-sub">Outsourced to UDAN · Udaan India</div>
+          <div class="odh-count" style="background:rgba(122,75,0,.1);color:var(--v-tx)">~12 staff</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-roles">
+        <div style="background:#FFF8E6;border:1px solid #B87800;border-radius:5px;padding:7px 10px;font-size:9.5px;color:#7A4B00;margin-bottom:4px">
+          <strong>Outsourced partner:</strong> UDAN India (<a href="https://www.udaanindia.com/" target="_blank" style="color:var(--blu)">udaanindia.com</a>) · All BUs
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">👥</span><div class="rc-info"><div class="rc-title">Visa Team Leader</div><div class="rc-reports">Reports to: Ops / BU Heads</div><div class="rc-name-wrap"><input class="rc-name-input" placeholder="Enter name…" id="n-visa-tl" oninput="save('n-visa-tl',this.value)" onclick="event.stopPropagation()"></div></div><span class="rc-qty">×2</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Manages visa pipeline across all BUs · embassy liaison · tracking 8-stage status · escalation at T-45</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">📋</span><div class="rc-info"><div class="rc-title">Visa Agent</div><div class="rc-reports">Reports to: Visa Team Leader</div></div><span class="rc-qty">×10</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Document collection · embassy appointments · biometrics coordination · rejection escalation · 8-stage status tracking</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKETING -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#F0F7FF;border-bottom:2px solid #1A73E8" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">📣</div>
+          <div class="odh-title" style="color:#0A3E96">Marketing</div>
+          <div class="odh-sub">Central + Localised offices per region</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-mkt-dir" placeholder="TBC — enter name…" oninput="save('n-mkt-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🌍</span><div class="rc-info"><div class="rc-title">Marketing Manager</div><div class="rc-reports">One per destination region</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Destinations</div><div class="rcd-tags"><span class="rcd-tag">Asia</span><span class="rcd-tag">Domestic</span><span class="rcd-tag">Europe</span><span class="rcd-tag">Australia</span><span class="rcd-tag">CIS</span><span class="rcd-tag">RTW</span></div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🎨</span><div class="rc-info"><div class="rc-title">Creative Team</div><div class="rc-reports">2 per destination</div></div><span class="rc-qty">×12</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Design · visual content · brochures · digital assets · brand consistency per destination</div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">📱</span><div class="rc-info"><div class="rc-title">Social Media Team</div><div class="rc-reports">1 per destination</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">Social content creation · community management · paid social · destination-specific campaigns</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:var(--fin-bg);border-bottom:2px solid var(--fin-bd)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">₹</div>
+          <div class="odh-title" style="color:var(--fin-tx)">Finance</div>
+          <div class="odh-sub">Central Function · Reporting to CEO</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-fin-dir" placeholder="TBC — enter name…" oninput="save('n-fin-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Full structure TBC — to be confirmed by Finance Director</div>
+      </div>
+    </div>
+
+    <!-- CREDITS -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:var(--cred-bg);border-bottom:2px solid var(--cred-bd)" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🏆</div>
+          <div class="odh-title" style="color:var(--cred-tx)">Credits</div>
+          <div class="odh-sub">Global &amp; Localised Function</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-cred-dir" placeholder="Sahil Nijhawan" oninput="save('n-cred-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Structure TBC — Sahil Nijhawan to advise. Finalise globally then localise.</div>
+      </div>
+    </div>
+
+    <!-- FLIGHTS -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#EBF3FF;border-bottom:2px solid #1A73E8" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">✈️</div>
+          <div class="odh-title" style="color:#0A3E96">Flights Series</div>
+          <div class="odh-sub">Central Function</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-flt-dir" placeholder="Ankit Aggarwal" oninput="save('n-flt-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Structure TBC — Ankit Aggarwal to advise</div>
+      </div>
+    </div>
+
+    <!-- COMMERCIAL PRODUCT -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#F5F0FF;border-bottom:2px solid #6B46C1" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">📦</div>
+          <div class="odh-title" style="color:#4C1D95">Commercial Product</div>
+          <div class="odh-sub">CPO: Ajay Kawa</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-roles">
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">🤝</span><div class="rc-info"><div class="rc-title">Contracting Manager</div><div class="rc-reports">One per destination</div></div><span class="rc-qty">×6</span><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-section"><div class="rcd-label">Destinations</div><div class="rcd-tags"><span class="rcd-tag">Asia</span><span class="rcd-tag">Domestic</span><span class="rcd-tag">Europe</span><span class="rcd-tag">Australia</span><span class="rcd-tag">CIS</span><span class="rcd-tag">RTW</span></div></div></div>
+        </div>
+        <div class="role-card" onclick="toggleRole(this)">
+          <div class="rc-top"><span class="rc-icon">⬆️</span><div class="rc-info"><div class="rc-title">Contracting Loading Team</div><div class="rc-reports">Reports to: Contracting Manager</div></div><span class="rc-expand-icon">▼</span></div>
+          <div class="rc-detail"><div class="rcd-note">System loading of contracted rates · inventory management · rate validity checks · product database maintenance</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEOPLE / HR / LEGAL -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#F0FFF4;border-bottom:2px solid #3D8A14" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">👤</div>
+          <div class="odh-title" style="color:#1E5A08">People, Legal &amp; Governance</div>
+          <div class="odh-sub">CPO: Alia Taub</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">CPO</span>
+        <input class="dir-input" id="n-hr-dir" placeholder="Alia Taub" oninput="save('n-hr-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Full structure TBC — Alia Taub to confirm HR · Training · Legal · Payroll · Compliance structure</div>
+      </div>
+    </div>
+
+    <!-- TECHNOLOGY -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#FDF4FF;border-bottom:2px solid #9333EA" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">💻</div>
+          <div class="odh-title" style="color:#6B21A8">Technology / Development</div>
+          <div class="odh-sub">Platform · Systems · Data</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Structure TBC — Vinay / Amit to confirm</div>
+      </div>
+    </div>
+
+    <!-- TRANSPORT -->
+    <div class="org-dept">
+      <div class="org-dept-hdr" style="background:#F0FFF4;border-bottom:2px solid #3D8A14" onclick="toggleDept(this)">
+        <div class="odh-left">
+          <div class="odh-icon">🚌</div>
+          <div class="odh-title" style="color:#1E5A08">Transport</div>
+          <div class="odh-sub">Central Function</div>
+        </div>
+        <div class="odh-toggle open">▼</div>
+      </div>
+      <div class="org-director">
+        <span class="dir-label">Director</span>
+        <input class="dir-input" id="n-trn-dir" placeholder="TBC — enter name…" oninput="save('n-trn-dir',this.value)">
+      </div>
+      <div class="org-roles">
+        <div class="tbc-badge">⏳ Structure TBC — to be advised</div>
+      </div>
+    </div>
+
+  </div><!-- /org-grid -->
+
+</div><!-- /tab-org -->
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 3 — JOB ROLES & DESCRIPTIONS
+══════════════════════════════════════════════════════════════ -->
+<div id="tab-jd" class="tab-panel">
+
+  <!-- Notice bar -->
+  <div class="notice-bar notice-amber">
+    <span>⚠️</span>
+    <span><strong>Headcount to be reconfirmed.</strong> All staff numbers shown are indicative based on current planning. Final headcount requires sign-off from each Department Director and the CCO / Global CEO before recruitment commences.</span>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="jd-filter-bar">
+    <span class="jd-filter-label">Filter by department:</span>
+    <div class="jd-filters" id="jdFilters"></div>
+    <button class="jd-filter-chip active" onclick="filterJD('all',this)">All</button>
+  </div>
+
+  <!-- Table header -->
+  <div class="jd-table-hdr">
+    <div>Department</div>
+    <div>Role</div>
+    <div>Reports To</div>
+    <div>Description <span style="font-weight:400;opacity:.6">— click row to expand</span></div>
+  </div>
+
+  <!-- Rows injected by JS -->
+  <div id="jdRows"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 4 — TO DEFINE & CONFIRM
+══════════════════════════════════════════════════════════════ -->
+<div id="tab-todo" class="tab-panel">
+
+  <div class="notice-bar notice-blue">
+    <span>📋</span>
+    <span>This tab tracks all decisions, structures and details that are still outstanding. Items are grouped by priority. Where a suggested structure is shown it is clearly marked as a <strong>suggestion only</strong> — to be reviewed and confirmed by the relevant owner.</span>
+  </div>
+
+  <!-- Priority 1 -->
+  <div class="todo-section-hdr todo-p1">🔴 Priority 1 — Needed before recruitment can begin</div>
+  <div class="todo-grid">
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>Global CEO Name</div>
+      <div class="todo-owner">Owner: Board / Shareholders</div>
+      <div class="todo-body">The Global CEO position is currently unfilled in the system. Name and start date required to confirm the full leadership chain.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>GIT Director</div>
+      <div class="todo-owner">Owner: CCO — Ajay Kawa</div>
+      <div class="todo-body">GIT Director role is TBC. This is a critical hire — the GIT department (50 staff) cannot be fully structured until this person is in place to confirm team shape, sales territory split and ops ratio.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>Groups / MICE Director</div>
+      <div class="todo-owner">Owner: CCO — Ajay Kawa</div>
+      <div class="todo-body">MICE Director role TBC. Needed to confirm event vs. group split, MICE-specific ops model, and whether the 10:1 ops ratio holds for all event types.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>FIT Director</div>
+      <div class="todo-owner">Owner: CCO — Ajay Kawa</div>
+      <div class="todo-body">FIT Director TBC. Critical hire for the largest BU (200 staff). Must confirm destination team sizes, ops ratio per destination, and whether all 6 destinations launch simultaneously or in phases.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>Finance Director &amp; Structure</div>
+      <div class="todo-owner">Owner: Global CEO / CEO India</div>
+      <div class="todo-body">Finance Director TBC. Full structure TBC. Needed to confirm: payment gate ownership, LERMS admin, TCS compliance lead, AP/AR split, and reporting lines.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        Finance Director → Finance Manager (Ops payments) · Finance Manager (Supplier settlements) · TCS & Compliance Officer · Accounts Payable Team · Accounts Receivable Team · LERMS Administrator
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-red"></span>FIT Headcount per Destination</div>
+      <div class="todo-owner">Owner: FIT Director (once hired) + CCO</div>
+      <div class="todo-body">FIT is planned for 200 staff across 6 destinations (Asia, Domestic, Europe, Australia, CIS, RTW) at a 10:1 sales/ops ratio. Exact split per destination is not yet determined — depends on demand data and destination maturity.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested phasing (indicative only)</div>
+        Phase 1 launch: Asia · Domestic · Europe (higher volume) → Phase 2: Australia · CIS · RTW. Suggested minimum per destination: 1 TL + 2 Senior Expert + 5 Expert + 2 Trainee + 1 Ops.
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+  </div>
+
+  <!-- Priority 2 -->
+  <div class="todo-section-hdr todo-p2">🟠 Priority 2 — Needed before operations begin</div>
+  <div class="todo-grid">
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>Flights Series — Full Structure</div>
+      <div class="todo-owner">Owner: Ankit Aggarwal (Director)</div>
+      <div class="todo-body">Ankit Aggarwal is confirmed as Director. Full team structure to be advised by Ankit. Needs to cover: domestic vs. international split, GDS team, group fares team, and integration with GIT/MICE/FIT ops.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        Flights Director (Ankit) → International Fares Team Leader · Domestic Fares Team Leader · Group Fares Specialist × 2 · GDS Agents × 8 · Ticketing Support × 4
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>Credits Department Structure</div>
+      <div class="todo-owner">Owner: Sahil Nijhawan (Director)</div>
+      <div class="todo-body">Sahil Nijhawan confirmed as Director. Structure TBC — Sahil to advise. The department operates both globally and locally, so structure needs to define the global/local split, technology platform, and redemption workflows.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        Credits Director → Global Credits Manager · Localisation Managers × 3 (regional) · Redemption Operations Team · Partner Integrations Lead · Customer-facing Credits Support × 3
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>Transport Department Structure</div>
+      <div class="todo-owner">Owner: Raj Kumar (Global CEO) to advise Director</div>
+      <div class="todo-body">Transport Director TBC. Structure to be advised. Needs to clarify: in-house vs. outsourced, driver management, coach contracting model, and whether transport ops sits within or alongside GIT operations.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        Transport Director → Transport Operations Manager · Coach Contracting Lead · Driver Fleet Coordinator · Ground Transport Agents × 4 · LERMS Transport Administrator
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>Technology / Development Structure</div>
+      <div class="todo-owner">Owner: Vinay / Amit</div>
+      <div class="todo-body">Structure to be confirmed by Vinay and Amit. Needs to cover: product/platform development, CRM ownership, LERMS administration, data & analytics, and IT support for all business units.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        Tech Lead (Vinay/Amit) → Product Manager · Frontend Dev Team × 3 · Backend Dev Team × 4 · CRM & LERMS Admin × 2 · Data Analyst × 2 · IT Support × 2
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>People, Legal &amp; Governance Structure</div>
+      <div class="todo-owner">Owner: Alia Taub (CPO)</div>
+      <div class="todo-body">CPO confirmed as Alia Taub. Full HR, Training, Legal, Payroll and Compliance structure to be confirmed by Alia. Needs to define: HR business partners per BU, training programme ownership, legal counsel model, and payroll system.</div>
+      <div class="todo-suggestion">
+        <div class="sug-label">💡 Suggested structure (indicative only)</div>
+        CPO (Alia Taub) → HR Manager · Training Manager · Legal Counsel · Payroll Manager · Compliance Officer · HR Business Partners × 2 (aligned to BUs)
+      </div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-amber"></span>Visa — Internal vs. Outsourced Decision per BU</div>
+      <div class="todo-owner">Owner: CCO + BU Directors</div>
+      <div class="todo-body">UDAN (Udaan India) confirmed for all BUs currently. Decision needed on whether each BU retains outsourced model long-term or brings visa processing in-house as volume grows. GIT and MICE may have different requirements to FIT.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+  </div>
+
+  <!-- Priority 3 -->
+  <div class="todo-section-hdr todo-p3">🟡 Priority 3 — Policy &amp; process decisions</div>
+  <div class="todo-grid">
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>Customer Services — Central vs. BU model</div>
+      <div class="todo-owner">Owner: CCO + Global CEO</div>
+      <div class="todo-body">Currently planned as central with 6 destination-aligned teams. Decision pending on whether Groups/MICE customer service sits separately given different SLA requirements for event clients vs. leisure travellers.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>Ticketing — Groups separate stream?</div>
+      <div class="todo-owner">Owner: Ticketing Head + CCO</div>
+      <div class="todo-body">Currently central with International and Domestic split. Review needed on whether GIT group block ticketing (100+ pax, fixed departures) should have a dedicated stream vs. going through the same team as individual FIT tickets.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>Phase 2 — Sales &amp; Ops Merge Timeline</div>
+      <div class="todo-owner">Owner: CCO + BU Directors</div>
+      <div class="todo-body">The Phase 2 plan (Sales and Ops merging into a single full-process function with a centralised operations system) has no confirmed timeline. Trigger conditions, technology readiness, and training requirements need to be defined before Phase 2 can begin.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>FIT Destination Launch Phasing</div>
+      <div class="todo-owner">Owner: FIT Director + CCO</div>
+      <div class="todo-body">Confirm whether all 6 FIT destinations (Asia, Domestic, Europe, Australia, CIS, RTW) launch simultaneously or in phases. Phased approach reduces risk but delays revenue. Decision affects hiring plan, training schedule and Marketing campaign timing.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>Marketing Localised Office Locations</div>
+      <div class="todo-owner">Owner: Marketing Director + Global CEO</div>
+      <div class="todo-body">Marketing is confirmed as central + localised offices. Specific office locations, headcount per office, and which destinations get physical presence vs. virtual coverage not yet defined.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+    <div class="todo-card">
+      <div class="todo-card-hdr"><span class="todo-dot dot-yel"></span>Commercial Product — Contracting model</div>
+      <div class="todo-owner">Owner: CEO India (Lalitha Krishna)</div>
+      <div class="todo-body">Commercial product has confirmed structure (Contracting Manager per destination + loading team). Decision needed on whether contracting is done locally in each destination market or centrally from India with regional support.</div>
+      <div class="todo-status todo-open">Open</div>
+    </div>
+
+  </div>
+
+  <!-- Confirmed -->
+  <div class="todo-section-hdr todo-confirmed">✅ Confirmed — no further action needed</div>
+  <div class="todo-grid">
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>CCO — Ajay Kawa</div>
+      <div class="todo-body">Confirmed. Owns GIT, Groups/MICE, FIT verticals commercially.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>CPO — Alia Taub</div>
+      <div class="todo-body">Confirmed. Owns People, Legal, Training, Payroll, Compliance.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>CEO India — Lalitha Krishna</div>
+      <div class="todo-body">Confirmed. Commercial Product, India operations.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>Flights Director — Ankit Aggarwal</div>
+      <div class="todo-body">Director confirmed. Team structure to be advised by Ankit.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>Credits Director — Sahil Nijhawan</div>
+      <div class="todo-body">Director confirmed. Structure to follow.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>Visa Outsource — UDAN India</div>
+      <div class="todo-body">Outsourced to udaanindia.com confirmed for all BUs. Visa TL × 2, Visa Agent × 10.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>Ops Ratios (indicative)</div>
+      <div class="todo-body">GIT: 20 Sales : 1 Ops · MICE: 10:1 · FIT: 10:1 per destination. Subject to headcount reconfirmation.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+    <div class="todo-card todo-card-done">
+      <div class="todo-card-hdr"><span class="todo-dot dot-green"></span>Ticketing — International × 20 · Domestic × 10</div>
+      <div class="todo-body">Headcount confirmed. TL International + TL Domestic + 30 agents.</div>
+      <div class="todo-status todo-done">Confirmed</div>
+    </div>
+  </div>
+
+</div><!-- /tab-todo -->
 
 </div><!-- /page -->
+
+<div class="footer">
+  TripFactory &nbsp;·&nbsp; Organisation &amp; Business Structure &nbsp;·&nbsp; Edition I, MMXXVI &nbsp;·&nbsp; Working Draft
+</div>
+
+<div class="save-indicator" id="saveToast">✓ Saved</div>
+
+<script>
+// ── Tab switching ──────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Role card expand/collapse ──────────────────────────────
+function toggleRole(card) {
+  const wasExpanded = card.classList.contains('expanded');
+  card.classList.toggle('expanded', !wasExpanded);
+  const icon = card.querySelector('.rc-expand-icon');
+  if (icon) icon.classList.toggle('open', !wasExpanded);
+}
+
+// ── Dept collapse ──────────────────────────────────────────
+function toggleDept(hdr) {
+  const dept = hdr.closest('.org-dept');
+  const roles = dept.querySelector('.org-roles');
+  const dir = dept.querySelector('.org-director');
+  const toggle = hdr.querySelector('.odh-toggle');
+  const hidden = roles && roles.style.display === 'none';
+  if (roles) roles.style.display = hidden ? '' : 'none';
+  if (dir)   dir.style.display   = hidden ? '' : 'none';
+  if (toggle) toggle.classList.toggle('open', hidden);
+}
+
+// ── Persist names ──────────────────────────────────────────
+let saveTimer;
+function save(key, val) {
+  try { localStorage.setItem('tf_' + key, val); } catch(e){}
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(showToast, 400);
+}
+function showToast() {
+  const t = document.getElementById('saveToast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+function restoreAll() {
+  document.querySelectorAll('[id^="n-"]').forEach(el => {
+    try { const v = localStorage.getItem('tf_' + el.id); if (v) el.value = v; } catch(e){}
+  });
+}
+restoreAll();
+
+// ── JD filter ─────────────────────────────────────────────
+function filterJD(dept, btn) {
+  document.querySelectorAll('.jd-filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.jd-row-wrap').forEach(row => {
+    row.style.display = (dept === 'all' || row.dataset.dept === dept) ? '' : 'none';
+  });
+}
+
+// ── JD Data ───────────────────────────────────────────────
+const JD = [
+  // Leadership
+  { dept:'Leadership', role:'Global CEO', reports:'Board / Shareholders', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Responsible for the global strategic direction of TripFactory.',
+    responsibilities:'Sets global strategy and vision · Owns P&L at group level · Leads the senior leadership team · Represents TripFactory to investors, partners and key markets · Final authority on all major commercial, people and operational decisions',
+    skills:'Strategic leadership · P&L management · Travel industry expertise · Stakeholder management · International business',
+    kpis:'Group revenue growth · EBITDA · Market expansion · Leadership team retention', headcount:'1' },
+  { dept:'Leadership', role:'CEO — India', reports:'Global CEO', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Leads TripFactory India operations and Commercial Product.',
+    responsibilities:'Oversees all India-based operations · Leads Commercial Product function · Manages contracting and product loading · Supports Global CEO on India market strategy · P&L responsibility for India operations',
+    skills:'Operations leadership · India travel market · Commercial acumen · Product management · Team leadership',
+    kpis:'India revenue · Product inventory quality · Contracting SLAs · Team performance', headcount:'1' },
+  { dept:'Leadership', role:'CCO', reports:'Global CEO', badge:'#17426E', badgeTx:'#fff',
+    summary:'Owns all commercial revenue: GIT, Groups/MICE, FIT Travel.',
+    responsibilities:'P&L ownership for all three business verticals · Directs GIT, MICE and FIT Directors · Sets sales strategy and targets · Leads weekly ops review · Signs off on discounts and special pricing · Owns Booking Owner scorecard programme',
+    skills:'Commercial leadership · Sales strategy · Travel product knowledge · People management · Revenue management',
+    kpis:'Total BU revenue · Conversion rates · Booking error rates · Director performance', headcount:'1' },
+  { dept:'Leadership', role:'CPO — People & Governance', reports:'Global CEO', badge:'#1E3A5F', badgeTx:'#fff',
+    summary:'Owns HR, Training, Legal, Payroll, Compliance and Technology.',
+    responsibilities:'Leads HR business partnering across all BUs · Owns training and development programmes · Legal and compliance oversight · Payroll administration · Technology and systems governance',
+    skills:'HR leadership · Employment law · Training design · Compliance management · Systems governance',
+    kpis:'Retention rate · Training completion · Legal risk incidents · Payroll accuracy', headcount:'1' },
+
+  // GIT
+  { dept:'GIT', role:'GIT Director', reports:'CCO', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Owns all Group Inclusive Tour revenue, team and operations.',
+    responsibilities:'Full P&L for GIT vertical · Manages Sales Team Leader and Ops Team Leader · Sets departure calendar and pricing · Attends weekly CCO ops review · Approves all discounts above standard threshold · Reviews Booking Owner scorecard quarterly',
+    skills:'Group tour operations · Revenue management · Team leadership · Supplier negotiation · Product development',
+    kpis:'GIT revenue · Departure fill rate · Booking error rate · Customer satisfaction score', headcount:'1 — TBC' },
+  { dept:'GIT', role:'Sales Team Leader', reports:'GIT Director', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Manages the GIT sales team and drives group tour conversion.',
+    responsibilities:'Coaches Senior Experts and Experts · Monitors team pipeline daily · Owns team conversion rate KPI · Escalation point for complex group enquiries · Attends weekly ops review with Director · Reviews Booking Owner compliance weekly',
+    skills:'Sales management · Group tour product knowledge · Coaching · Pipeline management · Policy compliance',
+    kpis:'Team conversion rate · Pipeline value · Booking error count · Team NPS', headcount:'1' },
+  { dept:'GIT', role:'Senior Expert', reports:'Sales Team Leader', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Handles complex group bookings and mentors junior team.',
+    responsibilities:'Manages high-value or complex group enquiries · Mentors Experts and Trainees · Acts as second escalation for policy queries · Covers Team Leader in absence · Owns key account relationships',
+    skills:'Group tour expertise · Mentoring · Complex itinerary design · Policy knowledge · Key account management',
+    kpis:'Personal conversion · Mentee progression · Error rate · Upsell value', headcount:'3' },
+  { dept:'GIT', role:'Expert', reports:'Senior Expert', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'End-to-end group booking owner — enquiry to departure.',
+    responsibilities:'Full Booking Owner duties · All 7 policy gates · Customer disclosure · Passenger data collection · Visa coordination · Payment collection · Sales-to-Ops handover file',
+    skills:'Group tour bookings · Policy compliance · Customer communication · Data accuracy · Time management',
+    kpis:'Bookings per month · Error rate · Gate compliance · Customer satisfaction', headcount:'~10' },
+  { dept:'GIT', role:'Trainee Expert', reports:'Expert (buddy)', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Learning programme — supervised bookings with progression target.',
+    responsibilities:'Completes TripFactory training programme · Handles supervised bookings under Expert guidance · Achieves policy certification within 6 months · Progresses to Expert grade on completion',
+    skills:'Eagerness to learn · Attention to detail · Customer service · Travel interest',
+    kpis:'Training completion · Policy certification date · Supervised booking quality', headcount:'~3' },
+  { dept:'GIT', role:'Ops Team Leader', reports:'GIT Director', badge:'#1A2E4A', badgeTx:'#fff',
+    summary:'Oversees all GIT operational execution from freeze to departure.',
+    responsibilities:'Accepts Sales-to-Ops handover files · Briefs Tour Managers · Authorises driver floats in LERMS · Manages supplier confirmations · Leads freeze process · Resolves on-road escalations · Ratio: 1 Ops per 20 Sales',
+    skills:'Tour operations · LERMS · Supplier management · Crisis management · TM management',
+    kpis:'On-time departure rate · Handover file acceptance rate · Float settlement time · Complaint rate', headcount:'1' },
+
+  // MICE
+  { dept:'Groups / MICE', role:'MICE Director', reports:'CCO', badge:'#17426E', badgeTx:'#fff',
+    summary:'Owns all MICE and Groups revenue, team and event delivery.',
+    responsibilities:'Full P&L for MICE/Groups · Manages Sales TL and Ops TL · Sets MICE pricing and proposal standards · Attends weekly CCO ops review · Signs off on event proposals above threshold · Reviews team scorecard',
+    skills:'MICE event management · Revenue management · B2B client management · Team leadership · Supplier negotiation',
+    kpis:'MICE revenue · Event delivery score · Proposal conversion · Booking error rate', headcount:'1 — TBC' },
+  { dept:'Groups / MICE', role:'Sales Team Leader', reports:'MICE Director', badge:'#17426E', badgeTx:'#fff',
+    summary:'Manages MICE sales team and drives event/group conversion.',
+    responsibilities:'Coaches team on MICE-specific sales process · Manages team pipeline · Oversees proposal quality · Escalation for complex event requirements · Attends ops review',
+    skills:'MICE sales · Event proposal writing · Team coaching · Pipeline management',
+    kpis:'Team conversion · Pipeline value · Proposal win rate · Error count', headcount:'1' },
+  { dept:'Groups / MICE', role:'Senior Expert', reports:'Sales Team Leader', badge:'#17426E', badgeTx:'#fff',
+    summary:'Handles complex MICE events and large group bookings.',
+    responsibilities:'Manages large-scale MICE events · Key account relationships · Mentors Experts · Complex event costing · Supplier negotiation for bespoke events',
+    skills:'Complex event management · Costing · Supplier negotiation · Mentoring',
+    kpis:'Personal revenue · Mentee progression · Event delivery quality', headcount:'3' },
+  { dept:'Groups / MICE', role:'Expert', reports:'Senior Expert', badge:'#17426E', badgeTx:'#fff',
+    summary:'Full MICE/group booking owner from enquiry to event delivery.',
+    responsibilities:'End-to-end MICE/group booking ownership · Proposal creation · Supplier coordination · All policy gates · Event-day handover to Ops',
+    skills:'MICE bookings · Event logistics · Policy compliance · Client communication',
+    kpis:'Bookings/events per month · Error rate · Client satisfaction', headcount:'~8' },
+  { dept:'Groups / MICE', role:'Ops Team Leader', reports:'MICE Director', badge:'#17426E', badgeTx:'#fff',
+    summary:'MICE operational execution and event-day coordination.',
+    responsibilities:'Operational delivery of MICE events · Handover file acceptance · Event-day supervision · Supplier management · LERMS entries · Ratio: 1 Ops per 10 Sales',
+    skills:'Event operations · LERMS · Supplier management · Crisis response',
+    kpis:'Event delivery score · On-time execution · Float settlement', headcount:'1' },
+
+  // FIT
+  { dept:'FIT Travel', role:'FIT Director', reports:'CCO', badge:'#113257', badgeTx:'#fff',
+    summary:'Owns all FIT/custom travel revenue across 6 destinations.',
+    responsibilities:'Full P&L for FIT · Manages Destination TLs and Ops TL · Sets FIT product strategy per destination · Reviews destination performance weekly · Approves itinerary exceptions · Manages B2B agent relationships at Director level',
+    skills:'FIT/tailor-made operations · Multi-destination product · Revenue management · Team leadership · B2B',
+    kpis:'FIT revenue · Itinerary quality score · B2B agent growth · Booking error rate', headcount:'1 — TBC' },
+  { dept:'FIT Travel', role:'Destination Team Leader', reports:'FIT Director', badge:'#113257', badgeTx:'#fff',
+    summary:'Leads FIT team for one destination — P&L and product owner.',
+    responsibilities:'Owns destination revenue and team performance · Manages Senior Experts and Experts · Destination product knowledge owner · Supplier relationships for that destination · Escalation point for complex itineraries',
+    skills:'Destination expertise · Team leadership · Itinerary design · Supplier management',
+    kpis:'Destination revenue · Team conversion · Product quality score', headcount:'×6 (one per destination)' },
+  { dept:'FIT Travel', role:'Ops Team Leader — ALL', reports:'FIT Director', badge:'#113257', badgeTx:'#fff',
+    summary:'FIT ops across all destinations — central ops function for FIT.',
+    responsibilities:'Oversees operational execution across all 6 FIT destinations · Handover file acceptance · LERMS management · Driver float authorisation · Supplier confirmations · Ratio: 1 Ops per 10 Sales per destination',
+    skills:'Multi-destination ops · LERMS · Supplier management · Cross-team coordination',
+    kpis:'Handover acceptance rate · LERMS accuracy · Float settlement time', headcount:'1' },
+  { dept:'FIT Travel', role:'Senior Expert', reports:'Destination Team Leader', badge:'#113257', badgeTx:'#fff',
+    summary:'Complex FIT itinerary specialist and destination expert.',
+    responsibilities:'Designs complex multi-destination itineraries · High-value client bookings · Mentors Experts · Destination product deep knowledge · B2B agent support',
+    skills:'Complex itinerary design · Destination expertise · High-value sales · Mentoring',
+    kpis:'Personal revenue · Itinerary quality · Mentee progression', headcount:'×6 (one per destination)' },
+  { dept:'FIT Travel', role:'Expert', reports:'Senior Expert', badge:'#113257', badgeTx:'#fff',
+    summary:'Full FIT booking owner — custom itineraries end to end.',
+    responsibilities:'Custom itinerary creation and booking · B2B agent liaison · All 7 policy gates · Full Booking Owner duties · Destination specialist',
+    skills:'FIT bookings · Tailor-made design · Policy compliance · B2B communication',
+    kpis:'Bookings per month · Error rate · B2B satisfaction · Gate compliance', headcount:'×6+ (TBC per destination)' },
+
+  // Customer Services
+  { dept:'Customer Services', role:'Team Leader', reports:'CS Head / Central', badge:'#138A62', badgeTx:'#fff',
+    summary:'Leads customer service team for one destination.',
+    responsibilities:'Day-to-day leadership of destination CS team · SLA monitoring · Escalation management · Reporting to management · Quality checks · Staff scheduling',
+    skills:'Customer service leadership · SLA management · Escalation handling · Team management',
+    kpis:'SLA compliance · CSAT score · Escalation resolution time · Team quality score', headcount:'×6' },
+  { dept:'Customer Services', role:'SME', reports:'Team Leader', badge:'#138A62', badgeTx:'#fff',
+    summary:'Subject matter expert — destination specialist and escalation handler.',
+    responsibilities:'Handles escalated customer queries · Product and destination expertise · Trains new agents · Quality audits · Supports Team Leader on complex cases',
+    skills:'Deep destination knowledge · Escalation handling · Training · Quality review',
+    kpis:'Escalation resolution rate · Training delivery · Quality audit scores', headcount:'×6' },
+  { dept:'Customer Services', role:'Supervisor', reports:'Team Leader', badge:'#138A62', badgeTx:'#fff',
+    summary:'Supervises day-to-day agent performance and queue management.',
+    responsibilities:'Monitors agent performance in real-time · Queue management · First-level escalation · Reports to Team Leader · Shift supervision',
+    skills:'Supervision · Queue management · Real-time performance monitoring',
+    kpis:'Queue SLA · Agent error rate · Daily report accuracy', headcount:'×6' },
+  { dept:'Customer Services', role:'Customer Service Agent', reports:'Supervisor', badge:'#138A62', badgeTx:'#fff',
+    summary:'Front-line customer support across all booking types.',
+    responsibilities:'Handles post-sale customer queries · Complaint intake · Refund requests · Escalates to SME when required · Destination-aligned',
+    skills:'Communication · Problem solving · CRM usage · Destination awareness',
+    kpis:'Contacts handled per day · CSAT · First-contact resolution · Error rate', headcount:'×30' },
+
+  // Ticketing
+  { dept:'Ticketing', role:'Team Leader — International', reports:'Ticketing Head', badge:'#4F46CC', badgeTx:'#fff',
+    summary:'Leads international ticketing team — GDS and group blocks.',
+    responsibilities:'Manages international ticketing agents · GDS team oversight · Group block management · Name amendment escalation · PNR quality control · Liaises with BU Ops for flight sealing',
+    skills:'GDS proficiency · International fares · Group ticketing · Team management',
+    kpis:'PNR error rate · Flight sealing SLA · Group block utilisation', headcount:'1' },
+  { dept:'Ticketing', role:'Team Leader — Domestic', reports:'Ticketing Head', badge:'#4F46CC', badgeTx:'#fff',
+    summary:'Leads domestic ticketing team — LCC and multi-city routes.',
+    responsibilities:'Manages domestic agents · LCC platform management · Multi-city routing · Refund processing oversight · Domestic group fares',
+    skills:'Domestic fares · LCC platforms · Multi-city routing · Team management',
+    kpis:'Booking accuracy · Refund processing time · Agent utilisation', headcount:'1' },
+  { dept:'Ticketing', role:'Ticketing Agent — International', reports:'TL International', badge:'#4F46CC', badgeTx:'#fff',
+    summary:'Issues and manages international flight tickets via GDS.',
+    responsibilities:'PNR creation and management · Fare class booking · Name amendment processing · Void and reissue · Group PNR coordination · Name vs. passport verification',
+    skills:'GDS (Amadeus/Galileo) · Fare rules · Name amendment procedures · Attention to detail',
+    kpis:'Tickets issued per day · Error rate · Amendment turnaround time', headcount:'×20' },
+  { dept:'Ticketing', role:'Ticketing Agent — Domestic', reports:'TL Domestic', badge:'#4F46CC', badgeTx:'#fff',
+    summary:'Issues and manages domestic flight tickets.',
+    responsibilities:'Domestic PNR creation · LCC booking platforms · Group domestic fares · Refund processing · Multi-city routing',
+    skills:'Domestic LCC platforms · Fare rules · Refund processing · Accuracy',
+    kpis:'Tickets issued · Error rate · Refund processing time', headcount:'×10' },
+
+  // Visa
+  { dept:'Visa', role:'Visa Team Leader', reports:'BU Ops / Ops Manager', badge:'#C47800', badgeTx:'#fff',
+    summary:'Manages visa pipeline across all BUs via UDAN outsource.',
+    responsibilities:'Oversees 8-stage visa tracking for all bookings · Embassy liaison · T-45 escalation management · Coordinates with UDAN Udaan India · Advises BU Ops on visa feasibility · Rejection escalation',
+    skills:'Visa processing · Embassy knowledge · Status tracking · Escalation management · UDAN liaison',
+    kpis:'Visa grant rate · T-45 passport possession · Rejection escalation speed', headcount:'×2' },
+  { dept:'Visa', role:'Visa Agent', reports:'Visa Team Leader', badge:'#C47800', badgeTx:'#fff',
+    summary:'Processes visa applications through all 8 stages.',
+    responsibilities:'Document collection from Booking Owners · Embassy appointment scheduling · Biometrics coordination · 8-stage status updates in system · Rejection documentation · Passport tracking',
+    skills:'Visa documentation · Embassy procedures · Status tracking · Organisation',
+    kpis:'Applications processed per week · Status update accuracy · Document completeness rate', headcount:'×10' },
+
+  // Marketing
+  { dept:'Marketing', role:'Marketing Director', reports:'Global CEO', badge:'#1A73E8', badgeTx:'#fff',
+    summary:'Leads all marketing across destinations with localised offices.',
+    responsibilities:'Global marketing strategy · Localised office management · Campaign approval · Brand guardianship · Budget management · Agency and partner relationships · Pricing approval sign-off',
+    skills:'Marketing leadership · Brand management · Digital marketing · Budget management · Travel marketing',
+    kpis:'Lead generation · Brand awareness · Campaign ROI · Cost per lead', headcount:'1 — TBC' },
+  { dept:'Marketing', role:'Marketing Manager', reports:'Marketing Director', badge:'#1A73E8', badgeTx:'#fff',
+    summary:'Owns marketing for one destination region.',
+    responsibilities:'Destination-specific marketing campaigns · Social and digital content direction · Creative team and social team management · Local market knowledge · Localised pricing and promotions',
+    skills:'Digital marketing · Destination knowledge · Campaign management · Team management',
+    kpis:'Destination enquiry volume · Campaign performance · Lead quality', headcount:'×6' },
+  { dept:'Marketing', role:'Creative Team', reports:'Marketing Manager', badge:'#1A73E8', badgeTx:'#fff',
+    summary:'Creates all visual and content assets for a destination.',
+    responsibilities:'Design and visual content production · Brochure and collateral design · Digital asset creation · Brand consistency · Photography and video coordination',
+    skills:'Graphic design · Adobe Suite · Brand guidelines · Digital content · Photography',
+    kpis:'Asset delivery time · Brand consistency score · Volume of assets produced', headcount:'×2 per destination (12 total)' },
+  { dept:'Marketing', role:'Social Media', reports:'Marketing Manager', badge:'#1A73E8', badgeTx:'#fff',
+    summary:'Manages social media presence for one destination.',
+    responsibilities:'Daily social content creation and posting · Community management · Paid social campaigns · Influencer coordination · Performance reporting',
+    skills:'Social media platforms · Content creation · Paid social · Analytics · Community management',
+    kpis:'Follower growth · Engagement rate · Paid social CPL · Reach', headcount:'×1 per destination (6 total)' },
+
+  // Finance
+  { dept:'Finance', role:'Finance Director', reports:'Global CEO', badge:'#2563EB', badgeTx:'#fff',
+    summary:'Leads all finance operations — structure TBC.',
+    responsibilities:'Overall financial control · P&L reporting to Global CEO · Payment gate ownership · Supplier settlement oversight · TCS and regulatory compliance · LERMS administration · Payroll sign-off · Float authorisation above threshold',
+    skills:'Financial leadership · Travel industry finance · TCS · LERMS · Compliance',
+    kpis:'Month-end accuracy · Gate compliance rate · TCS filing accuracy · Supplier payment SLA', headcount:'1 — TBC' },
+
+  // Credits
+  { dept:'Credits', role:'Credits Director', reports:'Global CEO', badge:'#B87800', badgeTx:'#fff',
+    summary:'Global and localised credits function — structure TBC.',
+    responsibilities:'Global credits strategy · Localisation per market · Partner credit integrations · Redemption platform · Customer-facing credits support · P&L for credits function',
+    skills:'Loyalty / rewards programme management · Technology integration · Global/local balance · Commercial acumen',
+    kpis:'Credits issued · Redemption rate · Partner satisfaction · Revenue from credits', headcount:'TBC — Sahil Nijhawan to advise' },
+
+  // Flights
+  { dept:'Flights', role:'Flights Director', reports:'Global CEO / CCO', badge:'#1A73E8', badgeTx:'#fff',
+    summary:'Central flights function — structure to be advised by Ankit Aggarwal.',
+    responsibilities:'Airline contract negotiations · GDS strategy · Group fares management · Integration with all BU ticketing requirements · Fare filing and distribution · Flights team management',
+    skills:'Airline commercial · GDS management · Group fares · Revenue management · Team leadership',
+    kpis:'Cost per seat · Group fare utilisation · GDS error rate · Airline relationship score', headcount:'TBC — Ankit Aggarwal to advise' },
+
+  // Commercial Product
+  { dept:'Commercial Product', role:'Contracting Manager', reports:'CEO India', badge:'#6B46C1', badgeTx:'#fff',
+    summary:'Owns hotel and supplier contracting for one destination.',
+    responsibilities:'Negotiates hotel and ground supplier contracts · Rate loading oversight · Allotment management · Supplier relationship management · Annual contracting cycle · Competitive rate benchmarking',
+    skills:'Hotel contracting · Rate negotiation · Destination knowledge · Relationship management',
+    kpis:'Rate competitiveness · Contract renewal rate · Loading accuracy · Allotment utilisation', headcount:'×6 (one per destination)' },
+  { dept:'Commercial Product', role:'Contracting Loading Team', reports:'Contracting Manager', badge:'#6B46C1', badgeTx:'#fff',
+    summary:'Loads contracted rates into the booking system.',
+    responsibilities:'System loading of hotel and supplier rates · Validity and accuracy checks · Inventory management · Rate update processing · Database maintenance',
+    skills:'Booking system proficiency · Accuracy · Rate loading · Database management',
+    kpis:'Loading accuracy rate · Loading turnaround time · Error rate', headcount:'TBC' },
+
+  // People
+  { dept:'People & Governance', role:'CPO', reports:'Global CEO', badge:'#3D8A14', badgeTx:'#fff',
+    summary:'Alia Taub — leads HR, Training, Legal, Payroll, Compliance.',
+    responsibilities:'HR strategy and business partnering across all BUs · Training programme design and delivery · Legal and compliance oversight · Payroll administration · Technology governance · Structure TBC',
+    skills:'HR leadership · Employment law · L&D · Compliance · Payroll',
+    kpis:'Retention · Training completion · Legal incidents · Payroll accuracy', headcount:'Structure TBC — Alia Taub to confirm' },
+];
+
+// ── Build JD tab ───────────────────────────────────────────
+function buildJD() {
+  const container = document.getElementById('jdRows');
+  const filterBar = document.getElementById('jdFilters');
+
+  // Unique depts
+  const depts = [...new Set(JD.map(r => r.dept))];
+  depts.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'jd-filter-chip';
+    btn.textContent = d;
+    btn.onclick = function(){ filterJD(d, this); };
+    filterBar.appendChild(btn);
+  });
+
+  // Wrap in container
+  const wrap = document.createElement('div');
+  wrap.className = 'jd-container';
+
+  JD.forEach((row, i) => {
+    const rowWrap = document.createElement('div');
+    rowWrap.className = 'jd-row-wrap';
+    rowWrap.dataset.dept = row.dept;
+
+    const r = document.createElement('div');
+    r.className = 'jd-row';
+    r.innerHTML = `
+      <div class="jd-cell jd-cell-dept">
+        <span class="jd-dept-badge" style="background:${row.badge};color:${row.badgeTx}">${row.dept}</span>
+      </div>
+      <div class="jd-cell jd-cell-role">${row.role}</div>
+      <div class="jd-cell jd-cell-rep">${row.reports}</div>
+      <div class="jd-cell jd-cell-desc">
+        <span>${row.summary}</span>
+        <span class="jd-expand-icon">▼</span>
+      </div>
+      <div class="jd-detail">
+        <div class="jd-detail-grid">
+          <div class="jd-detail-section">
+            <div class="jd-detail-lbl">Key Responsibilities</div>
+            <div class="jd-detail-body">${row.responsibilities.split(' · ').map(s=>`• ${s}`).join('<br>')}</div>
+          </div>
+          <div class="jd-detail-section">
+            <div class="jd-detail-lbl">Skills & Experience</div>
+            <div class="jd-detail-body" style="margin-bottom:8px">${(row.skills||'').split(' · ').map(s=>`• ${s}`).join('<br>')}</div>
+            ${row.kpis ? `<div class="jd-detail-lbl">Key Metrics / KPIs</div><div class="jd-detail-body">${row.kpis.split(' · ').map(s=>`• ${s}`).join('<br>')}</div>` : ''}
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+          <span class="jd-detail-lbl" style="margin-bottom:0">Indicative headcount:</span>
+          <span class="jd-tag">${row.headcount}</span>
+          <span style="font-size:8.5px;color:var(--grey);font-style:italic">Subject to reconfirmation by Director + CCO/CEO</span>
+        </div>
+      </div>`;
+    r.onclick = function() {
+      this.classList.toggle('expanded');
+    };
+    rowWrap.appendChild(r);
+    wrap.appendChild(rowWrap);
+  });
+
+  container.appendChild(wrap);
+}
+buildJD();
+</script>
 </body>
 </html>
