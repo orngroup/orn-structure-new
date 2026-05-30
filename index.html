@@ -339,6 +339,8 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
   <button class="tab-btn" data-tab="pol">Policies</button>
   <button class="tab-btn" data-tab="b2b">B2B vs B2C</button>
   <button class="tab-btn" data-tab="todo">To Define &amp; Confirm</button>
+  <button class="tab-btn" data-tab="kpi">KPI Dashboard</button>
+  <button class="tab-btn" data-tab="ext">External Departments</button>
 </div>
 
 <div class="tab-content-area">
@@ -1228,6 +1230,657 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
   </div>
 
 </div><!-- /tab-todo -->
+
+<div id="tab-kpi" class="tab-panel">
+<div style="background:#E8F2FF;border:1px solid #1565D8;border-radius:6px;padding:10px 14px;font-size:10.5px;color:#0A3E96;margin-bottom:8px">
+  <strong>📊 KPI Dashboard</strong> — Performance metrics for all departments. Targets are indicative and require sign-off from each Director and the CCO before use in appraisals.
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+  <div style="background:#fff;border:1px solid #D4DBE8;border-radius:6px;padding:12px;text-align:center"><div style="font-size:28px;font-weight:800;color:#000">84</div><div style="font-size:9px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Total KPIs</div></div>
+  <div style="background:#fff;border:1px solid #D4DBE8;border-radius:6px;padding:12px;text-align:center"><div style="font-size:28px;font-weight:800;color:#000">10</div><div style="font-size:9px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Departments</div></div>
+  <div style="background:#fff;border:1px solid #D4DBE8;border-radius:6px;padding:12px;text-align:center"><div style="font-size:28px;font-weight:800;color:#000">28</div><div style="font-size:9px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Weekly KPIs</div></div>
+  <div style="background:#fff;border:1px solid #D4DBE8;border-radius:6px;padding:12px;text-align:center"><div style="font-size:28px;font-weight:800;color:#000">35</div><div style="font-size:9px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Monthly KPIs</div></div>
+</div><div style="margin-bottom:16px">
+<div style="background:#000;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">👑</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Leadership</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">10 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Global CEO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Group Revenue Growth</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs annual plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Board</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Global CEO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">EBITDA Margin</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">% of revenue vs budget</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Board</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Global CEO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Leadership Retention</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Senior team — target 90%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F5F0FF;color:#4C1D95;border:1px solid #C4B5FD;white-space:nowrap">annual</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CPO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CEO India</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">India P&L Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs annual plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CEO India</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Contracting SLA</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Rate loading accuracy — 99%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CCO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Total BU Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">GIT + MICE + FIT vs plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CCO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Gate Compliance Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">All 7 gates cleared — 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CCO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">§26 Violations</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Zero-tolerance — target 0/quarter</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CPO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Staff Retention Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Annual retention — target 85%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CPO</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Policy Certification Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">% staff certified — target 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#111;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">🏨</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">GIT</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">10 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">GIT Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">GIT Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs annual plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">GIT Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Departure Fill Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Avg % occupancy — target 85%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Sales Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Team Conversion Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Enquiry to booking — target 35%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">GIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Sales Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Booking Error Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Errors per quarter — target < 3</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">GIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Senior Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Personal Conversion</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Individual rate — target 40%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Sales TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Bookings Managed</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Active simultaneous — target 15–25</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Senior Expert</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Gate Compliance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">All 7 gates correct — 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per booking</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Sales TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Customer Satisfaction</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Post-tour CSAT — target 4.2/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per tour</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">GIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Ops Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">On-Time Departure Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Departures on date — target 98%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">GIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Ops Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Float Settlement Time</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Settled within 48hrs — target 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per tour</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">GIT Director</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#17426E;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">🎯</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Groups / MICE</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">8 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">MICE Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">MICE Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs annual plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">MICE Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Event Delivery Score</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Post-event satisfaction — 4.3/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per event</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">MICE Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Proposal Conversion</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Proposal to confirmed — 30%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Sales Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Team Conversion</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Proposal win rate — target 30%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">MICE Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Events per Month</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Active events managed — 8–15</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Senior Expert</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Client Satisfaction</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Post-event CSAT — target 4.2/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per event</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Sales TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Ops Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Event Delivery Score</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Operational satisfaction — 4.3/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per event</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">MICE Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Ops Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">On-Time Execution</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Events starting on schedule — 95%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per event</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">MICE Director</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#113257;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">🧳</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">FIT Travel</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">8 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">FIT Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">FIT Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Total vs plan — destination split</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">FIT Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">B2B Agent Growth</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Active registered agents vs plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">FIT Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Booking Error Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Errors per 100 — target < 1.5%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CCO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Destination TL</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Destination Revenue</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs quarterly destination plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">FIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Destination TL</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Team Conversion</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Enquiry to booking — 30%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">FIT Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Bookings per Month</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Active bookings — 10–20 (FIT complexity)</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Destination TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Expert</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">B2B Agent Satisfaction</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Agent rating — target 4.2/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Destination TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Ops TL — ALL</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Handover Acceptance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Files accepted first time — 90%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">FIT Director</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#1E3A8A;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">₹</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Finance</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">6 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Month-End Close</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Within 3 working days of month end</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Gate Compliance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">All 6 payment gates enforced — 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">TCS Filing Accuracy</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Filed correctly and on time — 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Supplier Payment SLA</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Paid within agreed terms — 98%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Payroll Accuracy</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Payroll errors — target 0%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CPO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Finance Team</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Float Settlement</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Settled within 5 working days of return</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per tour</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Finance Director</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#138A62;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">🎧</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Customer Services</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">7 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">SLA Compliance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Contacts resolved within SLA — 92%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CS Head</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">CSAT Score</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Team satisfaction — target 4.2/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CS Head</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Escalation Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">% requiring escalation — target < 10%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CS Head</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">SME</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Escalation Resolution</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Resolved without further escalation — 85%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Team Leader</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CS Agent</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Contacts per Day</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Productive contacts — 40–60 per day</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">daily</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Supervisor</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CS Agent</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">First Contact Resolution</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Resolved on first contact — 70%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Supervisor</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">CS Agent</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">CSAT Score</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Individual satisfaction — 4.1/5+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Team Leader</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#4F46CC;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">✈️</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Ticketing</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">6 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">TL International</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">PNR Error Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Errors per 1000 PNRs — target < 0.5%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Flights Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">TL International</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">T-30 Compliance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Flights sealed by T-30 — 98%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Flights Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">TL International</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Group Block Utilisation</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Seats sold before release — 90%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Flights Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">TL Domestic</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Booking Accuracy</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Domestic PNR accuracy — 99.5%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Flights Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Agent International</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Tickets per Day</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Target 30–50 PNRs per day</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">daily</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">TL International</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Agent Domestic</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Tickets per Day</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Target 40–60 domestic PNRs per day</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">daily</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">TL Domestic</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#C47800;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">🛂</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Visa</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">5 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Visa Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Visa Grant Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Applications resulting in visa — 97%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">BU Ops Managers</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Visa Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">T-45 Compliance</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Passports in hand by T-45 — 95%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">BU Ops Managers</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Visa Team Leader</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Rejection Escalation</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Escalated within 24hrs — 100%</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">per event</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">BU Ops Managers</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Visa Agent</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Applications per Week</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Individual target — 15–25 per week</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Visa TL</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Visa Agent</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Document Completeness</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Submitted with complete docs — 98%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Visa TL</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#1A73E8;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">📣</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Marketing</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">7 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Marketing Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Lead Generation Volume</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Qualified enquiries vs plan</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Marketing Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Cost Per Lead</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Marketing cost per enquiry vs benchmark</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Marketing Director</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Campaign ROI</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Revenue attributed to marketing vs spend</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Global CEO</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Marketing Manager</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Destination Enquiry Vol</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Qualified enquiries for destination</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Mktg Director</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Social Media</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Engagement Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Average post engagement — 3%+ organic</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Mktg Manager</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Social Media</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Paid Social CPL</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Cost per lead from paid vs benchmark</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Mktg Manager</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Creative Team</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Asset Delivery</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Delivered to calendar deadline — 95%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE;white-space:nowrap">weekly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Mktg Manager</div>
+</div></div></div><div style="margin-bottom:16px">
+<div style="background:#6B46C1;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px">
+  <span style="font-size:14px">📦</span>
+  <span style="font-size:12px;font-weight:800;color:#fff;flex:1">Commercial Product</span>
+  <span style="font-size:9px;color:rgba(255,255,255,.85)">5 KPIs</span>
+</div>
+<div style="background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;background:#f8f9fa;border-bottom:1px solid #D4DBE8;padding:7px 14px;font-size:8.5px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em">
+  <div>Role</div><div>KPI / Metric</div><div>Target</div><div>Cadence</div><div>Reviewed By</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Contracting Manager</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Rate Competitiveness</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">vs market benchmark — at or below market</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap">quarterly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CEO India</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Contracting Manager</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Contract Renewal Rate</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Renewed on time vs expiry — 95%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F5F0FF;color:#4C1D95;border:1px solid #C4B5FD;white-space:nowrap">annual</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CEO India</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Contracting Manager</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Allotment Utilisation</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Contracted allotment used — 85%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">CEO India</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Loading Team</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Loading Accuracy</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Rates loaded without error — 99%+</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Contracting Manager</div>
+</div><div style="display:grid;grid-template-columns:160px 1fr 160px 100px 120px;border-bottom:1px solid #D4DBE8;padding:0">
+  <div style="padding:8px 14px;font-size:10px;font-weight:700;color:#000;display:flex;align-items:center">Loading Team</div>
+  <div style="padding:8px 14px;font-size:10px;font-weight:600;color:#1a1a1a;display:flex;align-items:center">Turnaround Time</div>
+  <div style="padding:8px 14px;font-size:9.5px;color:#3a3a3a;display:flex;align-items:center">Contract loaded within 3 working days</div>
+  <div style="padding:8px 14px;display:flex;align-items:center"><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;background:#F0FFF4;color:#15803D;border:1px solid #86EFAC;white-space:nowrap">monthly</span></div>
+  <div style="padding:8px 14px;font-size:9px;color:#3a3a3a;display:flex;align-items:center">Contracting Manager</div>
+</div></div></div>
+</div>
+
+<div id="tab-ext" class="tab-panel">
+<div style="background:#FFF8E6;border:1px solid #B87800;border-radius:6px;padding:10px 14px;font-size:10.5px;color:#7A4B00;margin-bottom:12px">
+  <strong>🌍 External Departments — For Discussion.</strong> These business units and functions sit outside or alongside the core internal structure. Each section outlines what is known, what needs to be decided, and suggested discussion points. All suggested structures are indicative only.
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div style="background:#fff;border:1px solid #D4DBE8;border-radius:8px;overflow:hidden">
+  <div style="padding:14px 16px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #D4DBE8">
+    <span style="font-size:24px;flex-shrink:0">🤝</span>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:800;color:#000;margin-bottom:3px">Field Sales Managers</div>
+      <div style="font-size:10px;color:#3a3a3a;line-height:1.4">Regional and market-based sales representatives working externally to drive B2B and direct bookings</div>
+    </div>
+    <span style="font-size:8.5px;font-weight:700;padding:3px 9px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap;flex-shrink:0">For Discussion</span>
+  </div>
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">✅ What we know</div>
+      <div style="background:#F0FFF4;border:1px solid #86EFAC;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>A field sales function is required to grow the B2B agent network and corporate client base</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Field Sales Managers would report into the CCO or BU Directors depending on territory</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Key markets need localised field presence — India regions, international markets TBC</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Field Sales typically operates on a base + commission structure with territory targets</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">❓ What is not yet defined</div>
+      <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>No Field Sales Manager roles currently defined in the structure</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Territory split not yet agreed — geographic vs vertical (GIT/MICE/FIT) model</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Relationship with B2B Account Managers inside BUs not yet defined</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Headcount and cost model not yet approved</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">💬 Key discussion questions</div>
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q1</span><span>Should Field Sales be a central function under CCO, or embedded in each BU?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q2</span><span>What is the territory model — geographic (North/South/East/West India + International) or by BU vertical?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q3</span><span>How does a Field Sales Manager hand off to a B2B Account Manager once an agent is registered?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q4</span><span>What CRM and pipeline tools will Field Sales use?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q5</span><span>Commission structure — override on bookings sourced, or pure relationship/acquisition?</span></div></div>
+    </div>
+    <div style="background:#F5F0FF;border:1px solid #C4B5FD;border-radius:5px;padding:8px 10px">
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#4C1D95;margin-bottom:4px">💡 Suggested approach (indicative only)</div>
+      <div style="font-size:10px;color:#4C1D95;line-height:1.6">Suggested starting structure: National Field Sales Head → Regional Field Sales Managers ×4–6 (North India, South India, West India, East India, International, Tier 2 Cities). Each FSM owns agent acquisition and activation in their territory, handing registered agents to internal B2B Account Managers. Reporting line: CCO.</div>
+    </div>
+  </div>
+</div><div style="background:#fff;border:1px solid #D4DBE8;border-radius:8px;overflow:hidden">
+  <div style="padding:14px 16px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #D4DBE8">
+    <span style="font-size:24px;flex-shrink:0">🏪</span>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:800;color:#000;margin-bottom:3px">TripFactory Travel Agencies</div>
+      <div style="font-size:10px;color:#3a3a3a;line-height:1.4">Branded or franchise retail travel agency locations operating under or affiliated with TripFactory</div>
+    </div>
+    <span style="font-size:8.5px;font-weight:700;padding:3px 9px;border-radius:99px;background:#FEE2E2;color:#7F1D1D;border:1px solid #FCA5A5;white-space:nowrap;flex-shrink:0">Needs Definition</span>
+  </div>
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">✅ What we know</div>
+      <div style="background:#F0FFF4;border:1px solid #86EFAC;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>TripFactory Travel Agencies concept exists — retail-facing booking points</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Agencies would drive B2C bookings for GIT departures and FIT custom travel</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Could operate as owned locations, franchise model, or preferred agent partnerships</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Would need product access, booking system integration and brand guidelines</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">❓ What is not yet defined</div>
+      <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Ownership model not defined — TripFactory-owned vs franchise vs white-label partner</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Location strategy not confirmed — which cities/markets get physical agency presence</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Revenue model not defined — does TripFactory take a margin, franchise fee, or both</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>How agency-sourced bookings flow to internal BU Booking Owners not defined</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Technology and booking system access for agencies not scoped</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">💬 Key discussion questions</div>
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q1</span><span>Is this a company-owned retail model or a franchise/partner model?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q2</span><span>Which cities are prioritised for Phase 1 — Metro cities only, or Tier 2 as well?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q3</span><span>How does an agency-sourced booking flow through to an internal BU Booking Owner?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q4</span><span>What is the commercial model — agency earns commission on net rate, or sells at retail?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q5</span><span>How are agency staff trained, certified and quality-controlled against TripFactory policy?</span></div></div>
+    </div>
+    <div style="background:#F5F0FF;border:1px solid #C4B5FD;border-radius:5px;padding:8px 10px">
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#4C1D95;margin-bottom:4px">💡 Suggested approach (indicative only)</div>
+      <div style="font-size:10px;color:#4C1D95;line-height:1.6">Two models to evaluate: (1) Owned Retail — TripFactory opens branded offices in key cities, staffed with certified Experts as walk-in booking centres. (2) Franchise/Partner — TripFactory licenses the brand and booking system to independent travel agents under a signed franchise agreement with minimum sales commitments and full policy certification. Model 2 has lower capex but requires strong governance.</div>
+    </div>
+  </div>
+</div><div style="background:#fff;border:1px solid #D4DBE8;border-radius:8px;overflow:hidden">
+  <div style="padding:14px 16px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #D4DBE8">
+    <span style="font-size:24px;flex-shrink:0">🌍</span>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:800;color:#000;margin-bottom:3px">Global Offices</div>
+      <div style="font-size:10px;color:#3a3a3a;line-height:1.4">International office presence outside India — source markets, destination support, or regional operations</div>
+    </div>
+    <span style="font-size:8.5px;font-weight:700;padding:3px 9px;border-radius:99px;background:#FFF8E6;color:#78350F;border:1px solid #FCD34D;white-space:nowrap;flex-shrink:0">For Discussion</span>
+  </div>
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">✅ What we know</div>
+      <div style="background:#F0FFF4;border:1px solid #86EFAC;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>TripFactory operates destinations globally — presence near key source markets may be needed</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Marketing has confirmed localised offices per region — these may co-locate with Global Offices</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Destination Management already has a global contracting model (360 contracts)</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Some destinations (Europe, Australia, CIS) may benefit from local operational presence</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">❓ What is not yet defined</div>
+      <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>No Global Office locations have been confirmed</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Whether offices are operational, commercial or purely support functions not defined</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Staffing model for Global Offices not defined — local hires vs India-based expats</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Legal and entity structure for international offices not scoped</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Budget for international office establishment not approved</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">💬 Key discussion questions</div>
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q1</span><span>Which markets justify physical Global Office presence vs virtual/remote coverage?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q2</span><span>What functions would a Global Office serve — sales, operations, contracting, or all three?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q3</span><span>Should Global Offices report to the Global CEO or to the relevant BU Director?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q4</span><span>What is the priority order — Singapore, Dubai, London, or Sydney first?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q5</span><span>What are the legal entity and employment law requirements for each priority market?</span></div></div>
+    </div>
+    <div style="background:#F5F0FF;border:1px solid #C4B5FD;border-radius:5px;padding:8px 10px">
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#4C1D95;margin-bottom:4px">💡 Suggested approach (indicative only)</div>
+      <div style="font-size:10px;color:#4C1D95;line-height:1.6">Phase 1 recommendation (indicative): Start with virtual/remote presence using a local representative model — 1 commercial representative per key source market (UK/Europe, UAE/Middle East, Australia/ANZ, Singapore/South East Asia). Each rep is a contractor or local hire, manages key travel agent and corporate relationships, and feeds into the India-based BU teams. Full office establishment in Phase 2 once volume justifies fixed costs.</div>
+    </div>
+  </div>
+</div><div style="background:#fff;border:1px solid #D4DBE8;border-radius:8px;overflow:hidden">
+  <div style="padding:14px 16px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid #D4DBE8">
+    <span style="font-size:24px;flex-shrink:0">🚌</span>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:800;color:#000;margin-bottom:3px">Transport Operations</div>
+      <div style="font-size:10px;color:#3a3a3a;line-height:1.4">Coach fleet, private transfers, driver management and ground transport across all business units</div>
+    </div>
+    <span style="font-size:8.5px;font-weight:700;padding:3px 9px;border-radius:99px;background:#FEE2E2;color:#7F1D1D;border:1px solid #FCA5A5;white-space:nowrap;flex-shrink:0">Needs Definition</span>
+  </div>
+  <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">✅ What we know</div>
+      <div style="background:#F0FFF4;border:1px solid #86EFAC;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Transport is confirmed as a Central Function with a Director role (TBC)</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>GIT requires group coaches for departures — potentially 30–200+ pax per departure</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>MICE requires event transfers, shuttle services and airport transfers</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>FIT requires private transfers, chauffeur services and small group vehicles</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#15803D;font-weight:700;flex-shrink:0">✓</span><span>Driver float process exists — LERMS entries, float issue and 48hr expense settlement</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">❓ What is not yet defined</div>
+      <div style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>In-house fleet vs contracted fleet vs per-trip outsource model not decided</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Driver employment model — employed, contracted, or third-party operators</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Transport Director has not been identified or hired</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Whether Transport is a profit centre or a cost centre not defined</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>Technology required — GPS tracking, driver app, LERMS integration</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1a1a1a;line-height:1.5"><span style="color:#B91C1C;font-weight:700;flex-shrink:0">✗</span><span>How transport pricing is handled — included in package vs charged to BUs</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:6px">💬 Key discussion questions</div>
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:5px;padding:8px 10px"><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q1</span><span>Is Transport in-house, outsourced, or a hybrid model by BU type?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q2</span><span>Who manages driver relationships day-to-day — Transport Director, BU Ops, or Central Ops?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q3</span><span>How does the Transport Director interact with GIT Ops TL, MICE Ops TL and FIT Ops TL?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q4</span><span>Is the coach contracting function part of Transport or Commercial Product?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q5</span><span>Does Transport own the driver float process end-to-end, or does Finance own it?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q6</span><span>How are international destination transfers managed — through DMC contracts or Transport?</span></div><div style="display:flex;gap:7px;margin-bottom:4px;font-size:10px;color:#1E3A8A;line-height:1.5"><span style="font-weight:700;flex-shrink:0">Q7</span><span>What technology is needed — fleet management, GPS tracking, driver mobile app?</span></div></div>
+    </div>
+    <div style="background:#F5F0FF;border:1px solid #C4B5FD;border-radius:5px;padding:8px 10px">
+      <div style="font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#4C1D95;margin-bottom:4px">💡 Suggested approach (indicative only)</div>
+      <div style="font-size:10px;color:#4C1D95;line-height:1.6">Three-tier model to discuss: (1) Domestic long-haul and group coaches — contracted with 2–3 preferred coach operators under annual framework agreements managed by Transport Director. (2) City and airport transfers — mix of owned vehicles for high-frequency routes and contracted local operators. (3) International destination transfers — managed through DMC contracts in Commercial Product, coordinated by FIT/MICE Ops. Transport Director oversees all SLAs and driver compliance. Driver float owned by Transport, reconciled through Finance/LERMS.</div>
+    </div>
+  </div>
+</div></div>
+</div>
 
 </div><!-- /tab-content-area -->
 </div><!-- /page -->
