@@ -311,6 +311,77 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
 @media(max-width:1100px){.org-grid{grid-template-columns:repeat(2,1fr)}.org-grid-wide{grid-column:span 1}}
 @media(max-width:900px){.row-2col,.row-3col{grid-template-columns:1fr}.jm-2col,.jm-kpi-grid,.b2b-card-cols{grid-template-columns:1fr}}
 @media(max-width:700px){.hdr{grid-template-columns:1fr;text-align:center}.org-leadership,.todo-grid,.pol-cards{grid-template-columns:1fr}.jd-table-hdr,.jd-row{grid-template-columns:1fr}}
+
+/* ── KPI expanded cards ──────────────────────────────────── */
+.kpi-dept{margin-bottom:18px}
+.kpi-dept-hdr{padding:10px 16px;border-radius:6px 6px 0 0;display:flex;align-items:center;gap:10px}
+.kpi-dept-icon{font-size:15px}
+.kpi-dept-name{font-size:12px;font-weight:800;color:#fff;flex:1}
+.kpi-dept-count{font-size:9px;color:rgba(255,255,255,.8)}
+.kpi-table{background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;overflow:hidden}
+.kpi-row{cursor:pointer;border-bottom:1px solid #eef0f4;transition:background .12s}
+.kpi-row:last-child{border-bottom:none}
+.kpi-row:hover{background:#f8fafc}
+.kpi-row.open{background:#EBF5FF}
+.kpi-row-top{display:grid;grid-template-columns:160px 1fr 160px 100px 110px 28px;align-items:center;padding:9px 14px;gap:0}
+.kpi-role{font-size:10px;font-weight:700;color:#000}
+.kpi-metric{font-size:10.5px;font-weight:600;color:#1a1a1a;padding:0 10px}
+.kpi-target{font-size:9.5px;color:#3a3a3a;padding:0 6px}
+.kpi-cadence{padding:0 6px}
+.kpi-cadence-chip{font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;border:1px solid;white-space:nowrap}
+.cc-weekly{background:#EFF4FF;color:#1E40AF;border-color:#BFDBFE}
+.cc-monthly{background:#F0FFF4;color:#15803D;border-color:#86EFAC}
+.cc-quarterly{background:#FFF8E6;color:#78350F;border-color:#FCD34D}
+.cc-annual{background:#F5F0FF;color:#4C1D95;border-color:#C4B5FD}
+.cc-booking{background:#FFF8E6;color:#78350F;border-color:#FCD34D}
+.cc-daily{background:#EFF4FF;color:#1E40AF;border-color:#BFDBFE}
+.kpi-owner-cell{font-size:9px;color:#3a3a3a;padding:0 6px}
+.kpi-chevron{font-size:9px;color:#aaa;text-align:center;transition:transform .18s}
+.kpi-row.open .kpi-chevron{transform:rotate(180deg);color:#1A73E8}
+.kpi-detail{display:none;padding:12px 14px 14px;background:#EBF5FF;border-top:1px solid #BFDBFE}
+.kpi-row.open .kpi-detail{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.kpi-d-block{background:#fff;border-radius:5px;border:1px solid #D4DBE8;padding:8px 10px}
+.kpi-d-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#555;margin-bottom:4px}
+.kpi-d-text{font-size:10px;color:#1a1a1a;line-height:1.5}
+.kpi-miss{background:#FEF2F2;border-color:#FCA5A5}
+.kpi-miss .kpi-d-label{color:#B91C1C}
+.kpi-summary-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.kpi-sum-card{background:#fff;border:1px solid #D4DBE8;border-radius:6px;padding:12px;text-align:center}
+.kpi-sum-num{font-size:28px;font-weight:800;color:#000;line-height:1}
+.kpi-sum-lbl{font-size:9px;font-weight:700;color:#3a3a3a;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+
+/* ── Reporting & Meetings tab ────────────────────────────── */
+.rm-intro{background:#E8F2FF;border:1px solid #1565D8;border-radius:6px;padding:10px 14px;font-size:10.5px;color:#0A3E96;margin-bottom:12px}
+.rm-section{margin-bottom:16px}
+.rm-section-hdr{background:#000;border-radius:6px 6px 0 0;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.rm-section-icon{font-size:14px}
+.rm-section-title{font-size:12px;font-weight:800;color:#fff;flex:1}
+.rm-section-sub{font-size:9px;color:rgba(255,255,255,.75)}
+.rm-cards{background:#fff;border:1px solid #D4DBE8;border-top:none;border-radius:0 0 6px 6px;padding:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.rm-card{border:1px solid #D4DBE8;border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.rm-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.rm-card.open{border-color:#1A73E8;box-shadow:0 2px 10px rgba(26,115,232,.12)}
+.rm-card-hdr{padding:10px 12px;display:flex;align-items:flex-start;gap:8px}
+.rm-card-icon{font-size:16px;flex-shrink:0}
+.rm-card-info{flex:1}
+.rm-card-name{font-size:11px;font-weight:700;color:#000;line-height:1.2;margin-bottom:2px}
+.rm-card-when{font-size:9px;font-weight:600;color:#555}
+.rm-card-owner{font-size:8.5px;color:#888;margin-top:2px}
+.rm-freq-badge{font-size:8px;font-weight:700;padding:2px 7px;border-radius:99px;flex-shrink:0}
+.rf-daily{background:#EFF4FF;color:#1E40AF;border:1px solid #BFDBFE}
+.rf-weekly{background:#F0FFF4;color:#15803D;border:1px solid #86EFAC}
+.rf-monthly{background:#FFF8E6;color:#78350F;border:1px solid #FCD34D}
+.rf-quarterly{background:#F5F0FF;color:#4C1D95;border:1px solid #C4B5FD}
+.rm-card-body{display:none;padding:0 12px 12px;border-top:1px solid #eee}
+.rm-card.open .rm-card-body{display:block}
+.rm-body-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.rm-body-block{background:#F8FAFC;border-radius:4px;padding:7px 9px}
+.rm-body-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#555;margin-bottom:3px}
+.rm-body-text{font-size:10px;color:#1a1a1a;line-height:1.5}
+.rm-agenda-list{margin:0;padding:0 0 0 14px}
+.rm-agenda-list li{font-size:10px;color:#1a1a1a;line-height:1.6;margin-bottom:1px}
+@media(max-width:900px){.kpi-row-top{grid-template-columns:140px 1fr 1fr};.rm-cards{grid-template-columns:1fr 1fr}.kpi-row.open .kpi-detail{grid-template-columns:1fr 1fr}.kpi-summary-strip{grid-template-columns:1fr 1fr}}
+
 </style>
 </head>
 <body>
@@ -341,6 +412,7 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
   <button class="tab-btn" data-tab="todo">To Define &amp; Confirm</button>
   <button class="tab-btn" data-tab="kpi">KPI Dashboard</button>
   <button class="tab-btn" data-tab="ext">External Departments</button>
+  <button class="tab-btn" data-tab="rm">Reporting &amp; Meetings</button>
 </div>
 
 <div class="tab-content-area">
@@ -1232,8 +1304,10 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
 </div><!-- /tab-todo -->
 
 <div id="tab-kpi" class="tab-panel">
-<div style="background:#E8F2FF;border:1px solid #1565D8;border-radius:6px;padding:10px 14px;font-size:10.5px;color:#0A3E96;margin-bottom:8px">
-  <strong>📊 KPI Dashboard</strong> — Performance metrics for all departments. Targets are indicative and require sign-off from each Director and the CCO before use in appraisals.
+<div style="background:#E8F2FF;border:1px solid #1565D8;border-radius:6px;padding:10px 14px;font-size:10.5px;color:#0A3E96;margin-bottom:12px">
+  <strong>📊 KPI Dashboard</strong> — 84 KPIs across 10 departments. Click any row to expand the full definition, measurement method and escalation path. Targets are indicative — require Director + CCO sign-off before use in appraisals.
+</div>
+<div id="kpiCardsContainer"></div>
 </div>
 
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
@@ -1882,6 +1956,12 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
 </div></div>
 </div>
 
+<div id="tab-rm" class="tab-panel">
+<div class="rm-intro">
+  <strong>📅 Reporting &amp; Meetings</strong> — The full meeting cadence for TripFactory operations. Every meeting has a defined owner, agenda, attendees and output. Click any card to see full details.
+</div>
+<div id="meetingsContainer"></div>
+</div>
 </div><!-- /tab-content-area -->
 </div><!-- /page -->
 
@@ -1900,6 +1980,7 @@ body{background:#0D1B2A;min-height:100vh;padding:24px 20px 48px;font-family:'Plu
 
 <script>
 // ── TABS ─────────────────────────────────────────────────────
+var _tabBuilt = {};
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     const id = this.dataset.tab;
@@ -1907,6 +1988,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     this.classList.add('active');
     document.getElementById('tab-' + id).classList.add('active');
+    // Build content on first visit
+    if(!_tabBuilt[id]) {
+      _tabBuilt[id] = true;
+      if(id==='kpi' && typeof buildKPICards==='function') buildKPICards();
+      if(id==='rm' && typeof buildMeetings==='function') buildMeetings();
+    }
   });
 });
 
@@ -3144,6 +3231,394 @@ buildJD();
 buildProc();
 buildPol();
 buildB2B();
+
+
+// ═══════════════════════════════════════════════════════════════
+// KPI DATA (with expanded detail)
+// ═══════════════════════════════════════════════════════════════
+const KPI_DATA = [
+  {dept:'Leadership',color:'#000',icon:'👑',rows:[
+    {role:'Global CEO',metric:'Group Revenue Growth',target:'vs annual plan — board quarterly',cadence:'quarterly',owner:'Board',
+     definition:'Total revenue across all BUs and functions vs. the approved annual budget. Tracked quarterly with board-level commentary.',
+     measure:'Monthly P&L rolled to quarterly · Finance Director presents to Board · variance analysis required for any miss > 5%.',
+     escalation:'Miss >10%: Board review · Restructure of commercial strategy · CCO accountability review.'},
+    {role:'Global CEO',metric:'EBITDA Margin',target:'% of revenue vs budget',cadence:'monthly',owner:'Board',
+     definition:'Earnings before interest, taxes, depreciation and amortisation as a % of total revenue. Measures operational profitability.',
+     measure:'Finance Director calculates monthly · presented in management accounts · compared to budget and prior year.',
+     escalation:'Miss vs budget: Finance Director flags in management accounts · Global CEO reviews cost base within 30 days.'},
+    {role:'Global CEO',metric:'Leadership Team Retention',target:'Senior team — target 90%+',cadence:'annual',owner:'CPO',
+     definition:'% of C-suite and Director-level staff retained over a 12-month rolling period. Excludes planned departures.',
+     measure:'CPO tracks headcount monthly · annual review presented to Global CEO · exit interview data reviewed.',
+     escalation:'Below 85%: CPO conducts retention risk assessment · compensation and structure review initiated.'},
+    {role:'CCO',metric:'Total BU Revenue',target:'GIT + MICE + FIT combined vs plan',cadence:'monthly',owner:'Global CEO',
+     definition:'Combined revenue from all three business verticals measured against the approved monthly revenue plan.',
+     measure:'Each BU Director submits weekly pipeline · Finance consolidates monthly · CCO presents in monthly director review.',
+     escalation:'Miss >5%: CCO presents recovery plan within 7 days · BU Directors accountable for individual shortfall.'},
+    {role:'CCO',metric:'Gate Compliance Rate',target:'All 7 gates cleared — 100%',cadence:'weekly',owner:'Global CEO',
+     definition:'% of all bookings that cleared all 7 policy gates (A through G) correctly without exception. Zero tolerance.',
+     measure:'Booking system auto-flags gate violations · Ops Manager weekly report to CCO · individual BO scorecards updated.',
+     escalation:'Any §26 violation: Booking Owner scorecard entry · 3+ per quarter → managed performance process.'},
+    {role:'CPO',metric:'Policy Certification Rate',target:'% staff certified — 100%',cadence:'monthly',owner:'Global CEO',
+     definition:'% of all customer-facing staff holding a current, valid TripFactory policy certification. Must be 100%.',
+     measure:'CPO tracks certification expiry monthly · auto-reminder system for renewals · non-certified staff flagged to Director.',
+     escalation:'Below 100%: non-certified staff removed from customer-facing duties until certified.'},
+  ]},
+  {dept:'GIT',color:'#111',icon:'🏨',rows:[
+    {role:'GIT Director',metric:'GIT Revenue',target:'vs annual plan — monthly',cadence:'monthly',owner:'CCO',
+     definition:'Total GIT departure revenue net of cancellations measured against monthly plan.',
+     measure:'GIT Director presents in weekly CCO ops review · Finance validates monthly · departure-level breakdown reviewed.',
+     escalation:'Miss >5%: CCO review · departure calendar adjustment considered · pricing strategy review.'},
+    {role:'GIT Director',metric:'Departure Fill Rate',target:'Avg % occupancy — target 85%+',cadence:'monthly',owner:'CCO',
+     definition:'Average % of seats sold across all GIT departures in the period. Measures commercial effectiveness of the departure calendar.',
+     measure:'Ops Team Leader tracks per departure · GIT Director reports to CCO monthly · sub-70% departures flagged at T-30.',
+     escalation:'Below 70% at T-30: merge or cancel decision by GIT Director + CCO. Below 85% average: departure calendar review.'},
+    {role:'Sales Team Leader',metric:'Team Conversion Rate',target:'Enquiry to booking — 35%+',cadence:'weekly',owner:'GIT Director',
+     definition:'% of qualified enquiries that convert to a confirmed booking (deposit paid, disclosure signed).',
+     measure:'CRM tracks enquiry to booking pipeline · Sales TL reports in weekly ops · individual Expert rates reviewed monthly.',
+     escalation:'Below 25%: Sales TL coaches team · below 20% for 2 consecutive weeks → GIT Director intervention.'},
+    {role:'Expert',metric:'Bookings Managed',target:'Active simultaneous — 15–25',cadence:'weekly',owner:'Senior Expert',
+     definition:'Number of active booking files being managed simultaneously by one Expert at any point in time.',
+     measure:'CRM pipeline count per Expert · Sales TL reviews weekly · flags anyone under 10 or over 30 for review.',
+     escalation:'Under 10 consistently: capacity and demand review. Over 30: risk of quality decline → redistribute load.'},
+    {role:'Expert',metric:'Gate Compliance',target:'All 7 gates — 100%',cadence:'per booking',owner:'Sales TL',
+     definition:'Each individual booking must clear all 7 policy gates (A-G) correctly. Any failure = scorecard entry.',
+     measure:'System flags gate failures · Ops TL records at handover · Sales TL reviews weekly scorecard report.',
+     escalation:'1 violation: coaching session. 3+ per quarter: formal managed performance process via CPO.'},
+    {role:'Ops Team Leader',metric:'On-Time Departure Rate',target:'Target 98%+',cadence:'monthly',owner:'GIT Director',
+     definition:'% of GIT departures that depart on their planned date without operational cancellation or postponement.',
+     measure:'Ops TL records every departure outcome · GIT Director reviews monthly · root cause analysis on any miss.',
+     escalation:'Below 95%: operational review with GIT Director · supplier relationship review · contingency planning.'},
+  ]},
+  {dept:'Groups / MICE',color:'#17426E',icon:'🎯',rows:[
+    {role:'MICE Director',metric:'MICE Revenue',target:'vs annual plan',cadence:'monthly',owner:'CCO',
+     definition:'Total confirmed event and group revenue net of cancellations vs monthly plan.',
+     measure:'MICE Director presents pipeline and confirmed revenue weekly to CCO · Finance validates monthly.',
+     escalation:'Miss >10%: CCO review · pipeline quality assessment · B2B client outreach programme review.'},
+    {role:'MICE Director',metric:'Event Delivery Score',target:'Post-event client satisfaction — 4.3/5+',cadence:'per event',owner:'CCO',
+     definition:'Client satisfaction score collected after every MICE event delivery. Measures operational quality.',
+     measure:'Survey sent to event organiser within 48hrs of event close · MICE Director reviews every score · CCO sees quarterly summary.',
+     escalation:'Score below 3.5: MICE Director calls client within 24hrs · root cause review · operational process change if systemic.'},
+    {role:'Sales Team Leader',metric:'Proposal Conversion',target:'Proposal to confirmed — 30%+',cadence:'monthly',owner:'MICE Director',
+     definition:'% of formal proposals submitted that convert to a confirmed and deposited event booking.',
+     measure:'CRM tracks proposals vs confirmations · Sales TL reviews weekly · MICE Director sees monthly breakdown by event type.',
+     escalation:'Below 20%: proposal quality review · pricing strategy assessment · Sales TL coaching programme.'},
+  ]},
+  {dept:'FIT Travel',color:'#113257',icon:'🧳',rows:[
+    {role:'FIT Director',metric:'FIT Revenue',target:'Total vs plan — by destination',cadence:'monthly',owner:'CCO',
+     definition:'Total FIT revenue across all 6 destinations vs monthly plan. Broken down by destination for granular review.',
+     measure:'Destination TLs report pipeline weekly · FIT Director consolidates and presents to CCO monthly.',
+     escalation:'Any destination miss >15%: Destination TL review · product quality and pricing assessment for that market.'},
+    {role:'FIT Director',metric:'B2B Agent Growth',target:'Active registered agents vs plan',cadence:'quarterly',owner:'CCO',
+     definition:'Number of active B2B agents (at least 1 booking in the quarter) vs the quarterly growth plan.',
+     measure:'CRM tracks agent activity · FIT Director reviews quarterly · comparison to target and prior quarter.',
+     escalation:'Below plan for 2 consecutive quarters: B2B acquisition strategy review · Field Sales discussion.'},
+    {role:'Destination TL',metric:'Destination Revenue',target:'vs quarterly plan',cadence:'monthly',owner:'FIT Director',
+     definition:'Revenue for that specific destination vs the quarterly plan apportioned monthly.',
+     measure:'Destination TL tracks own pipeline daily · reports to FIT Director weekly · Finance validates monthly.',
+     escalation:'Below 70% of plan: FIT Director and Destination TL recovery plan within 7 days.'},
+    {role:'Expert',metric:'Gate Compliance',target:'All 7 gates — 100%',cadence:'per booking',owner:'Destination TL',
+     definition:'Each FIT booking must clear all 7 policy gates correctly including the Europe visa feasibility rule.',
+     measure:'System flags failures · Destination TL reviews weekly scorecard · FIT Director monthly summary.',
+     escalation:'Same as GIT Expert escalation path — scorecard → coaching → managed performance.'},
+  ]},
+  {dept:'Finance',color:'#1E3A8A',icon:'₹',rows:[
+    {role:'Finance Director',metric:'Month-End Close',target:'Within 3 working days of month end',cadence:'monthly',owner:'Global CEO',
+     definition:'Completion of all month-end accounting entries, P&L, balance sheet and management accounts within 3 working days.',
+     measure:'Finance Director confirms close to Global CEO by day 3 · management accounts distributed to Directors.',
+     escalation:'Miss: Finance Director explains delay to Global CEO · root cause addressed within following month.'},
+    {role:'Finance Director',metric:'Gate Compliance',target:'All 6 payment gates enforced — 100%',cadence:'weekly',owner:'Global CEO',
+     definition:'Finance must enforce all 6 booking payment gates without exception. No authorisation issued before gate clears.',
+     measure:'Finance tracks gate exceptions weekly · any exception requires Finance Manager written sign-off · CCO notified.',
+     escalation:'Unauthorised exception: immediate escalation to Global CEO · Finance Director accountability review.'},
+    {role:'Finance Director',metric:'TCS Filing Accuracy',target:'Filed correctly and on time — 100%',cadence:'monthly',owner:'Global CEO',
+     definition:'Tax Collected at Source must be calculated, collected and filed on time with 100% accuracy. Legal obligation.',
+     measure:'Finance Director confirms filing with Global CEO monthly · external auditor reviews quarterly.',
+     escalation:'Any TCS error or late filing: immediate legal review · Finance Director personally accountable.'},
+    {role:'Finance Team',metric:'Float Settlement',target:'Settled within 48hrs of tour return',cadence:'per tour',owner:'Finance Director',
+     definition:'All driver float expense submissions must be reviewed and settled (or rejected) within 48 hours of tour return.',
+     measure:'Ops Team Leader submits post-tour · Finance reviews within 48hrs · LERMS updated · exceptions reported weekly.',
+     escalation:'Consistent late settlement: Ops and Finance process review · driver float threshold adjustment considered.'},
+  ]},
+  {dept:'Customer Services',color:'#138A62',icon:'🎧',rows:[
+    {role:'Team Leader',metric:'SLA Compliance',target:'Contacts resolved within SLA — 92%+',cadence:'weekly',owner:'CS Head',
+     definition:'% of all customer contacts (calls, emails, chats) resolved within the defined SLA for each contact type.',
+     measure:'CRM/contact system tracks SLA automatically · Team Leader reports to CS Head weekly · below-SLA cases reviewed.',
+     escalation:'Below 85%: Team Leader and CS Head review team capacity and process · queue redistribution if needed.'},
+    {role:'CS Agent',metric:'First Contact Resolution',target:'Resolved on first contact — 70%+',cadence:'weekly',owner:'Supervisor',
+     definition:'% of customer contacts fully resolved without the customer needing to contact again about the same issue.',
+     measure:'CRM tracks repeat contacts within 5 days · Supervisor reviews weekly · individual agent FCR reported monthly.',
+     escalation:'Below 60%: Supervisor reviews agent knowledge gaps · SME coaching programme initiated.'},
+    {role:'CS Agent',metric:'CSAT Score',target:'Individual satisfaction — 4.1/5+',cadence:'monthly',owner:'Team Leader',
+     definition:'Customer satisfaction score collected via post-contact survey. Measures individual agent quality.',
+     measure:'Auto-survey sent post-contact · Team Leader reviews individual scores monthly · low scores trigger coaching.',
+     escalation:'Below 3.5 for 2 consecutive months: Team Leader formal coaching plan · CPO notified if no improvement.'},
+  ]},
+  {dept:'Ticketing',color:'#4F46CC',icon:'✈️',rows:[
+    {role:'TL International',metric:'T-30 Compliance',target:'Flights sealed by T-30 — 98%+',cadence:'weekly',owner:'Flights Director',
+     definition:'% of all bookings where the flight PNR is sealed (confirmed and non-refundable) at least 30 days before departure.',
+     measure:'Ticketing system tracks seal dates · TL International reports weekly to Flights Director · sub-T30 list reviewed.',
+     escalation:'Below 95%: Flights Director reviews pipeline · escalates unsealed bookings to relevant BU Ops Manager.'},
+    {role:'Agent International',metric:'PNR Error Rate',target:'Errors per 1000 PNRs — < 0.5%',cadence:'weekly',owner:'TL International',
+     definition:'% of PNRs containing an error (name mismatch, wrong date, wrong routing) requiring correction after creation.',
+     measure:'Errors logged by TL International on correction · weekly error rate calculated and reviewed.',
+     escalation:'Above 1%: TL International conducts individual agent review · retraining initiated if systemic.'},
+  ]},
+  {dept:'Visa',color:'#C47800',icon:'🛂',rows:[
+    {role:'Visa Team Leader',metric:'T-45 Compliance',target:'Passports in hand by T-45 — 95%+',cadence:'weekly',owner:'BU Ops Managers',
+     definition:'% of all Europe and international visa bookings where the physical passport is in the Visa team\'s possession by T-45.',
+     measure:'Visa TL tracks passport receipt dates in system · weekly report to all BU Ops Managers · at-risk list shared.',
+     escalation:'Below 90%: Visa TL escalates each at-risk booking to Booking Owner and BU Ops · T-30 hard deadline review.'},
+    {role:'Visa Team Leader',metric:'Visa Grant Rate',target:'Applications resulting in visa — 97%+',cadence:'monthly',owner:'BU Ops Managers',
+     definition:'% of submitted visa applications that result in a granted visa. Measures process quality and eligibility screening.',
+     measure:'Visa TL tracks outcomes for all submitted applications · monthly report to BU Ops Managers · rejection analysis.',
+     escalation:'Below 93%: rejection pattern analysis · Booking Owner eligibility check process strengthened · UDAN review.'},
+  ]},
+  {dept:'Marketing',color:'#1A73E8',icon:'📣',rows:[
+    {role:'Marketing Director',metric:'Cost Per Lead',target:'vs benchmark — at or below market',cadence:'monthly',owner:'Global CEO',
+     definition:'Total marketing spend divided by number of qualified enquiries generated. Core efficiency metric.',
+     measure:'Marketing Director tracks spend vs leads monthly · channel breakdown reported · compared to industry benchmark.',
+     escalation:'CPL rising >20% vs benchmark: channel mix review · underperforming channels paused · spend reallocation.'},
+    {role:'Marketing Director',metric:'Campaign ROI',target:'Revenue attributed to marketing vs spend',cadence:'quarterly',owner:'Global CEO',
+     definition:'Revenue directly attributed to marketing campaigns vs total marketing spend in the period.',
+     measure:'Marketing Director uses CRM attribution · quarterly board reporting · by campaign and channel.',
+     escalation:'ROI below 3:1: Marketing Director presents reallocation strategy to Global CEO within 30 days.'},
+    {role:'Social Media',metric:'Engagement Rate',target:'3%+ organic',cadence:'weekly',owner:'Marketing Manager',
+     definition:'Average engagement rate (likes, comments, shares, saves) as % of followers across all social platforms.',
+     measure:'Social media platform analytics · Marketing Manager reviews weekly per destination · monthly summary to Marketing Director.',
+     escalation:'Below 1.5% for 4 consecutive weeks: content strategy review · competitive analysis · Marketing Manager action plan.'},
+  ]},
+  {dept:'Commercial Product',color:'#6B46C1',icon:'📦',rows:[
+    {role:'Contracting Manager',metric:'Rate Competitiveness',target:'At or below market benchmark',cadence:'quarterly',owner:'CEO India',
+     definition:'Contracted hotel and supplier rates compared to the competitive set (OTA prices, competitor rates) for the same product.',
+     measure:'Contracting Manager runs quarterly benchmarking exercise · compared to Expedia, Booking.com, competitor quotes.',
+     escalation:'Rates >10% above market: renegotiation initiated · supplier relationship review · alternative suppliers sourced.'},
+    {role:'Loading Team',metric:'Loading Accuracy',target:'Rates loaded without error — 99%+',cadence:'monthly',owner:'Contracting Manager',
+     definition:'% of contracted rates loaded into the booking system correctly on first attempt without requiring correction.',
+     measure:'System audit flags loading errors · Contracting Manager reviews monthly · error correction log maintained.',
+     escalation:'Below 97%: Loading Team process review · double-check verification step added for that contract type.'},
+  ]},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// REPORTING & MEETINGS DATA
+// ═══════════════════════════════════════════════════════════════
+const MEETINGS = [
+  {
+    section:'Daily Touchpoints',color:'#000',icon:'📅',freq:'Daily',
+    meetings:[
+      {icon:'☀️',name:'Morning Stand-Up',when:'Every day · 9:00–9:15am',freq:'daily',
+       owner:'Each BU Sales Team Leader',
+       purpose:'15-minute team pulse — open files, gate blockers, today\'s priorities. Not a reporting meeting — a blocker-removal meeting.',
+       attendees:'All Sales Experts + Sales Team Leader per BU',
+       agenda:['Open files with gate issues today','Any T-14 dues outstanding','New enquiries to allocate','One win from yesterday'],
+       output:'Team aligned on priorities. Gate blockers flagged before they become problems.',
+       format:'Standing meeting. No slides. Team Leader facilitates.'},
+      {icon:'📋',name:'Operations Daily Check',when:'Every day · 9:30–9:45am',freq:'daily',
+       owner:'BU Ops Team Leader',
+       purpose:'Daily operational status — departures in 7 days, active tours on road, driver float settlements outstanding.',
+       attendees:'Ops Team Leader · Relevant Booking Owners',
+       agenda:['Departures within 7 days — status check','Active tours on road — any issues from TM','Float settlements due today','Handover files received overnight'],
+       output:'Ops ready list confirmed. Any urgent issues escalated immediately.',
+       format:'Ops TL-led. 15 minutes. CRM screen share.'},
+    ]
+  },
+  {
+    section:'Weekly Reviews',color:'#17426E',icon:'📊',freq:'Weekly',
+    meetings:[
+      {icon:'⭐',name:'CCO Weekly Ops Review',when:'Every Monday · 10:00–11:30am',freq:'weekly',
+       owner:'CCO — Ajay Kawa',
+       purpose:'The single most important recurring meeting. All BU Directors report on revenue, pipeline, gate compliance and ops issues. CCO holds Directors accountable.',
+       attendees:'CCO · GIT Director · MICE Director · FIT Director · Finance Director (brief cameo) · Ops TL from each BU',
+       agenda:['GIT pipeline and revenue update (15 min)','MICE pipeline and event status (15 min)','FIT destination breakdown (20 min)','Gate compliance report — any §26 violations (10 min)','Departures in next 14 days — ops readiness (15 min)','Finance gate exceptions (5 min)','Issues and decisions required (10 min)'],
+       output:'Action log distributed within 2 hours. All escalations owned and dated. Revenue gaps identified and recovery plans commissioned.',
+       format:'Video or in-person. CCO chairs. Each Director presents their own numbers — no hiding behind slides.'},
+      {icon:'💼',name:'Finance Weekly Gate Review',when:'Every Wednesday · 2:00–2:30pm',freq:'weekly',
+       owner:'Finance Director',
+       purpose:'Finance reviews all payment gate exceptions, outstanding dues, and upcoming T-14 collections with BU Ops Teams.',
+       attendees:'Finance Director · Finance Manager · All BU Ops Team Leaders',
+       agenda:['Outstanding dues: T-14 bookings with balance unpaid','Gate exception log — any unauthorised actions','Driver float settlements outstanding','Supplier payments due this week','LERMS reconciliation exceptions'],
+       output:'Outstanding dues actioned. Gate exceptions resolved. Supplier payments authorised.',
+       format:'Finance Director chairs. 30 minutes maximum.'},
+      {icon:'✈️',name:'Ticketing & Visa Weekly',when:'Every Thursday · 11:00–11:30am',freq:'weekly',
+       owner:'Flights Director / Visa TL',
+       purpose:'Ticketing and Visa status review — T-30 unsealed flights, T-45 passports outstanding, rejections.',
+       attendees:'Flights Director · TL International · TL Domestic · Visa TL · BU Ops TL representatives',
+       agenda:['Flights not sealed by T-30 — list and action','Passports not received by T-45 — escalation list','Visa rejection review','Group block utilisation and release decisions'],
+       output:'At-risk list actioned. Escalations to BU Ops confirmed.',
+       format:'30 minutes. Ticketing TL and Visa TL alternate chairing.'},
+      {icon:'🎧',name:'CS Weekly Quality Review',when:'Every Friday · 3:00–3:30pm',freq:'weekly',
+       owner:'CS Head',
+       purpose:'Customer Services quality review — SLA performance, complaint trends, CSAT scores, escalation patterns.',
+       attendees:'CS Head · All CS Team Leaders · SME leads',
+       agenda:['SLA compliance by destination this week','Complaints received — categorised and trended','CSAT scores — individual and team','Escalations that reached L2 this week','Training needs identified'],
+       output:'Underperforming agents given coaching plan. Systemic issues flagged to CCO.',
+       format:'CS Head chairs. Each TL presents their destination numbers.'},
+    ]
+  },
+  {
+    section:'Monthly Reviews',color:'#138A62',icon:'📈',freq:'Monthly',
+    meetings:[
+      {icon:'👑',name:'Monthly Director Review',when:'First Tuesday of each month · 9:00–12:00',freq:'monthly',
+       owner:'Global CEO',
+       purpose:'Full-day senior leadership review. All Directors present monthly performance. Global CEO holds senior team accountable and makes strategic decisions.',
+       attendees:'Global CEO · CEO India · CCO · CPO · Finance Director · Marketing Director · All BU Directors · Flights Director · Credits Director',
+       agenda:['Group P&L review — Finance Director (30 min)','GIT monthly performance (20 min)','MICE monthly performance (20 min)','FIT destination breakdown (30 min)','Marketing performance and CPL (15 min)','HR and people update — CPO (15 min)','Commercial Product — contracting status (15 min)','Strategic decisions required (30 min)'],
+       output:'Monthly action log. Budget variances addressed. Headcount decisions made. Strategic direction confirmed.',
+       format:'In-person preferred. Full presentations expected. Finance Director distributes management accounts 48hrs before.'},
+      {icon:'📦',name:'Commercial Product Monthly',when:'Third Wednesday · 2:00–3:30pm',freq:'monthly',
+       owner:'CEO India — Lalitha Krishna',
+       purpose:'Contracting and product review. Rate competitiveness, allotment utilisation, loading accuracy, new supplier onboarding.',
+       attendees:'CEO India · All Contracting Managers (×6) · Loading Team Lead · CCO (brief)',
+       agenda:['Rate benchmarking update by destination','Allotment utilisation — over or under-sold','New contracts signed this month','Loading accuracy stats','Supplier issues or relationship changes','Upcoming contracting cycle preparation'],
+       output:'Rate renegotiations commissioned. Allotment adjustments agreed. Supplier issues escalated.',
+       format:'CEO India chairs. Each Contracting Manager presents their destination.'},
+      {icon:'📣',name:'Marketing Monthly Performance',when:'Last Friday · 11:00–12:00',freq:'monthly',
+       owner:'Marketing Director',
+       purpose:'Full marketing performance review. CPL, campaign ROI, social performance, B2B agent communications effectiveness.',
+       attendees:'Marketing Director · All 6 Marketing Managers · Social Media leads · CCO',
+       agenda:['Overall CPL vs benchmark this month','Top 3 performing campaigns and why','Bottom 3 campaigns — what to cut or change','Social media performance by destination','B2B agent communication opens and responses','Budget spend vs plan','Next month campaign calendar review'],
+       output:'Underperforming campaigns paused or restructured. Budget reallocation decisions. Next month calendar approved.',
+       format:'Marketing Director chairs. Marketing Managers present their destination numbers.'},
+    ]
+  },
+  {
+    section:'Quarterly Reviews',color:'#4F46CC',icon:'🏆',freq:'Quarterly',
+    meetings:[
+      {icon:'👑',name:'Quarterly Board & Leadership Review',when:'End of quarter · Full day',freq:'quarterly',
+       owner:'Global CEO',
+       purpose:'Board-level quarterly business review. Financial results, strategic progress, headcount review, market performance.',
+       attendees:'Board · Global CEO · CEO India · CCO · CPO · Finance Director · All Directors',
+       agenda:['Q results vs plan — Finance Director (45 min)','Commercial review — CCO (30 min)','People review — CPO (20 min)','Strategic initiatives update (30 min)','Next quarter targets and priorities (30 min)','Headcount and budget adjustments (20 min)','Board Q&A (30 min)'],
+       output:'Board decisions recorded. Next quarter targets set. Budget adjustments approved. Headcount plan confirmed.',
+       format:'Formal presentation. Board pack distributed 5 working days in advance.'},
+      {icon:'📈',name:'Booking Owner Scorecard Review',when:'End of each quarter',freq:'quarterly',
+       owner:'CCO + CPO + BU Directors',
+       purpose:'Formal quarterly review of every Booking Owner\'s scorecard — gate compliance, errors, CSAT, complaints. Performance decisions made.',
+       attendees:'CCO · CPO · Each BU Director · Ops TL from each BU · HR representative',
+       agenda:['Scorecard results by BU and individual','§26 violations — patterns and individuals','Gate compliance rates by Expert','CSAT scores by Booking Owner','Performance improvement plans for flagged individuals','Certification renewals due next quarter'],
+       output:'PIPs issued where required. Certification renewals scheduled. Promotions and role changes recommended.',
+       format:'Confidential. CCO and CPO co-chair. HR present for any PIP discussions.'},
+      {icon:'🤝',name:'Supplier & Contracting Quarterly',when:'Q+1 week 1',freq:'quarterly',
+       owner:'CEO India',
+       purpose:'Review all supplier relationships, contract performance, rate competitiveness and contracting pipeline for next season.',
+       attendees:'CEO India · All Contracting Managers · CCO (for commercial direction) · Finance Director',
+       agenda:['Supplier performance scorecard by destination','Contract renewals due in next 90 days','Rate competitiveness summary','New supplier opportunities identified','Financial exposure and supplier credit review'],
+       output:'Renewal strategy agreed per supplier. New contract mandates issued. Finance risk positions reviewed.',
+       format:'CEO India chairs. Contracting Managers present destination by destination.'},
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// KPI RENDER
+// ═══════════════════════════════════════════════════════════════
+function buildKPICards(){
+  var container = document.getElementById('kpiCardsContainer');
+  if(!container) return;
+
+  // Summary strip
+  var totalKPIs = KPI_DATA.reduce(function(s,d){return s+d.rows.length;},0);
+  var weekly = KPI_DATA.flatMap(function(d){return d.rows;}).filter(function(r){return r.cadence==='weekly';}).length;
+  var monthly = KPI_DATA.flatMap(function(d){return d.rows;}).filter(function(r){return r.cadence==='monthly';}).length;
+  var depts = KPI_DATA.length;
+  container.innerHTML =
+    '<div class="kpi-summary-strip">' +
+    ['<div class="kpi-sum-card"><div class="kpi-sum-num">'+totalKPIs+'</div><div class="kpi-sum-lbl">Total KPIs</div></div>',
+     '<div class="kpi-sum-card"><div class="kpi-sum-num">'+depts+'</div><div class="kpi-sum-lbl">Departments</div></div>',
+     '<div class="kpi-sum-card"><div class="kpi-sum-num">'+weekly+'</div><div class="kpi-sum-lbl">Weekly KPIs</div></div>',
+     '<div class="kpi-sum-card"><div class="kpi-sum-num">'+monthly+'</div><div class="kpi-sum-lbl">Monthly KPIs</div></div>',
+    ].join('') + '</div>';
+
+  var cadenceClass = {weekly:'cc-weekly',monthly:'cc-monthly',quarterly:'cc-quarterly',annual:'cc-annual','per booking':'cc-booking','per tour':'cc-booking','per event':'cc-booking',daily:'cc-daily'};
+
+  KPI_DATA.forEach(function(dept){
+    var block = document.createElement('div');
+    block.className = 'kpi-dept';
+    var hdr = '<div class="kpi-dept-hdr" style="background:'+dept.color+'"><span class="kpi-dept-icon">'+dept.icon+'</span><span class="kpi-dept-name">'+dept.dept+'</span><span class="kpi-dept-count">'+dept.rows.length+' KPIs — click rows to expand</span></div>';
+    var tableHdr = '<div style="display:grid;grid-template-columns:160px 1fr 160px 100px 110px 28px;background:#f8f9fa;border-bottom:1px solid #eee;padding:7px 14px;font-size:8.5px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em"><div>Role</div><div style="padding:0 10px">KPI / Metric</div><div style="padding:0 6px">Target</div><div style="padding:0 6px">Cadence</div><div style="padding:0 6px">Owner</div><div></div></div>';
+    var rows = dept.rows.map(function(row, ri){
+      var cc = cadenceClass[row.cadence] || 'cc-monthly';
+      var rowId = dept.dept.replace(/\s/g,'_')+'_'+ri;
+      return '<div class="kpi-row" onclick="toggleKPI(\''+rowId+'\')">'+
+        '<div class="kpi-row-top">'+
+          '<div class="kpi-role">'+row.role+'</div>'+
+          '<div class="kpi-metric">'+row.metric+'</div>'+
+          '<div class="kpi-target">'+row.target+'</div>'+
+          '<div class="kpi-cadence"><span class="kpi-cadence-chip '+cc+'">'+row.cadence+'</span></div>'+
+          '<div class="kpi-owner-cell">'+row.owner+'</div>'+
+          '<div class="kpi-chevron">▼</div>'+
+        '</div>'+
+        '<div class="kpi-detail" id="kd_'+rowId+'">'+
+          '<div class="kpi-d-block"><div class="kpi-d-label">📐 Definition</div><div class="kpi-d-text">'+row.definition+'</div></div>'+
+          '<div class="kpi-d-block"><div class="kpi-d-label">📊 How it\'s Measured</div><div class="kpi-d-text">'+row.measure+'</div></div>'+
+          '<div class="kpi-d-block kpi-miss"><div class="kpi-d-label">🚨 If Missed / Escalation</div><div class="kpi-d-text">'+row.escalation+'</div></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+    block.innerHTML = hdr + '<div class="kpi-table">' + tableHdr + rows + '</div>';
+    container.appendChild(block);
+  });
+}
+
+function toggleKPI(id){
+  var row = document.querySelector('[onclick="toggleKPI(\''+id+'\')"]');
+  var detail = document.getElementById('kd_'+id);
+  if(!row||!detail) return;
+  var open = row.classList.toggle('open');
+  detail.style.display = open ? 'grid' : 'none';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// REPORTING & MEETINGS RENDER
+// ═══════════════════════════════════════════════════════════════
+function buildMeetings(){
+  var container = document.getElementById('meetingsContainer');
+  if(!container) return;
+  MEETINGS.forEach(function(sec){
+    var s = document.createElement('div');
+    s.className = 'rm-section';
+    var hdr = '<div class="rm-section-hdr" style="background:'+sec.color+'">'+
+      '<span class="rm-section-icon">'+sec.icon+'</span>'+
+      '<span class="rm-section-title">'+sec.section+'</span>'+
+      '<span class="rm-section-sub">'+sec.meetings.length+' meetings · click cards to expand</span>'+
+    '</div>';
+    var cards = sec.meetings.map(function(m,mi){
+      var cid = sec.section.replace(/\s/g,'_')+'_'+mi;
+      var agendaHtml = m.agenda.map(function(a){return '<li>'+a+'</li>';}).join('');
+      return '<div class="rm-card" id="mc_'+cid+'">'+
+        '<div class="rm-card-hdr" onclick="toggleMeeting(\''+cid+'\')">'+
+          '<span class="rm-card-icon">'+m.icon+'</span>'+
+          '<div class="rm-card-info">'+
+            '<div class="rm-card-name">'+m.name+'</div>'+
+            '<div class="rm-card-when">'+m.when+'</div>'+
+            '<div class="rm-card-owner">Owner: '+m.owner+'</div>'+
+          '</div>'+
+          '<span class="rm-freq-badge rf-'+m.freq+'">'+m.freq+'</span>'+
+        '</div>'+
+        '<div class="rm-card-body" id="mb_'+cid+'">'+
+          '<div style="margin:8px 0 6px;font-size:10px;color:#1a1a1a;line-height:1.5;background:#F8FAFC;border-radius:4px;padding:7px 9px">'+m.purpose+'</div>'+
+          '<div class="rm-body-grid">'+
+            '<div class="rm-body-block"><div class="rm-body-lbl">👥 Attendees</div><div class="rm-body-text">'+m.attendees+'</div></div>'+
+            '<div class="rm-body-block"><div class="rm-body-lbl">✅ Output</div><div class="rm-body-text">'+m.output+'</div></div>'+
+          '</div>'+
+          '<div class="rm-body-block" style="margin-top:8px"><div class="rm-body-lbl">📋 Agenda</div><ul class="rm-agenda-list">'+agendaHtml+'</ul></div>'+
+          '<div class="rm-body-block" style="margin-top:6px"><div class="rm-body-lbl">📐 Format</div><div class="rm-body-text">'+m.format+'</div></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+    s.innerHTML = hdr + '<div class="rm-cards">' + cards + '</div>';
+    container.appendChild(s);
+  });
+}
+
+function toggleMeeting(id){
+  var card = document.getElementById('mc_'+id);
+  var body = document.getElementById('mb_'+id);
+  if(!card||!body) return;
+  var open = card.classList.toggle('open');
+  body.style.display = open ? 'block' : 'none';
+}
+
 </script>
 </body>
 </html>
